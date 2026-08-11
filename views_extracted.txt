@@ -1,0 +1,2211 @@
+s="view active" id="view-overview">
+      <div class="kpi-row">
+        <div class="kpi">
+          <div class="k-label">Occupancy</div>
+          <div class="k-value" id="kpi-occupancy">42 / 48</div>
+          <div class="k-delta up">▲ 87% units let</div>
+        </div>
+        <div class="kpi">
+          <div class="k-label">Rent Collected Today</div>
+          <div class="k-value mono">RWF 1.24M</div>
+          <div class="k-delta up">▲ 12% vs yesterday</div>
+        </div>
+        <div class="kpi">
+          <div class="k-label">Overdue Balance</div>
+          <div class="k-value mono">RWF 380K</div>
+          <div class="k-delta down">5 tenants overdue</div>
+        </div>
+        <div class="kpi">
+          <div class="k-label">Deliveries In Progress</div>
+          <div class="k-value">18</div>
+          <div class="k-delta flat">via yoDeals riders</div>
+        </div>
+        <div class="kpi">
+          <div class="k-label">Online Sales Today</div>
+          <div class="k-value mono">RWF 2.1M</div>
+          <div class="k-delta up">▲ across 27 storefronts</div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <div>
+              <h3>Mall Rent Health — Ground Floor</h3>
+              <div class="hint">Live snapshot · click a unit to open its ledger</div>
+            </div>
+            <button class="link-btn" onclick="setView(&#39;floormap&#39;)">Open full map →</button>
+          </div>
+          <div class="card-body">
+            <div id="mini-map" style="display:grid;grid-template-columns:repeat(8,1fr);gap:8px;"><div class="unit paid" style="height:58px;" title="G-01 — Boutique">
+      <div class="u-name">G-01</div>
+      <div class="u-tag">Boutique</div>
+    </div><div class="unit paid" style="height:58px;" title="G-02 — Café">
+      <div class="u-name">G-02</div>
+      <div class="u-tag">Café</div>
+    </div><div class="unit vacant" style="height:58px;" title="G-03 — Vacant">
+      <div class="u-name">G-03</div>
+      <div class="u-tag">Vacant</div>
+    </div><div class="unit paid" style="height:58px;" title="G-04 — Electronics">
+      <div class="u-name">G-04</div>
+      <div class="u-tag">Electronics</div>
+    </div><div class="unit due" style="height:58px;" title="G-05 — Salon">
+      <div class="u-name">G-05</div>
+      <div class="u-tag">Salon</div>
+    </div><div class="unit paid" style="height:58px;" title="G-06 — Bakery">
+      <div class="u-name">G-06</div>
+      <div class="u-tag">Bakery</div>
+    </div><div class="unit paid" style="height:58px;" title="G-07 — Pharmacy">
+      <div class="u-name">G-07</div>
+      <div class="u-tag">Pharmacy</div>
+    </div><div class="unit paid" style="height:58px;" title="G-08 — Fashion">
+      <div class="u-name">G-08</div>
+      <div class="u-tag">Fashion</div>
+    </div></div>
+            <div class="legend">
+              <div class="item"><span class="sw" style="background:var(--forest-500)"></span> Paid up</div>
+              <div class="item"><span class="sw" style="background:var(--amber-500)"></span> Due this week</div>
+              <div class="item"><span class="sw" style="background:var(--red-500)"></span> Overdue</div>
+              <div class="item"><span class="sw" style="background:#DDD9CC"></span> Vacant</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">
+            <div><h3>Attention needed</h3><div class="hint">Auto-flagged today</div></div>
+          </div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+            <div class="announce-card" style="border-color:var(--red-100);background:var(--red-100);">
+              <div><div class="a-title" style="color:var(--red-500)">G-14 · Nyabugogo TechHub</div><div class="a-body">Daily repayment overdue by 3 days — RWF 45,000 outstanding.</div></div>
+              <button class="btn" style="background:#fff;">Nudge</button>
+            </div>
+            <div class="announce-card" style="border-color:var(--amber-100);background:var(--amber-100);">
+              <div><div class="a-title" style="color:var(--amber-600)">1F-06 · Amasezerano Boutique</div><div class="a-body">Storefront draft not published — invisible on mall guide app.</div></div>
+              <button class="btn" style="background:#fff;">Review</button>
+            </div>
+            <div class="announce-card">
+              <div><div class="a-title">2F-02 · Café Umurava</div><div class="a-body">Maintenance request: AC unit — awaiting technician assignment.</div></div>
+              <button class="btn" style="background:#fff;">Assign</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px;">
+        <div class="card-head"><div><h3>Rent collection health</h3><div class="hint">Read-only summary — full ledger and payouts are managed by yoMall's platform team</div></div></div>
+        <div class="card-body">
+          <div class="rent-health-card">
+            <div class="rent-health-row">
+              <div class="rhr-ring" id="rent-health-ring" style="background:conic-gradient(var(--forest-500) 0% 76%, var(--cream-100) 76% 100%);">
+                <div style="width:48px;height:48px;border-radius:50%;background:var(--cream-50);display:flex;align-items:center;justify-content:center;">76%</div>
+              </div>
+              <div class="rent-health-stats">
+                <div class="rhs-item"><span>Collected this month</span><b>RWF 14.1M</b></div>
+                <div class="rhs-item"><span>Outstanding</span><b>RWF 4.5M</b></div>
+                <div class="rhs-item"><span>Tenants overdue</span><b>5 of 42</b></div>
+              </div>
+            </div>
+            <div class="rent-health-note">Need the full breakdown or to run a payout? That's handled by yoMall's platform team on your behalf.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FLOOR MAP ============ -->
+    <div class="view" id="view-floormap">
+      <div class="section-title">
+        <div><h2>Floor &amp; Unit Map</h2><div class="hint">The same layout tenants see in the customer-facing mall guide — colour reflects rent status</div></div>
+        <div class="floor-tabs">
+          <button class="floor-tab active" data-floor="G">Ground</button>
+          <button class="floor-tab" data-floor="1">Floor 1</button>
+          <button class="floor-tab" data-floor="2">Floor 2</button>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div id="full-map" style="display:grid;grid-template-columns:repeat(8,1fr);gap:10px;"><div class="unit paid" style="height:70px;" title="G-01 — Boutique">
+      <div class="u-name">G-01</div>
+      <div class="u-tag">Boutique</div>
+    </div><div class="unit paid" style="height:70px;" title="G-02 — Café">
+      <div class="u-name">G-02</div>
+      <div class="u-tag">Café</div>
+    </div><div class="unit vacant" style="height:70px;" onclick="openVacancyModal(&#39;G-03&#39;,&#39;G&#39;)" title="G-03 — Vacant">
+      <div class="u-name">G-03</div>
+      <div class="u-tag">Vacant</div>
+    </div><div class="unit paid" style="height:70px;" title="G-04 — Electronics">
+      <div class="u-name">G-04</div>
+      <div class="u-tag">Electronics</div>
+    </div><div class="unit due" style="height:70px;" title="G-05 — Salon">
+      <div class="u-name">G-05</div>
+      <div class="u-tag">Salon</div>
+    </div><div class="unit paid" style="height:70px;" title="G-06 — Bakery">
+      <div class="u-name">G-06</div>
+      <div class="u-tag">Bakery</div>
+    </div><div class="unit paid" style="height:70px;" title="G-07 — Pharmacy">
+      <div class="u-name">G-07</div>
+      <div class="u-tag">Pharmacy</div>
+    </div><div class="unit paid" style="height:70px;" title="G-08 — Fashion">
+      <div class="u-name">G-08</div>
+      <div class="u-tag">Fashion</div>
+    </div><div class="unit overdue" style="height:70px;" title="G-09 — Phone repair">
+      <div class="u-name">G-09</div>
+      <div class="u-tag">Phone repair</div>
+    </div><div class="unit paid" style="height:70px;" title="G-10 — Bookshop">
+      <div class="u-name">G-10</div>
+      <div class="u-tag">Bookshop</div>
+    </div><div class="unit paid" style="height:70px;" title="G-11 — Toys">
+      <div class="u-name">G-11</div>
+      <div class="u-tag">Toys</div>
+    </div><div class="unit vacant" style="height:70px;" onclick="openVacancyModal(&#39;G-12&#39;,&#39;G&#39;)" title="G-12 — Vacant">
+      <div class="u-name">G-12</div>
+      <div class="u-tag">Vacant</div>
+    </div><div class="unit due" style="height:70px;" title="G-13 — Shoes">
+      <div class="u-name">G-13</div>
+      <div class="u-tag">Shoes</div>
+    </div><div class="unit overdue" style="height:70px;" title="G-14 — TechHub">
+      <div class="u-name">G-14</div>
+      <div class="u-tag">TechHub</div>
+    </div><div class="unit paid" style="height:70px;" title="G-15 — Jewelry">
+      <div class="u-name">G-15</div>
+      <div class="u-tag">Jewelry</div>
+    </div><div class="unit paid" style="height:70px;" title="G-16 — Stationery">
+      <div class="u-name">G-16</div>
+      <div class="u-tag">Stationery</div>
+    </div></div>
+          <div class="legend">
+            <div class="item"><span class="sw" style="background:var(--forest-500)"></span> Paid up</div>
+            <div class="item"><span class="sw" style="background:var(--amber-500)"></span> Due this week</div>
+            <div class="item"><span class="sw" style="background:var(--red-500)"></span> Overdue</div>
+            <div class="item"><span class="sw" style="background:#DDD9CC"></span> Vacant — <span id="vacant-count">6</span> units available · click a vacant unit to list it</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <div class="card-head"><h3>Listed vacancies</h3><div class="hint" style="margin-top:0">Units currently marketed to prospective tenants</div></div>
+          <div class="card-body" id="vacancy-list"><div class="maint-req-empty">No vacancies listed yet — click a vacant unit on the map to list it.</div></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Prospective tenant inquiries</h3><div class="hint" style="margin-top:0">People who reached out about a listed unit</div></div>
+          <div class="card-body" id="vacancy-inquiry-list">
+    <div class="inquiry-row">
+      <div class="amenity-ic">👤</div>
+      <div style="flex:1;">
+        <div class="iq-name">Eric Mugisha <span style="font-weight:500;color:var(--ink-400);">— Unit G-03</span></div>
+        <div class="iq-msg">Interested in this unit for a phone accessories shop — is it still available?</div>
+        <div class="iq-meta">+250 78• ••• 552 · 48 hrs ago</div>
+      </div>
+    </div>
+    <div class="inquiry-row">
+      <div class="amenity-ic">👤</div>
+      <div style="flex:1;">
+        <div class="iq-name">Solange Uwase <span style="font-weight:500;color:var(--ink-400);">— Unit 1F-04</span></div>
+        <div class="iq-msg">Looking for a boutique space, can I schedule a viewing?</div>
+        <div class="iq-meta">+250 72• ••• 810 · 120 hrs ago</div>
+      </div>
+    </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TENANT DIRECTORY ============ -->
+    <div class="view" id="view-tenants">
+      <div class="section-title">
+        <div><h2>Tenant Directory</h2><div class="hint" id="tenant-count-hint">42 active tenants across 3 floors</div></div>
+        <button class="btn primary" onclick="openOnboardModal()">+ Onboard tenant</button>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding-top:16px;">
+          <table>
+            <thead><tr><th>Tenant</th><th>Category</th><th>Repayment plan</th><th>Storefront</th><th>Rent status</th><th>Contact</th><th></th></tr></thead>
+            <tbody id="tenant-table">
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">NT</div><div><div class="tname">Nyabugogo TechHub</div><div class="tunit">G-14</div></div></div></td>
+      <td>Electronics</td>
+      <td><span class="freq-pill daily">Daily</span></td>
+      <td><span class="badge published">Published</span></td>
+      <td><span class="badge overdue">Overdue</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 78• ••• 214</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Nyabugogo TechHub&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">AB</div><div><div class="tname">Amasezerano Boutique</div><div class="tunit">1F-06</div></div></div></td>
+      <td>Fashion</td>
+      <td><span class="freq-pill weekly">Weekly</span></td>
+      <td><span class="badge draft">Draft</span></td>
+      <td><span class="badge due">Due soon</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 72• ••• 890</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Amasezerano Boutique&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">CU</div><div><div class="tname">Café Umurava</div><div class="tunit">2F-02</div></div></div></td>
+      <td>Food &amp; beverage</td>
+      <td><span class="freq-pill daily">Daily</span></td>
+      <td><span class="badge published">Published</span></td>
+      <td><span class="badge paid">Paid up</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 78• ••• 331</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Café Umurava&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">ME</div><div><div class="tname">Muraho Electronics</div><div class="tunit">G-04</div></div></div></td>
+      <td>Electronics</td>
+      <td><span class="freq-pill weekly">Weekly</span></td>
+      <td><span class="badge published">Published</span></td>
+      <td><span class="badge paid">Paid up</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 73• ••• 122</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Muraho Electronics&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">IS</div><div><div class="tname">Ikirenga Salon</div><div class="tunit">G-05</div></div></div></td>
+      <td>Beauty</td>
+      <td><span class="freq-pill daily">Daily</span></td>
+      <td><span class="badge published">Published</span></td>
+      <td><span class="badge due">Due soon</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 78• ••• 045</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Ikirenga Salon&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">ZP</div><div><div class="tname">Zamu Phone Repair</div><div class="tunit">G-09</div></div></div></td>
+      <td>Electronics</td>
+      <td><span class="freq-pill daily">Daily</span></td>
+      <td><span class="badge draft">Draft</span></td>
+      <td><span class="badge overdue">Overdue</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 79• ••• 671</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Zamu Phone Repair&#39;)">Manage</button></td>
+    </tr>
+    <tr class="rowhover">
+      <td><div class="cell-tenant"><div class="avatar-sm">CB</div><div><div class="tname">Coko Bookshop</div><div class="tunit">G-10</div></div></div></td>
+      <td>Books &amp; stationery</td>
+      <td><span class="freq-pill weekly">Weekly</span></td>
+      <td><span class="badge published">Published</span></td>
+      <td><span class="badge paid">Paid up</span></td>
+      <td class="mono" style="font-size:11.5px;color:var(--ink-600);">+250 78• ••• 500</td>
+      <td><button class="btn ghost" style="padding:6px 10px;font-size:11.5px;" onclick="openTenantManage(&#39;Coko Bookshop&#39;)">Manage</button></td>
+    </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TENANT: MY OVERVIEW ============ -->
+    <div class="view" id="view-t-overview">
+      <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi"><div class="k-label">Today's sales</div><div class="k-value mono">RWF 88,400</div><div class="k-delta up">▲ 14% vs yesterday</div></div>
+        <div class="kpi"><div class="k-label">Orders today</div><div class="k-value">11</div><div class="k-delta flat">via yoDeals</div></div>
+        <div class="kpi"><div class="k-label">Rent balance</div><div class="k-value mono">RWF 57,000</div><div class="k-delta down">Overdue by 3 days</div></div>
+        <div class="kpi"><div class="k-label">Storefront status</div><div class="k-value" style="font-size:15px;">Published</div><div class="k-delta up">Live on mall guide</div></div>
+      </div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><div><h3>Recent orders</h3><div class="hint">Latest yoDeals activity for your shop</div></div><button class="link-btn" onclick="setView(&#39;t-orders&#39;)">View all →</button></div>
+          <div class="card-body">
+            <table>
+              <thead><tr><th>Order</th><th>Item(s)</th><th>Status</th><th>Value</th><th></th></tr></thead>
+              <tbody id="overview-orders-table"><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3392&#39;)">
+      <td class="mono">#YD-3392</td><td>Wireless Earbuds ×2, Phone Charger (Type-C)</td>
+      <td><span class="badge preparing">Preparing your order</span></td>
+      <td class="mono">RWF 55,800</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3392&#39;)">Track</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3391&#39;)">
+      <td class="mono">#YD-3391</td><td>Wireless Earbuds, Phone Charger (Type-C), Bluetooth Speaker</td>
+      <td><span class="badge transit">On the way</span></td>
+      <td class="mono">RWF 52,800</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3391&#39;)">Track</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3387&#39;)">
+      <td class="mono">#YD-3387</td><td>Power Bank 10,000mAh ×2, Phone Charger (Type-C)</td>
+      <td><span class="badge arrived">Rider arrived — confirming handoff</span></td>
+      <td class="mono">RWF 35,800</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3387&#39;)">Track</button></td>
+    </tr></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><h3>Rent reminder</h3></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:10px;">
+            <div class="announce-card" style="border-color:var(--red-100);background:var(--red-100);">
+              <div><div class="a-title" style="color:var(--red-500)">3 days overdue</div><div class="a-body">RWF 57,000 owed on your daily repayment plan.</div></div>
+              <button class="btn" style="background:#fff;" onclick="setView(&#39;t-rent&#39;); openPaymentModal(&#39;repay&#39;);">Pay now</button>
+            </div>
+            <div class="announce-card">
+              <div><div class="a-title">Need a repair?</div><div class="a-body">Request maintenance from our on-call directory.</div></div>
+              <button class="btn" style="background:#fff;" onclick="setView(&#39;staff&#39;)">Request</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TENANT: MY ORDERS ============ -->
+    <div class="view" id="view-t-orders">
+      <div class="section-title"><div><h2>My Orders</h2><div class="hint">Online orders placed through your storefront on yoDeals</div></div></div>
+      <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kpi"><div class="k-label">Orders today</div><div class="k-value" id="t-orders-count-kpi">6</div><div class="k-delta up">▲ 14%</div></div>
+        <div class="kpi"><div class="k-label">Sales today</div><div class="k-value mono">RWF 88,400</div><div class="k-delta up">▲ 9%</div></div>
+        <div class="kpi"><div class="k-label">In transit now</div><div class="k-value" id="t-transit-count-kpi">2</div><div class="k-delta flat">yoDeals riders</div></div>
+      </div>
+      <div class="card">
+        <div class="card-body" style="padding-top:16px;">
+          <table>
+            <thead><tr><th>Order</th><th>Item(s)</th><th>Rider</th><th>Status</th><th>Value</th><th>Placed</th><th></th></tr></thead>
+            <tbody id="t-orders-table"><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3392&#39;)">
+      <td class="mono">#YD-3392</td>
+      <td>Wireless Earbuds ×2, Phone Charger (Type-C)</td>
+      <td>—</td>
+      <td><span class="badge preparing">Preparing your order</span></td>
+      <td class="mono">RWF 55,800</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">2 min ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3392&#39;)">Track →</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3391&#39;)">
+      <td class="mono">#YD-3391</td>
+      <td>Wireless Earbuds, Phone Charger (Type-C), Bluetooth Speaker</td>
+      <td>E. Niyonzima</td>
+      <td><span class="badge transit">On the way</span></td>
+      <td class="mono">RWF 52,800</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">12 min ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3391&#39;)">Track →</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3387&#39;)">
+      <td class="mono">#YD-3387</td>
+      <td>Power Bank 10,000mAh ×2, Phone Charger (Type-C)</td>
+      <td>D. Habimana</td>
+      <td><span class="badge arrived">Rider arrived — confirming handoff</span></td>
+      <td class="mono">RWF 35,800</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">33 min ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3387&#39;)">Track →</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3384&#39;)">
+      <td class="mono">#YD-3384</td>
+      <td>Power Bank 10,000mAh, Wireless Earbuds</td>
+      <td>D. Habimana</td>
+      <td><span class="badge confirmed">Delivered &amp; confirmed</span></td>
+      <td class="mono">RWF 40,800</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">1 hr ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3384&#39;)">Track →</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3379&#39;)">
+      <td class="mono">#YD-3379</td>
+      <td>Phone Charger (Type-C) ×3</td>
+      <td>J. Uwase</td>
+      <td><span class="badge confirmed">Delivered &amp; confirmed</span></td>
+      <td class="mono">RWF 15,600</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">2 hrs ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3379&#39;)">Track →</button></td>
+    </tr><tr class="rowhover" onclick="openOrderDetail(&#39;YD-3371&#39;)">
+      <td class="mono">#YD-3371</td>
+      <td>Wireless Earbuds ×5, Bluetooth Speaker</td>
+      <td>E. Niyonzima</td>
+      <td><span class="badge confirmed">Delivered &amp; confirmed</span></td>
+      <td class="mono">RWF 147,800</td>
+      <td style="font-size:11.5px;color:var(--ink-400);">4 hrs ago</td>
+      <td><button class="btn ghost" style="padding:5px 10px;font-size:11px;" onclick="event.stopPropagation();openOrderDetail(&#39;YD-3371&#39;)">Track →</button></td>
+    </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TENANT: MY RENT ============ -->
+    <div class="view" id="view-t-rent">
+      <div class="section-title"><div><h2>My Rent</h2><div class="hint">Choose how you keep up with rent — a rentAdvance, or save daily into your wallet</div></div></div>
+
+      <div class="method-grid">
+        <div class="method-card selected" id="card-advance" onclick="selectPlan(&#39;advance&#39;)">
+          <div class="mc-top"><div class="mc-ic">💸</div><span class="mc-badge">Active</span></div>
+          <div class="mc-title">rentAdvance</div>
+          <div class="mc-desc">yoMall pays your landlord in full today. You repay slowly on a daily or weekly schedule you choose.</div>
+        </div>
+        <div class="method-card" id="card-wallet" onclick="selectPlan(&#39;wallet&#39;)">
+          <div class="mc-top"><div class="mc-ic">👛</div></div>
+          <div class="mc-title">Wallet auto-save</div>
+          <div class="mc-desc">Deposit small amounts into your yoMall wallet each day. We automatically disburse it to your landlord as rent falls due.</div>
+        </div>
+      </div>
+
+      <!-- ===== rentAdvance panel ===== -->
+      <div class="method-panel active" id="panel-advance">
+        <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+          <div class="kpi"><div class="k-label">Plan</div><div class="k-value" style="font-size:16px;">Daily · RWF 15,000</div><div class="k-delta flat">via MoMo</div></div>
+          <div class="kpi"><div class="k-label">Balance owed</div><div class="k-value mono" id="adv-balance-value">RWF 57,000</div><div class="k-delta down" id="adv-balance-delta">Overdue by 3 days</div></div>
+          <div class="kpi"><div class="k-label">Progress this cycle</div><div class="k-value" id="adv-progress-value">62%</div><div class="k-delta flat" id="adv-total-delta">of RWF 450,000 advance repaid</div></div>
+        </div>
+
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-head"><div><h3>Payment history</h3></div><button class="btn primary" style="padding:7px 12px;font-size:12px;" onclick="openPaymentModal(&#39;repay&#39;)">Repay now →</button></div>
+            <div class="card-body" style="padding-top:16px;">
+              <table>
+                <thead><tr><th>Date</th><th>Amount</th><th>Method</th><th>Status</th></tr></thead>
+                <tbody id="adv-payment-history">
+                  <tr><td>15 Jul 2026</td><td class="mono">RWF 15,000</td><td>MoMo</td><td><span class="badge paid">Paid</span></td></tr>
+                  <tr><td>14 Jul 2026</td><td class="mono">RWF 15,000</td><td>MoMo</td><td><span class="badge paid">Paid</span></td></tr>
+                  <tr><td>13 Jul 2026</td><td class="mono">—</td><td>—</td><td><span class="badge overdue">Missed</span></td></tr>
+                  <tr><td>12 Jul 2026</td><td class="mono">RWF 15,000</td><td>MoMo</td><td><span class="badge paid">Paid</span></td></tr>
+                  <tr><td>11 Jul 2026</td><td class="mono">RWF 15,000</td><td>MoMo</td><td><span class="badge paid">Paid</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><div><h3>New rentAdvance</h3><div class="hint" style="margin-top:0">Applications are reviewed by our lending partner</div></div></div>
+            <div class="card-body" id="tenant-loan-card-body">
+      
+      <p style="font-size:12.5px;color:var(--ink-600);line-height:1.6;margin:0 0 14px;">Need help covering rent? Apply for a rentAdvance — we pay your landlord in full today, you repay us daily or weekly. Takes about 3 minutes.</p>
+      <button class="btn primary" style="width:100%;justify-content:center;" onclick="openLoanAppModal()">Apply for rentAdvance →</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== Wallet panel ===== -->
+      <div class="method-panel" id="panel-wallet">
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-body" style="padding:0;">
+              <div class="wallet-hero">
+                <div class="wh-label">yoMall wallet balance</div>
+                <div class="wh-balance mono" id="wallet-balance">RWF 34,500</div>
+                <div class="wh-actions">
+                  <button class="btn amber" onclick="openPaymentModal(&#39;topup&#39;)">+ Top up wallet</button>
+                  <button class="btn ghost2">Withdraw</button>
+                </div>
+                <div class="quick-topup-row">
+                  <span class="qtr-label">Quick top-up</span>
+                  <button class="qtr-chip" onclick="quickTopUp(5000)">5K</button>
+                  <button class="qtr-chip" onclick="quickTopUp(10000)">10K</button>
+                  <button class="qtr-chip" onclick="quickTopUp(20000)">20K</button>
+                </div>
+              </div>
+              <div style="padding:16px 18px;">
+                <div class="toggle-row" style="border-top:none;">
+                  <div><div class="t-label">Auto-deposit enabled</div><div class="t-hint">Save automatically at the amount and frequency below</div></div>
+                  <div class="switch on"><div class="knob"></div></div>
+                </div>
+                <div class="form-2col" style="margin-top:8px;">
+                  <div class="form-row"><label>Deposit amount</label><input value="RWF 12,000"></div>
+                  <div class="form-row"><label>Frequency</label><select><option>Daily</option><option>Weekly</option></select></div>
+                </div>
+                <div class="toggle-row">
+                  <div><div class="t-label">Auto-disburse to landlord when rent is due</div><div class="t-hint">Wallet balance is sent automatically — no manual step needed</div></div>
+                  <div class="switch on"><div class="knob"></div></div>
+                </div>
+                <div class="confirm-banner" id="wallet-confirm">✓ Wallet updated — next auto-deposit runs tomorrow at 7:00 AM.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-head"><h3>Deposit &amp; disbursement history</h3></div>
+            <div class="card-body" style="padding-top:16px;">
+              <table>
+                <thead><tr><th>Date</th><th>Deposited</th><th>Status</th></tr></thead>
+                <tbody id="wallet-history">
+                  <tr><td>19 Jul 2026</td><td class="mono">RWF 12,000</td><td><span class="badge due">Held in wallet</span></td></tr>
+                  <tr><td>18 Jul 2026</td><td class="mono">RWF 12,000</td><td><span class="badge paid">Auto-disbursed</span></td></tr>
+                  <tr><td>17 Jul 2026</td><td class="mono">RWF 12,000</td><td><span class="badge paid">Auto-disbursed</span></td></tr>
+                  <tr><td>16 Jul 2026</td><td class="mono">RWF 12,000</td><td><span class="badge paid">Auto-disbursed</span></td></tr>
+                  <tr><td>15 Jul 2026</td><td class="mono">RWF 10,500</td><td><span class="badge paid">Auto-disbursed</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MY LEASE (tenant) ============ -->
+    <div class="view" id="view-t-lease">
+      <div class="section-title"><div><h2>My Lease</h2><div class="hint">Your lease terms, itemized charges, deposit and compliance</div></div></div>
+
+      <div id="t-lease-notices"></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>Monthly charges</h3><div class="hint" style="margin-top:0">Itemized breakdown, per ICSC leasing standards</div></div>
+          <div class="card-body" id="t-lease-charges"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Lease summary</h3></div>
+          <div class="card-body">
+            <div class="receipt-line"><span>Lease start</span><span id="t-lease-start"></span></div>
+            <div class="receipt-line"><span>Lease term</span><span>12 months, auto-renewing</span></div>
+            <div class="receipt-line"><span>Unit</span><span id="t-lease-unit"></span></div>
+            <button class="btn ghost" style="width:100%;justify-content:center;margin-top:14px;" onclick="tenantDownloadLease()">⬇ Download my lease agreement</button>
+
+            <div class="deposit-card">
+              <div style="font-size:10.8px;text-transform:uppercase;letter-spacing:.3px;color:var(--ink-400);font-weight:700;">Security deposit</div>
+              <div class="dc-amount" id="t-lease-deposit"></div>
+              <div class="dc-note">Refundable within 30 days of move-out, less any outstanding rent, CAM charges, or damage beyond normal wear — standard commercial leasing practice.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px;">
+        <div class="card">
+          <div class="card-head"><h3>Insurance &amp; compliance</h3></div>
+          <div class="card-body">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+              <div>
+                <div style="font-size:12.8px;font-weight:700;" id="t-lease-insurance-name">No certificate on file</div>
+                <div style="font-size:11px;color:var(--ink-400);margin-top:2px;" id="t-lease-insurance-sub">Required: liability &amp; goods-in-trade insurance</div>
+              </div>
+              <span class="badge" id="t-lease-insurance-badge"></span>
+            </div>
+            <button class="btn ghost" style="width:100%;justify-content:center;" onclick="triggerInsuranceUpload()">⬆ Upload insurance certificate</button>
+            <input type="file" id="t-insurance-file-input" style="display:none;" onchange="handleInsuranceFile(event)">
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Give notice</h3><div class="hint" style="margin-top:0">Required notice period: 60 days before lease end</div></div>
+          <div class="card-body" id="t-lease-notice-body"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MESSAGES (tenant) ============ -->
+    <div class="view" id="view-t-messages">
+      <div class="section-title"><div><h2>Messages</h2><div class="hint">Contact your property manager directly — billing questions, disputes, or anything else</div></div></div>
+      <div class="card">
+        <div class="card-body" id="t-message-thread" style="max-height:420px;overflow-y:auto;"></div>
+        <div class="card-body" style="padding-top:0;">
+          <div class="form-row"><label>Category</label>
+            <select id="t-message-category">
+              <option>General question</option><option>Billing dispute</option><option>Request payment extension</option><option>Neighboring tenant issue</option>
+            </select>
+          </div>
+          <div class="msg-compose">
+            <textarea id="t-message-input" placeholder="Type your message..."></textarea>
+            <button class="btn primary" onclick="tenantSendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ STOREFRONT CMS ============ -->
+    <div class="view" id="view-storefront">
+      <div class="section-title">
+        <div>
+          <h2 style="display:flex;align-items:center;">Storefront <span class="cms-status-pill live" id="cms-status-pill">Live</span></h2>
+          <div class="hint op-only">Editing: <b>Nyabugogo TechHub</b> — G-14 · content publishes straight to the mall guide app</div>
+          <div class="hint tn-block">Your shop profile as customers see it on the mall guide app</div>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <select class="op-only" style="border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-size:12.5px;font-family:inherit;background:#fff;">
+            <option>Nyabugogo TechHub — G-14</option>
+            <option>Amasezerano Boutique — 1F-06</option>
+            <option>Café Umurava — 2F-02</option>
+          </select>
+          <button class="btn ghost" onclick="openCmsPreview()">Preview</button>
+          <button class="btn primary" id="cms-publish-btn" onclick="publishCmsChanges()">Publish changes</button>
+        </div>
+      </div>
+
+      <div class="cms-grid">
+        <div class="card">
+          <div class="card-body" style="padding-top:18px;">
+            <div class="form-row"><label>Shop name</label><input id="cms-shopname" value="Nyabugogo TechHub" oninput="cmsFieldChanged()"></div>
+            <div class="form-2col">
+              <div class="form-row"><label>Category</label>
+                <select id="cms-category" onchange="cmsFieldChanged()">
+                  <option>Phones &amp; Electronics</option><option>Fashion &amp; boutique</option><option>Food &amp; beverage</option>
+                </select>
+              </div>
+              <div class="form-row"><label>Unit / Location</label><input id="cms-location" value="Ground Floor · G-14" oninput="cmsFieldChanged()"></div>
+            </div>
+            <div class="form-row"><label>Storefront description</label><textarea id="cms-desc" oninput="cmsFieldChanged()">Genuine phones, laptops and accessories with warranty on every device. New stock arrives weekly, including the latest smartphone releases.</textarea></div>
+            <div class="form-2col">
+              <div class="form-row"><label>Opening hours</label><input id="cms-hours" value="7:00 AM – 9:00 PM, daily" oninput="cmsFieldChanged()"></div>
+              <div class="form-row"><label>Contact / MoMo number</label><input id="cms-contact" value="+250 78• ••• 214" oninput="cmsFieldChanged()"></div>
+            </div>
+
+            <div style="margin-top:6px;border-top:1px solid var(--cream-100);">
+              <div class="toggle-row"><div><div class="t-label">Listed on mall guide navigation</div><div class="t-hint">Shows up when customers search or browse the floor map</div></div><div class="switch on" onclick="cmsFieldChanged()"><div class="knob"></div></div></div>
+              <div class="toggle-row"><div><div class="t-label">Available for yoDeals delivery</div><div class="t-hint">Enables riders to pick up online orders from this storefront</div></div><div class="switch on" onclick="cmsFieldChanged()"><div class="knob"></div></div></div>
+              <div class="toggle-row"><div><div class="t-label">Running a promotion</div><div class="t-hint">Feature this shop on the mall guide's deals banner</div></div><div class="switch" onclick="cmsFieldChanged()"><div class="knob"></div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div class="p-cover"><div class="p-cat cms-live-cat">Phones &amp; Electronics</div></div>
+              <div class="p-shop-card">
+                <div class="p-shop-name cms-live-name">Nyabugogo TechHub</div>
+                <div class="p-shop-loc cms-live-loc">Ground Floor · G-14</div>
+                <div class="p-status-pill">● Open now</div>
+              </div>
+              <div class="p-body">
+                <div class="p-sec-title" style="margin-top:12px;">About</div>
+                <div class="cms-live-desc" style="font-size:10.5px;color:var(--ink-600);line-height:1.6;">Genuine phones, laptops and accessories with warranty on every device. New stock arrives weekly, including the latest smartphone releases.</div>
+                <div class="p-sec-title" style="margin-top:14px;">Hours</div>
+                <div class="cms-live-hours" style="font-size:10.5px;color:var(--ink-600);">7:00 AM – 9:00 PM, daily</div>
+              </div>
+              <div class="p-nav"><div class="ni"></div><div class="ni"></div><div class="ni"></div><div class="ni"></div></div>
+            </div>
+          </div>
+          <div class="phone-caption">Live preview — Mall Guide customer app</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ POST TO YODEALS ============ -->
+    <div class="view" id="view-yodeals">
+      <div class="section-title">
+        <div>
+          <h2>Post to yoDeals</h2>
+          <div class="hint op-only">Special offers and discounts for <b>Nyabugogo TechHub</b> — shown in the yoDeals app, not a full product catalogue</div>
+          <div class="hint tn-block">Post special offers and discounts — yoDeals shows deals only, not your full product catalogue</div>
+        </div>
+        <button class="btn ghost" onclick="openCmsPreview()">Preview</button>
+      </div>
+
+      <div class="cms-grid">
+        <div class="card">
+          <div class="card-body" style="padding-top:18px;">
+            <div class="form-row">
+              <label style="display:flex;justify-content:space-between;align-items:center;">Deals &amp; special offers <span class="link-btn" onclick="openDealWizard()">+ Post a new deal</span></label>
+              <div id="cms-deal-list">
+    <div class="deal-item" style="border-left-color:#8B5CF6;">
+      <div class="thumb" style="background:transparent;"><img src="data:image/jpeg;base64,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" alt="30% off Wireless Earbuds"></div>
+      <div style="flex:1;">
+        <div class="d-headline">30% off Wireless Earbuds <span class="tag" style="background:#8B5CF6;color:#fff;">-30%</span></div>
+        <div class="d-sub">Valid until 2026-08-15 · <span class="badge paid">Live on yoDeals</span></div>
+      </div>
+      <button class="tag p-tag-btn" style="background:var(--forest-100);color:var(--forest-700);" onclick="cmsToggleDealLive(1)">Live</button>
+      <button class="p-remove" onclick="cmsRemoveDeal(1)" title="Remove">✕</button>
+    </div>
+    <div class="deal-item" style="border-left-color:#F5720A;">
+      <div class="thumb" style="background:#F5720A22;">🏷️</div>
+      <div style="flex:1;">
+        <div class="d-headline">Buy a Power Bank, get a free cable <span class="tag" style="background:#F5720A;color:#fff;">BOGO</span></div>
+        <div class="d-sub">No expiry set · <span class="badge due">Pending review</span></div>
+      </div>
+      <button class="tag p-tag-btn" style="background:var(--forest-100);color:var(--forest-700);" onclick="cmsToggleDealLive(2)">Live</button>
+      <button class="p-remove" onclick="cmsRemoveDeal(2)" title="Remove">✕</button>
+    </div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phone-wrap">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="phone-notch"></div>
+              <div class="p-cover"><div class="p-cat cms-live-cat">Phones &amp; Electronics</div></div>
+              <div class="p-shop-card">
+                <div class="p-shop-name cms-live-name">Nyabugogo TechHub</div>
+                <div class="p-shop-loc cms-live-loc">Ground Floor · G-14</div>
+                <div class="p-status-pill">● Open now</div>
+              </div>
+              <div class="p-body">
+                <div class="p-sec-title" style="margin-top:12px;">Deals on yoDeals</div>
+                <div class="cms-live-deals">
+      <div class="p-deal-card" style="border-left-color:#8B5CF6;">
+        <div class="pd-eyebrow" style="color:#8B5CF6;">Deal</div>
+        <div class="pd-headline">30% off Wireless Earbuds</div>
+        <div class="pd-details">This week only — while stocks last.</div>
+        <div class="pd-badge" style="background:#8B5CF6;">-30%</div>
+      </div></div>
+              </div>
+              <div class="p-nav"><div class="ni"></div><div class="ni"></div><div class="ni"></div><div class="ni"></div></div>
+            </div>
+          </div>
+          <div class="phone-caption">Live preview — Mall Guide customer app</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MALL GUIDE CONTENT ============ -->
+    <div class="view" id="view-guide">
+      <div class="section-title"><div><h2>Mall Guide Content</h2><div class="hint">General wayfinding, amenities and announcements shown to customers navigating the mall</div></div><button class="btn primary" onclick="openAnnouncementModal()">+ New announcement</button></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head"><h3>Amenities &amp; wayfinding</h3><button class="link-btn" onclick="openAmenityModal()">+ Add amenity</button></div>
+          <div class="card-body" id="amenity-list">
+    <div class="amenity-row">
+      <div class="amenity-left"><div class="amenity-ic">🅿️</div><div><div class="amenity-name">Parking — Basement</div><div class="amenity-sub">120 bays · entrance off KN 3 Ave</div></div></div>
+      <button class="btn ghost" onclick="openAmenityModal(1)">Edit</button>
+    </div>
+    <div class="amenity-row">
+      <div class="amenity-left"><div class="amenity-ic">🛗</div><div><div class="amenity-name">Elevators &amp; escalators</div><div class="amenity-sub">2 lifts, 2 escalator banks — all floors</div></div></div>
+      <button class="btn ghost" onclick="openAmenityModal(2)">Edit</button>
+    </div>
+    <div class="amenity-row">
+      <div class="amenity-left"><div class="amenity-ic">🚻</div><div><div class="amenity-name">Restrooms</div><div class="amenity-sub">Ground &amp; 2nd floor, near east wing</div></div></div>
+      <button class="btn ghost" onclick="openAmenityModal(3)">Edit</button>
+    </div>
+    <div class="amenity-row">
+      <div class="amenity-left"><div class="amenity-ic">ℹ️</div><div><div class="amenity-name">Information desk</div><div class="amenity-sub">Ground floor, main atrium</div></div></div>
+      <button class="btn ghost" onclick="openAmenityModal(4)">Edit</button>
+    </div></div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><h3>Live announcements</h3></div>
+          <div class="card-body" id="announcement-list">
+    <div class="announce-card">
+      <div><div class="a-title">Weekend market — Northern Province cooperatives</div><div class="a-body">Pop-up stalls in the atrium, Sat–Sun.</div><div class="a-meta">Live · expires 8/1/2026</div></div>
+      <button class="btn ghost" onclick="openAnnouncementModal(1)">Edit</button>
+    </div>
+    <div class="announce-card">
+      <div><div class="a-title">Elevator B under maintenance</div><div class="a-body">Use elevator A or the east escalator until further notice.</div><div class="a-meta">Live · no end date</div></div>
+      <button class="btn ghost" onclick="openAnnouncementModal(2)">Edit</button>
+    </div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TENANT HANDBOOK (shared: tenant view-only, landlord/admin edit) ============ -->
+    <div class="view" id="view-handbook">
+      <div class="section-title"><div><h2>Tenant Handbook</h2><div class="hint">Building operating rules that apply to every tenant</div></div><button class="btn primary op-only" onclick="openHandbookModal()">+ Add section</button></div>
+      <div class="card">
+        <div class="card-body" id="handbook-list"></div>
+      </div>
+    </div>
+
+    <!-- ============ LEASE RENEWALS ============ -->
+    <div class="view" id="view-renewals">
+      <div class="section-title"><div><h2>Lease Renewals</h2><div class="hint">Upcoming lease expirations, soonest first</div></div></div>
+      <div class="kpi-row" style="grid-template-columns:repeat(3,1fr);">
+        <div class="kpi"><div class="k-label">Expiring within 30 days</div><div class="k-value" id="renewal-kpi-30">6</div><div class="k-delta down">Act soon</div></div>
+        <div class="kpi"><div class="k-label">Expiring within 90 days</div><div class="k-value" id="renewal-kpi-90">7</div><div class="k-delta flat">Plan ahead</div></div>
+        <div class="kpi"><div class="k-label">Total active leases</div><div class="k-value" id="renewal-kpi-total">7</div><div class="k-delta flat">across the building</div></div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h3>Renewal timeline</h3><div class="hint" style="margin-top:0">Sorted by soonest expiry</div></div>
+        <div class="card-body" id="renewal-list"><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">CB</div>
+      <div><div class="rr-name">Coko Bookshop</div><div class="rr-sub">Unit G-10 · lease ends 11/1/2023 (-1007 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Coko Bookshop&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">ME</div>
+      <div><div class="rr-name">Muraho Electronics</div><div class="rr-sub">Unit G-04 · lease ends 3/10/2024 (-877 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Muraho Electronics&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">IS</div>
+      <div><div class="rr-name">Ikirenga Salon</div><div class="rr-sub">Unit G-05 · lease ends 1/20/2025 (-561 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Ikirenga Salon&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">CU</div>
+      <div><div class="rr-name">Café Umurava</div><div class="rr-sub">Unit 2F-02 · lease ends 9/1/2025 (-337 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Café Umurava&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">ZP</div>
+      <div><div class="rr-name">Zamu Phone Repair</div><div class="rr-sub">Unit G-09 · lease ends 2/5/2026 (-180 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Zamu Phone Repair&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">AB</div>
+      <div><div class="rr-name">Amasezerano Boutique</div><div class="rr-sub">Unit 1F-06 · lease ends 6/15/2026 (-50 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge overdue">Expiring soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Amasezerano Boutique&#39;)">Mark renewed</button>
+      </div>
+    </div><div class="renewal-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">NT</div>
+      <div><div class="rr-name">Nyabugogo TechHub</div><div class="rr-sub">Unit G-14 · lease ends 11/1/2026 (89 days)</div></div>
+      <div class="rr-actions">
+        <span class="badge due">Renew soon</span>
+        <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="tmMarkRenewed(&#39;Nyabugogo TechHub&#39;)">Mark renewed</button>
+      </div>
+    </div></div>
+      </div>
+    </div>
+
+    <!-- ============ REPORTS ============ -->
+    <div class="view" id="view-reports">
+      <div class="section-title"><div><h2>Reports</h2><div class="hint">Export your building's data for your own records, accountant, or investors</div></div></div>
+      <div class="card">
+        <div class="card-body" style="padding-top:18px;">
+          <div class="report-card">
+            <div class="report-ic">☰</div>
+            <div style="flex:1;"><div class="rc-name">Tenant Directory</div><div class="rc-sub">All tenants, units, categories, plans, contact info</div></div>
+            <button class="btn ghost" onclick="exportTenantsCSV()">⬇ Download CSV</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ic">🔧</div>
+            <div style="flex:1;"><div class="rc-name">Maintenance Requests</div><div class="rc-sub">All requests and tasks with status and dates</div></div>
+            <button class="btn ghost" onclick="exportMaintenanceCSV()">⬇ Download CSV</button>
+          </div>
+          <div class="report-card">
+            <div class="report-ic">▦</div>
+            <div style="flex:1;"><div class="rc-name">Occupancy Summary</div><div class="rc-sub">Unit-by-unit occupancy and rent status</div></div>
+            <button class="btn ghost" onclick="exportOccupancyCSV()">⬇ Download CSV</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ TEAM ============ -->
+    <div class="view" id="view-team">
+      <div class="section-title"><div><h2>Team</h2><div class="hint">People with access to manage this building's dashboard</div></div><button class="btn primary" onclick="openInviteTeamModal()">+ Invite team member</button></div>
+      <div class="card">
+        <div class="card-body" id="team-list">
+    <div class="team-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">SK</div>
+      <div style="flex:1;"><div class="tr-name">Shema Katende <span class="tag">Owner</span></div><div class="tr-sub">shema@edupoto.rw · Owner — full access</div></div>
+      
+    </div>
+    <div class="team-row">
+      <div class="tm-avatar" style="width:36px;height:36px;font-size:12px;">CM</div>
+      <div style="flex:1;"><div class="tr-name">Claudine Mukamana</div><div class="tr-sub">claudine@edupoto.rw · Manager — full access</div></div>
+      <button class="btn ghost" style="padding:6px 10px;font-size:11px;color:var(--red-500);border-color:var(--red-100);" onclick="removeTeamMember(2)">Remove</button>
+    </div></div>
+      </div>
+    </div>
+
+    <!-- ============ DOCUMENTS ============ -->
+    <div class="view" id="view-documents">
+      <div class="section-title"><div><h2>Documents</h2><div class="hint">Compliance certificates and building documents</div></div><button class="btn primary" onclick="openUploadDocModal()">+ Upload document</button></div>
+      <div class="card">
+        <div class="card-body" id="document-list">
+    <div class="doc-row">
+      <div class="tm-doc-ic">📄</div>
+      <div style="flex:1;"><div class="dr-name">Property Insurance Policy</div><div class="dr-sub">Insurance · expires 1/15/2027 · uploaded 1440 hrs ago</div></div>
+      <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="downloadBuildingDoc(1)">⬇ Download</button>
+    </div>
+    <div class="doc-row">
+      <div class="tm-doc-ic">📄</div>
+      <div style="flex:1;"><div class="dr-name">Fire Safety Inspection Certificate</div><div class="dr-sub">Safety &amp; Compliance · expires 12/1/2026 · uploaded 2880 hrs ago</div></div>
+      <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="downloadBuildingDoc(2)">⬇ Download</button>
+    </div>
+    <div class="doc-row">
+      <div class="tm-doc-ic">📄</div>
+      <div style="flex:1;"><div class="dr-name">Business Operating License</div><div class="dr-sub">Business License · uploaded 4800 hrs ago</div></div>
+      <button class="btn ghost" style="padding:6px 10px;font-size:11px;" onclick="downloadBuildingDoc(3)">⬇ Download</button>
+    </div></div>
+      </div>
+    </div>
+
+    <!-- ============ RENT & PAYMENTS ============ -->
+    <div class="view" id="view-rent">
+      <div class="section-title"><div><h2>Rent &amp; Payments</h2><div class="hint">yoMall advances full rent to the landlord; tenants repay on a daily or weekly plan</div></div><button class="btn primary" id="run-payout-btn" onclick="openLandlordPayoutModal()" style="opacity: 1;">Run landlord payout</button></div>
+
+      <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi"><div class="k-label">Advanced to landlord (July)</div><div class="k-value mono" id="landlord-advanced-kpi">RWF 18.6M</div><div class="k-delta flat" id="landlord-advanced-delta">Paid in full on the 1st</div></div>
+        <div class="kpi"><div class="k-label">Recovered from tenants</div><div class="k-value mono">RWF 14.1M</div><div class="k-delta up">76% recovered so far</div></div>
+        <div class="kpi"><div class="k-label">Outstanding balance</div><div class="k-value mono">RWF 4.5M</div><div class="k-delta down">5 tenants overdue</div></div>
+        <div class="kpi"><div class="k-label">On daily vs weekly plan</div><div class="k-value">29 / 13</div><div class="k-delta flat">tenants by plan type</div></div>
+      </div>
+
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-head"><h3>Repayment ledger</h3><div class="hint" style="margin-top:0">Grouped by tenant · this month</div></div>
+        <div class="card-body" style="padding-top:16px;">
+          <table>
+            <thead><tr><th>Tenant</th><th>Plan</th><th>Per-period amount</th><th>Progress</th><th>Balance</th><th>Next due</th><th>Status</th></tr></thead>
+            <tbody id="ledger-table">
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">NT</div><div><div class="tname">Nyabugogo TechHub</div><div class="tunit">G-14</div></div></div></td>
+    <td><span class="freq-pill daily">Daily</span></td>
+    <td class="mono">RWF 15,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:62%;"></div></div><span style="font-size:11px;color:var(--ink-400);">62%</span></div></td>
+    <td class="mono">RWF 57,000</td>
+    <td style="font-size:12px;">Tomorrow</td>
+    <td><span class="badge overdue">Overdue</span></td>
+  </tr>
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">AB</div><div><div class="tname">Amasezerano Boutique</div><div class="tunit">1F-06</div></div></div></td>
+    <td><span class="freq-pill weekly">Weekly</span></td>
+    <td class="mono">RWF 180,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:80%;"></div></div><span style="font-size:11px;color:var(--ink-400);">80%</span></div></td>
+    <td class="mono">RWF 144,000</td>
+    <td style="font-size:12px;">Fri 24 Jul</td>
+    <td><span class="badge due">Due soon</span></td>
+  </tr>
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">ME</div><div><div class="tname">Muraho Electronics</div><div class="tunit">G-04</div></div></div></td>
+    <td><span class="freq-pill weekly">Weekly</span></td>
+    <td class="mono">RWF 260,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:100%;"></div></div><span style="font-size:11px;color:var(--ink-400);">100%</span></div></td>
+    <td class="mono">—</td>
+    <td style="font-size:12px;">Fri 24 Jul</td>
+    <td><span class="badge paid">Settled</span></td>
+  </tr>
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">IS</div><div><div class="tname">Ikirenga Salon</div><div class="tunit">G-05</div></div></div></td>
+    <td><span class="freq-pill daily">Daily</span></td>
+    <td class="mono">RWF 12,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:70%;"></div></div><span style="font-size:11px;color:var(--ink-400);">70%</span></div></td>
+    <td class="mono">RWF 36,000</td>
+    <td style="font-size:12px;">Today</td>
+    <td><span class="badge due">Due soon</span></td>
+  </tr>
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">ZP</div><div><div class="tname">Zamu Phone Repair</div><div class="tunit">G-09</div></div></div></td>
+    <td><span class="freq-pill daily">Daily</span></td>
+    <td class="mono">RWF 18,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:40%;"></div></div><span style="font-size:11px;color:var(--ink-400);">40%</span></div></td>
+    <td class="mono">RWF 108,000</td>
+    <td style="font-size:12px;">Overdue 4d</td>
+    <td><span class="badge overdue">Overdue</span></td>
+  </tr>
+  <tr class="rowhover">
+    <td><div class="cell-tenant"><div class="avatar-sm">CB</div><div><div class="tname">Coko Bookshop</div><div class="tunit">G-10</div></div></div></td>
+    <td><span class="freq-pill weekly">Weekly</span></td>
+    <td class="mono">RWF 150,000</td>
+    <td><div style="display:flex;align-items:center;gap:8px;"><div class="progress"><div class="fill" style="width:100%;"></div></div><span style="font-size:11px;color:var(--ink-400);">100%</span></div></td>
+    <td class="mono">—</td>
+    <td style="font-size:12px;">Fri 24 Jul</td>
+    <td><span class="badge paid">Settled</span></td>
+  </tr></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Payout history</h3><div class="hint" style="margin-top:0">Every disbursement run to your bank account</div></div>
+        <div class="card-body" style="padding-top:16px;">
+          <table>
+            <thead><tr><th>Reference</th><th>Date</th><th>Amount</th><th>Destination</th><th>Status</th></tr></thead>
+            <tbody id="payout-history-table">
+    <tr><td class="mono">PO-88231</td><td>7/8/2026</td><td class="mono">RWF 18,600,000</td><td>Bank of Kigali •••• 4471</td><td><span class="badge paid">Paid</span></td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ DELIVERIES & SALES ============ -->
+    <div class="view" id="view-deliveries">
+      <div class="section-title"><div><h2>Deliveries &amp; yoDeals Sales</h2><div class="hint">Live monitor of online orders placed against tenant storefronts</div></div></div>
+
+      <div class="kpi-row" style="grid-template-columns:repeat(4,1fr);">
+        <div class="kpi"><div class="k-label">Orders today</div><div class="k-value">86</div><div class="k-delta up">▲ 9% vs yesterday</div></div>
+        <div class="kpi"><div class="k-label">Online sales today</div><div class="k-value mono">RWF 2.1M</div><div class="k-delta up">Across 27 storefronts</div></div>
+        <div class="kpi"><div class="k-label">Avg delivery time</div><div class="k-value">27 min</div><div class="k-delta flat">yoDeals riders</div></div>
+        <div class="kpi"><div class="k-label">In transit now</div><div class="k-value">18</div><div class="k-delta flat">live riders on the map</div></div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h3>Live orders</h3></div>
+        <div class="card-body" style="padding-top:16px;">
+          <table>
+            <thead><tr><th>Order</th><th>Storefront</th><th>Item(s)</th><th>Rider</th><th>Status</th><th>Value</th><th>Placed</th></tr></thead>
+            <tbody id="orders-table">
+  <tr class="rowhover">
+    <td class="mono">#YD-3391</td>
+    <td>Nyabugogo TechHub</td>
+    <td style="color:var(--ink-600);">Earbuds, charger, speaker</td>
+    <td>E. Niyonzima</td>
+    <td><span class="badge transit">In transit</span></td>
+    <td class="mono">RWF 52,000</td>
+    <td style="font-size:11.5px;color:var(--ink-400);">3 min ago</td>
+  </tr>
+  <tr class="rowhover">
+    <td class="mono">#YD-3390</td>
+    <td>Café Umurava</td>
+    <td style="color:var(--ink-600);">2x Cappuccino, muffin</td>
+    <td>J. Uwase</td>
+    <td><span class="badge delivered">Delivered</span></td>
+    <td class="mono">RWF 5,200</td>
+    <td style="font-size:11.5px;color:var(--ink-400);">12 min ago</td>
+  </tr>
+  <tr class="rowhover">
+    <td class="mono">#YD-3389</td>
+    <td>Muraho Electronics</td>
+    <td style="color:var(--ink-600);">Phone charger</td>
+    <td>—</td>
+    <td><span class="badge transit">In transit</span></td>
+    <td class="mono">RWF 9,000</td>
+    <td style="font-size:11.5px;color:var(--ink-400);">14 min ago</td>
+  </tr>
+  <tr class="rowhover">
+    <td class="mono">#YD-3388</td>
+    <td>Ikirenga Salon</td>
+    <td style="color:var(--ink-600);">Home braiding booking</td>
+    <td>D. Habimana</td>
+    <td><span class="badge delivered">Delivered</span></td>
+    <td class="mono">RWF 12,000</td>
+    <td style="font-size:11.5px;color:var(--ink-400);">29 min ago</td>
+  </tr>
+  <tr class="rowhover">
+    <td class="mono">#YD-3387</td>
+    <td>Coko Bookshop</td>
+    <td style="color:var(--ink-600);">Notebook set</td>
+    <td>E. Niyonzima</td>
+    <td><span class="badge transit">In transit</span></td>
+    <td class="mono">RWF 4,800</td>
+    <td style="font-size:11.5px;color:var(--ink-400);">33 min ago</td>
+  </tr></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ MAINTENANCE & SUPPORT ============ -->
+    <div class="view" id="view-staff">
+      <div class="section-title"><div><h2>Maintenance &amp; Support Directory</h2><div class="hint">On-call staff tenants can request directly from their app</div></div><button class="btn primary op-only">+ Add staff member</button><button class="btn primary tn-block" onclick="openMaintRequestModal()">+ New repair request</button></div>
+
+      <div class="tn-block" style="margin-bottom:22px;">
+        <div class="section-title"><div><h3 style="margin:0;font-size:15px;">My requests</h3><div class="hint">Track your repair requests through to completion</div></div></div>
+        <div class="card">
+          <div class="card-body" style="padding-top:16px;" id="maint-request-list">
+    <div class="maint-req-row" onclick="openMaintDetail(&#39;MR-2201&#39;)">
+      <div class="mr-ic">🔧</div>
+      <div style="flex:1;">
+        <div class="mr-title">HVAC / Air conditioning <span class="mono" style="font-weight:500;color:var(--ink-400);font-size:10.5px;">#MR-2201</span></div>
+        <div class="mr-sub">Claudine Ingabire · 3 hrs ago · <span style="color:var(--red-500);font-weight:700;">Urgent</span></div>
+      </div>
+      <span class="badge preparing">Work in progress</span>
+    </div>
+    <div class="maint-req-row" onclick="openMaintDetail(&#39;MR-2196&#39;)">
+      <div class="mr-ic">🔧</div>
+      <div style="flex:1;">
+        <div class="mr-title">Electrical <span class="mono" style="font-weight:500;color:var(--ink-400);font-size:10.5px;">#MR-2196</span></div>
+        <div class="mr-sub">Eugene Niyonzima · 48 hrs ago</div>
+      </div>
+      <span class="badge paid">Completed</span>
+    </div></div>
+        </div>
+      </div>
+
+      <div class="op-only" style="margin-bottom:22px;">
+        <div class="section-title"><div><h3 style="margin:0;font-size:15px;">Assigned tasks</h3><div class="hint">Tasks you've dispatched to staff, tracked through to completion</div></div></div>
+        <div class="card">
+          <div class="card-body" style="padding-top:16px;" id="assigned-task-list"><div class="maint-req-empty">No tasks assigned yet — use "Assign task" on any staff card.</div></div>
+        </div>
+      </div>
+
+      <div class="staff-grid" id="staff-grid">
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">EN</div>
+      <div><div class="staff-name">Eugene Niyonzima</div><div class="staff-role">Electrician</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--forest-500)"></span>Available</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Eugene Niyonzima&quot;, &quot;Electrician&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Eugene Niyonzima&quot;, &quot;Electrician&quot;)">Request repair</button></div>
+  </div>
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">JU</div>
+      <div><div class="staff-name">Jeanne Uwase</div><div class="staff-role">Cleaning supervisor</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--forest-500)"></span>On duty</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Jeanne Uwase&quot;, &quot;Cleaning supervisor&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Jeanne Uwase&quot;, &quot;Cleaning supervisor&quot;)">Request repair</button></div>
+  </div>
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">DH</div>
+      <div><div class="staff-name">Didier Habimana</div><div class="staff-role">Plumber</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--amber-500)"></span>Busy — G-09</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Didier Habimana&quot;, &quot;Plumber&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Didier Habimana&quot;, &quot;Plumber&quot;)">Request repair</button></div>
+  </div>
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">AM</div>
+      <div><div class="staff-name">Aline Mukamana</div><div class="staff-role">Security lead</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--forest-500)"></span>On duty</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Aline Mukamana&quot;, &quot;Security lead&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Aline Mukamana&quot;, &quot;Security lead&quot;)">Request repair</button></div>
+  </div>
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">PN</div>
+      <div><div class="staff-name">Patrick Ndayisenga</div><div class="staff-role">IT / POS support</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--forest-500)"></span>Available</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Patrick Ndayisenga&quot;, &quot;IT / POS support&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Patrick Ndayisenga&quot;, &quot;IT / POS support&quot;)">Request repair</button></div>
+  </div>
+  <div class="staff-card">
+    <div class="staff-top">
+      <div class="staff-av">CI</div>
+      <div><div class="staff-name">Claudine Ingabire</div><div class="staff-role">HVAC technician</div></div>
+    </div>
+    <div class="staff-status"><span class="sdot" style="background:var(--ink-400)"></span>Off shift</div>
+    <div class="staff-foot"><button class="btn ghost">Call</button><button class="btn primary op-only" onclick="openAssignTaskModal(&quot;Claudine Ingabire&quot;, &quot;HVAC technician&quot;)">Assign task</button><button class="btn primary tn-block" style="flex:1;" onclick="openMaintRequestModal(&quot;Claudine Ingabire&quot;, &quot;HVAC technician&quot;)">Request repair</button></div>
+  </div></div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /#app-shell -->
+
+<!-- ================= TOP-UP / REPAYMENT MODAL ================= -->
+<div class="modal-overlay" id="pm-overlay">
+  <div class="payment-modal">
+    <div class="pm-head">
+      <div class="pm-head-left">
+        <button class="pm-back" id="pm-back-btn" onclick="pmBack()" style="display:none;">←</button>
+        <div class="pm-title" id="pm-title">Top up wallet</div>
+      </div>
+      <button class="pm-close" onclick="closePaymentModal()">✕</button>
+    </div>
+
+    <div class="pm-body">
+
+      <!-- Step 1: amount -->
+      <div class="pm-step active" data-step="amount">
+        <div class="pm-context"><span id="pm-context-label">Topping up</span><b id="pm-context-value">yoMall Wallet</b></div>
+        <div class="amount-display"><span class="cur">RWF</span><input id="pm-amount-input" inputmode="numeric" value="10,000" onfocus="this.select()" oninput="pmAmountTyped()"></div>
+        <div class="chip-row" id="pm-chip-row"></div>
+        <button class="pm-btn" onclick="pmGoMethod()">Continue →</button>
+      </div>
+
+      <!-- Step 2: method -->
+      <div class="pm-step" data-step="method">
+        <div class="pm-context"><span>Amount</span><b id="pm-method-amount">RWF 10,000</b></div>
+        <div id="pm-method-list"></div>
+        <button class="pm-btn" onclick="pmGoConfirm()">Continue →</button>
+      </div>
+
+      <!-- Step 3: confirm -->
+      <div class="pm-step" data-step="confirm">
+        <div class="pm-summary">
+          <div class="sr"><span>Amount</span><b id="pm-conf-amount">RWF 10,000</b></div>
+          <div class="sr"><span>Paying with</span><b id="pm-conf-method">MTN MoMo •••• 214</b></div>
+          <div class="sr"><span>Fee</span><b>RWF 0</b></div>
+          <div class="sr total"><span id="pm-conf-to-label">To yoMall Wallet</span><b id="pm-conf-total">RWF 10,000</b></div>
+        </div>
+        <button class="pm-btn" onclick="pmGoPin()">Confirm &amp; pay →</button>
+        <button class="pm-btn ghost3" onclick="pmBack()">← Back</button>
+      </div>
+
+      <!-- Step 4: PIN -->
+      <div class="pm-step" data-step="pin">
+        <div class="pin-hint">Enter your Mobile Money PIN to authorize</div>
+        <div class="pin-phone" id="pm-pin-phone">+250 78• ••• 214</div>
+        <div class="pin-dots" id="pm-pin-dots">
+          <div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div><div class="pin-dot"></div>
+        </div>
+        <div class="keypad" id="pm-keypad"></div>
+      </div>
+
+      <!-- Step 5: processing -->
+      <div class="pm-step" data-step="processing">
+        <div class="pm-processing">
+          <div class="spinner"></div>
+          <div class="proc-title">Processing your payment…</div>
+          <div class="proc-sub" id="pm-proc-sub">Confirm the prompt on your phone if asked.</div>
+        </div>
+      </div>
+
+      <!-- Step 6: success -->
+      <div class="pm-step" data-step="success">
+        <div class="pm-success">
+          <div class="success-check">✓</div>
+          <div class="suc-title" id="pm-success-title">Wallet topped up</div>
+          <div class="suc-amount" id="pm-success-amount">RWF 10,000</div>
+          <div class="suc-sub" id="pm-success-sub">Added to your yoMall wallet.</div>
+          <div class="receipt">
+            <div class="rr"><span>Reference</span><b id="pm-receipt-ref">YM-849213</b></div>
+            <div class="rr"><span>Date</span><b>19 Jul 2026, 14:32</b></div>
+            <div class="rr"><span>Method</span><b id="pm-receipt-method">MTN MoMo •••• 214</b></div>
+          </div>
+        </div>
+        <button class="pm-btn" onclick="closePaymentModal()">Done</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= TENANT ONBOARDING MODAL ================= -->
+<div class="modal-overlay" id="ob-overlay">
+  <div class="onboard-modal">
+    <div class="pm-head">
+      <div class="pm-head-left">
+        <button class="pm-back" id="ob-back-btn" onclick="obBack()" style="display:none;">←</button>
+        <div class="pm-title">Onboard a new tenant</div>
+      </div>
+      <button class="pm-close" onclick="closeOnboardModal()">✕</button>
+    </div>
+
+    <div class="ob-stepper" id="ob-stepper">
+      <div class="ob-step-item active" data-n="1"><div class="ob-step-circle">1</div><div class="ob-step-label">Tenant</div></div>
+      <div class="ob-step-item" data-n="2"><div class="ob-step-circle">2</div><div class="ob-step-label">Unit</div></div>
+      <div class="ob-step-item" data-n="3"><div class="ob-step-circle">3</div><div class="ob-step-label">Rent plan</div></div>
+      <div class="ob-step-item" data-n="4"><div class="ob-step-circle">4</div><div class="ob-step-label">Storefront</div></div>
+      <div class="ob-step-item" data-n="5"><div class="ob-step-circle">5</div><div class="ob-step-label">Review</div></div>
+    </div>
+
+    <div class="ob-body">
+
+      <!-- Step 1: Tenant details -->
+      <div class="ob-step-panel active" data-step="1">
+        <h4>Who's moving in?</h4>
+        <div class="ob-sub">Basic shop and contact details</div>
+        <div class="form-row"><label>Shop name</label><input id="ob-shopname" placeholder="e.g. Nyabugogo TechHub"></div>
+        <div class="form-2col">
+          <div class="form-row"><label>Category</label>
+            <select id="ob-category">
+              <option>Grocery</option><option>Fashion &amp; boutique</option><option>Electronics</option>
+              <option>Food &amp; beverage</option><option>Beauty</option><option>Books &amp; stationery</option>
+              <option>Services</option><option>Other</option>
+            </select>
+          </div>
+          <div class="form-row"><label>Owner full name</label><input id="ob-owner" placeholder="e.g. Aline Uwera"></div>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Phone (MoMo number)</label><input id="ob-phone" placeholder="+250 78• ••• •••"></div>
+          <div class="form-row"><label>Email</label><input id="ob-email" placeholder="shop@example.com"></div>
+        </div>
+      </div>
+
+      <!-- Step 2: Unit & lease -->
+      <div class="ob-step-panel" data-step="2">
+        <h4>Assign a unit</h4>
+        <div class="ob-sub">Only vacant units can be selected — click one to assign it</div>
+        <div class="ob-unit-picker">
+          <div class="floor-tabs" id="ob-floor-tabs">
+            <button class="ob-ftab active" data-obfloor="G">Ground</button>
+            <button class="ob-ftab" data-obfloor="1">Floor 1</button>
+            <button class="ob-ftab" data-obfloor="2">Floor 2</button>
+          </div>
+          <div class="ob-unit-grid" id="ob-unit-grid"></div>
+          <div class="ob-selected-unit" id="ob-selected-unit"></div>
+        </div>
+        <div class="form-2col" style="margin-top:14px;">
+          <div class="form-row"><label>Monthly rent</label><input id="ob-rent" value="RWF 450,000"></div>
+          <div class="form-row"><label>Lease start date</label><input id="ob-lease-date" type="date" value="2026-07-20"></div>
+        </div>
+      </div>
+
+      <!-- Step 3: Rent plan -->
+      <div class="ob-step-panel" data-step="3">
+        <h4>How will they pay rent?</h4>
+        <div class="ob-sub">Same two options every tenant gets on their own dashboard</div>
+        <div class="ob-plan-grid">
+          <div class="method-card selected" id="ob-card-advance" onclick="obSelectPlan(&#39;advance&#39;)">
+            <div class="mc-top"><div class="mc-ic">💸</div></div>
+            <div class="mc-title">rentAdvance</div>
+            <div class="mc-desc">yoMall pays the landlord in full today; tenant repays daily or weekly.</div>
+          </div>
+          <div class="method-card" id="ob-card-wallet" onclick="obSelectPlan(&#39;wallet&#39;)">
+            <div class="mc-top"><div class="mc-ic">👛</div></div>
+            <div class="mc-title">Wallet auto-save</div>
+            <div class="mc-desc">Tenant deposits daily into a wallet, auto-disbursed to the landlord.</div>
+          </div>
+        </div>
+
+        <div class="ob-sub-panel active" id="ob-panel-advance">
+          <div class="form-row"><label>Advance amount</label><input id="ob-adv-amount" value="RWF 450,000"></div>
+          <div class="form-row">
+            <label>Repayment frequency</label>
+            <div class="freq-select">
+              <div class="fo selected" data-obfreq="daily" onclick="obSelectFreq(this)">Daily</div>
+              <div class="fo" data-obfreq="weekly" onclick="obSelectFreq(this)">Weekly</div>
+            </div>
+          </div>
+          <div class="ob-calc-note" id="ob-calc-note">≈ RWF 15,000 / day over 30 days</div>
+          <div class="ob-calc-note" style="margin-top:4px;">rentAdvance terms cannot exceed 30 days</div>
+        </div>
+        <div class="ob-sub-panel" id="ob-panel-wallet">
+          <div class="form-2col">
+            <div class="form-row"><label>Target deposit amount</label><input id="ob-wallet-amount" value="RWF 12,000"></div>
+            <div class="form-row"><label>Frequency</label>
+              <select id="ob-wallet-freq"><option>Daily</option><option>Weekly</option></select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Step 4: Storefront -->
+      <div class="ob-step-panel" data-step="4">
+        <h4>Set up their storefront</h4>
+        <div class="ob-sub">This is what appears on the mall guide customer app — can be refined later</div>
+        <div class="form-row"><label>Storefront description</label><textarea id="ob-desc" placeholder="A short line about what this shop sells...">Fresh, locally-sourced goods with same-day restocking.</textarea></div>
+        <div class="form-row"><label>Opening hours</label><input id="ob-hours" value="8:00 AM – 8:00 PM, daily"></div>
+        <div style="border-top:1px solid var(--cream-100);margin-top:4px;">
+          <div class="toggle-row"><div><div class="t-label">List on mall guide navigation</div><div class="t-hint">Shows up when customers browse or search the floor map</div></div><div class="switch on"><div class="knob"></div></div></div>
+          <div class="toggle-row"><div><div class="t-label">Enable yoDeals delivery</div><div class="t-hint">Allow riders to pick up online orders from this storefront</div></div><div class="switch on"><div class="knob"></div></div></div>
+        </div>
+      </div>
+
+      <!-- Step 5: Review -->
+      <div class="ob-step-panel" data-step="5">
+        <h4>Review &amp; confirm</h4>
+        <div class="ob-sub">Double-check everything before creating the account</div>
+        <div class="ob-review" id="ob-review"></div>
+      </div>
+
+      <!-- Processing -->
+      <div class="ob-step-panel" data-step="processing">
+        <div class="pm-processing">
+          <div class="spinner"></div>
+          <div class="proc-title">Setting up the tenant account…</div>
+          <div class="proc-sub">Creating login, assigning unit, publishing storefront</div>
+        </div>
+      </div>
+
+      <!-- Success -->
+      <div class="ob-step-panel" data-step="success">
+        <div class="pm-success">
+          <div class="success-check">✓</div>
+          <div class="suc-title">Tenant onboarded</div>
+          <div class="suc-sub" id="ob-success-sub">Nyabugogo TechHub is now live on Unit G-14.</div>
+          <div class="ob-cred-card">
+            <div class="cc-row"><span>Login email</span><b id="ob-cred-email">shop@example.com</b></div>
+            <div class="cc-row"><span>Temporary password</span><b>1234</b></div>
+            <div class="cc-row"><span>Unit assigned</span><b id="ob-cred-unit">G-14</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ob-foot" id="ob-foot-1to4">
+      <button class="btn ghost" onclick="obBack()" id="ob-foot-back" style="visibility:hidden;">← Back</button>
+      <button class="btn primary" onclick="obNext()" id="ob-foot-next">Continue →</button>
+    </div>
+    <div class="ob-foot" id="ob-foot-success" style="display:none;">
+      <button class="btn ghost" onclick="closeOnboardModal()">Close</button>
+      <button class="btn primary" onclick="obFinishAndView()">View in directory →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= POST A DEAL WIZARD ================= -->
+<div class="modal-overlay" id="deal-overlay">
+  <div class="deal-modal">
+    <div class="pm-head">
+      <div class="pm-head-left">
+        <button class="pm-back" id="deal-back-btn" onclick="dealBack()" style="display:none;">←</button>
+        <div class="pm-title">Post a deal to yoDeals</div>
+      </div>
+      <button class="pm-close" onclick="closeDealWizard()">✕</button>
+    </div>
+
+    <div class="ob-stepper" id="deal-stepper">
+      <div class="ob-step-item active" data-n="1"><div class="ob-step-circle">1</div><div class="ob-step-label">Essentials</div></div>
+      <div class="ob-step-item" data-n="2"><div class="ob-step-circle">2</div><div class="ob-step-label">Details</div></div>
+      <div class="ob-step-item" data-n="3"><div class="ob-step-circle">3</div><div class="ob-step-label">Promote</div></div>
+      <div class="ob-step-item" data-n="4"><div class="ob-step-circle">4</div><div class="ob-step-label">Review</div></div>
+    </div>
+
+    <div class="deal-modal-body">
+      <div class="deal-form-col">
+
+        <!-- Step 1: Essentials -->
+        <div class="ob-step-panel active" data-step="1">
+          <h4>Start with the deal</h4>
+          <div class="ob-sub">Only your shop and the offer — this is what shoppers see on yoDeals</div>
+          <div class="form-row"><label>Business name</label><input id="deal-business" readonly="" style="background:var(--cream-100);color:var(--ink-600);"></div>
+          <div class="form-row"><label>Deal headline</label><input id="deal-headline" placeholder="e.g. 30% off" oninput="dealUpdatePreview()"></div>
+          <div class="modal-error" id="deal-essentials-error">Please give your deal a headline before continuing.</div>
+        </div>
+
+        <!-- Step 2: Details -->
+        <div class="ob-step-panel" data-step="2">
+          <h4>Make it convincing</h4>
+          <div class="ob-sub">Add a useful explanation and a strong photo</div>
+          <div class="form-row"><label>More details <span style="font-weight:500;color:var(--ink-400);">(optional)</span></label>
+            <textarea id="deal-details" oninput="dealUpdatePreview()" placeholder="e.g. Valid on all accessories, while stocks last"></textarea>
+          </div>
+          <div class="form-row"><label>Deal photo <span style="font-weight:500;color:var(--ink-400);">(optional)</span></label>
+            <div class="photo-picker">
+              <div class="photo-preview" id="deal-photo-preview"><span>🏷️</span></div>
+              <div class="photo-actions">
+                <button type="button" class="btn ghost photo-action-btn" onclick="triggerDealPhotoUpload()">⬆ Choose photo</button>
+                <button type="button" class="btn ghost photo-action-btn" onclick="openCameraModal(&#39;deal&#39;)">📷 Take photo</button>
+                <button type="button" class="btn ghost photo-action-btn photo-remove-btn" id="deal-remove-photo-btn" onclick="removeDealPhoto()" style="display:none;">✕ Remove photo</button>
+              </div>
+              <input type="file" id="deal-file-input" accept="image/*" style="display:none;" onchange="handleDealPhotoFile(event)">
+            </div>
+          </div>
+          <div class="form-2col">
+            <div class="form-row"><label>Badge <span style="font-weight:500;color:var(--ink-400);">(optional)</span></label><input id="deal-badge" placeholder="e.g. -20% or 2 FOR 1" oninput="dealUpdatePreview()"></div>
+            <div class="form-row"><label>Valid until</label><input id="deal-validuntil" type="date"></div>
+          </div>
+          <div class="form-row"><label>Card colour</label>
+            <div class="color-swatch-row" id="deal-color-row"></div>
+          </div>
+        </div>
+
+        <!-- Step 3: Promote -->
+        <div class="ob-step-panel" data-step="3">
+          <h4>Choose promotion</h4>
+          <div class="ob-sub">Optional: pick where yoDeals should promote it</div>
+          <div id="deal-promo-list"></div>
+
+          <div class="kt-boost-box" id="kt-boost-box">
+            <div class="kt-boost-header" onclick="toggleKtBoostBox()">
+              <div class="kbh-title">🔺 Boost this deal on Kigali Today</div>
+              <div class="kbh-chevron">⌃</div>
+            </div>
+            <div class="kt-boost-body">
+              <div class="kt-optional-box"><span class="kt-optional-tag">Optional</span> You can continue without selecting any paid Kigali Today service.</div>
+              <div class="kt-explain">Paid placement. Choose your channels; after payment, Kigali Today reviews and schedules the request.</div>
+              <span class="kt-signin-link" onclick="ktSignInPrompt()">Subscribers save 30% · Sign in</span>
+              <div class="kt-grid" id="kt-promo-grid"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Review -->
+        <div class="ob-step-panel" data-step="4">
+          <h4>Review and publish</h4>
+          <div class="ob-sub">Confirm the deal before it goes live on yoDeals</div>
+          <div class="ob-review" id="deal-review"></div>
+        </div>
+
+        <!-- Processing -->
+        <div class="ob-step-panel" data-step="processing">
+          <div class="pm-processing">
+            <div class="spinner"></div>
+            <div class="proc-title">Publishing your deal…</div>
+            <div class="proc-sub">Sending to the yoDeals app</div>
+          </div>
+        </div>
+
+        <!-- Success -->
+        <div class="ob-step-panel" data-step="success">
+          <div class="pm-success">
+            <div class="success-check">✓</div>
+            <div class="suc-title">Deal is live</div>
+            <div class="suc-sub" id="deal-success-sub">Now visible to shoppers on yoDeals</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="deal-preview-col">
+        <div class="deal-preview-label"><span>Preview</span><span class="dp-live-badge">Updates live</span></div>
+        <div class="deal-preview-card" id="deal-preview-card" style="--dp-color:#8B5CF6;">
+          <div class="dp-eyebrow">Deal</div>
+          <div class="dp-headline" id="dp-headline">Your deal headline</div>
+          <div class="dp-details" id="dp-details"></div>
+          <div class="dp-divider"></div>
+          <div class="dp-shop" id="dp-shop">Nyabugogo TechHub</div>
+          <div class="dp-badge" id="dp-badge" style="display:none;"></div>
+        </div>
+        <div class="deal-info-box">
+          <div class="dib-title">Goes live instantly</div>
+          <div class="dib-sub">No separate approval needed — this appears on yoDeals as soon as you publish.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ob-foot" id="deal-foot-1to4">
+      <button class="btn ghost" onclick="dealBack()" id="deal-foot-back" style="visibility:hidden;">← Back</button>
+      <button class="btn primary" onclick="dealNext()" id="deal-foot-next">Continue →</button>
+    </div>
+    <div class="ob-foot" id="deal-foot-success" style="display:none;">
+      <button class="btn primary" style="width:100%;justify-content:center;" onclick="closeDealWizard()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= CAMERA CAPTURE MODAL ================= -->
+<div class="modal-overlay" id="cam-overlay">
+  <div class="payment-modal" style="width:360px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Take a photo</div></div>
+      <button class="pm-close" onclick="closeCameraModal()">✕</button>
+    </div>
+    <div class="pm-body" style="padding-top:14px;">
+      <div class="camera-stage">
+        <video id="cam-video" autoplay="" playsinline=""></video>
+        <canvas id="cam-canvas" style="display:none;"></canvas>
+        <img id="cam-captured-img" style="display:none;">
+      </div>
+      <div class="camera-error" id="cam-error">Couldn't access the camera. Check your browser's camera permission, or use "Upload photo" instead.</div>
+      <div class="camera-controls" id="cam-live-controls">
+        <button class="pm-btn" onclick="capturePhoto()">📸 Capture</button>
+      </div>
+      <div class="camera-controls" id="cam-captured-controls" style="display:none;">
+        <button class="pm-btn ghost3" onclick="retakePhoto()">↺ Retake</button>
+        <button class="pm-btn" onclick="useCapturedPhoto()">✓ Use this photo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= PHOTO EDITOR MODAL ================= -->
+<div class="modal-overlay" id="editor-overlay">
+  <div class="editor-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Adjust your photo</div></div>
+      <button class="pm-close" onclick="closePhotoEditor()">✕</button>
+    </div>
+    <div class="editor-body">
+      <div class="editor-hint">Drag the photo to move it · use the slider to zoom</div>
+
+      <div class="editor-stage-wrap">
+        <canvas id="ap-editor-canvas" width="560" height="560"></canvas>
+      </div>
+
+      <div class="zoom-row">
+        <button class="zoom-btn" onclick="editorZoomStep(-0.15)">−</button>
+        <input type="range" class="zoom-slider" id="editor-zoom-slider" min="100" max="300" value="100" oninput="editorZoomFromSlider(this.value)">
+        <button class="zoom-btn" onclick="editorZoomStep(0.15)">+</button>
+      </div>
+
+      <button class="rotate-btn" onclick="editorRotate()">↻ Rotate photo</button>
+
+      <button class="autofix-btn" onclick="editorAutoFix()">✨ Auto-fix lighting <span class="af-sub">— 1 tap</span></button>
+
+      <div class="filter-row-label">Style</div>
+      <div class="filter-chip-row" id="editor-filter-row"></div>
+
+      <div class="editor-foot">
+        <button class="btn ghost" onclick="closePhotoEditor()">← Back</button>
+        <button class="btn primary" onclick="confirmPhotoEditor()">Use this photo →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= ORDER DETAIL MODAL ================= -->
+<div class="modal-overlay" id="order-detail-overlay">
+  <div class="order-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Order <span class="mono" id="od-order-id"></span></div></div>
+      <button class="pm-close" onclick="closeOrderDetail()">✕</button>
+    </div>
+    <div class="od-body" id="od-body"></div>
+  </div>
+</div>
+
+<!-- Hidden print target — only shown by @media print, keeps printed receipts clean -->
+<div id="print-root"></div>
+
+<!-- ================= TENANT: RENTADVANCE APPLICATION WIZARD ================= -->
+<div class="modal-overlay" id="loanapp-overlay">
+  <div class="onboard-modal" style="width:500px;">
+    <div class="pm-head">
+      <div class="pm-head-left">
+        <button class="pm-back" id="la-back-btn" onclick="laBack()" style="display:none;">←</button>
+        <div class="pm-title">Apply for a rentAdvance</div>
+      </div>
+      <button class="pm-close" onclick="closeLoanAppModal()">✕</button>
+    </div>
+
+    <div class="ob-stepper" id="la-stepper">
+      <div class="ob-step-item active" data-n="1"><div class="ob-step-circle">1</div><div class="ob-step-label">Loan</div></div>
+      <div class="ob-step-item" data-n="2"><div class="ob-step-circle">2</div><div class="ob-step-label">KYC</div></div>
+      <div class="ob-step-item" data-n="3"><div class="ob-step-circle">3</div><div class="ob-step-label">Agreement</div></div>
+      <div class="ob-step-item" data-n="4"><div class="ob-step-circle">4</div><div class="ob-step-label">Review</div></div>
+    </div>
+
+    <div class="ob-body">
+
+      <!-- Step 1: Loan details -->
+      <div class="ob-step-panel active" data-step="1">
+        <h4>How much do you need?</h4>
+        <div class="ob-sub">yoMall pays this straight to your landlord once approved</div>
+        <div class="form-row"><label>Amount requested</label><input id="la-amount" value="RWF 300,000"></div>
+        <div class="form-row">
+          <label>Repayment frequency</label>
+          <div class="freq-select">
+            <div class="fo selected" data-lafreq="daily" onclick="laSelectFreq(this)">Daily</div>
+            <div class="fo" data-lafreq="weekly" onclick="laSelectFreq(this)">Weekly</div>
+          </div>
+        </div>
+        <div class="form-row"><label>Repayment term</label>
+          <select id="la-term"><option>7 days</option><option>14 days</option><option>21 days</option><option selected="">30 days</option></select>
+          <div class="ob-calc-note" style="margin-top:6px;">rentAdvance terms cannot exceed 30 days</div>
+        </div>
+        <div class="ob-calc-note" id="la-calc-note">≈ RWF 10,000 / day over 30 days</div>
+      </div>
+
+      <!-- Step 2: KYC -->
+      <div class="ob-step-panel" data-step="2">
+        <h4>Verify your identity</h4>
+        <div class="ob-sub">Required by our lending partner before any advance is approved</div>
+        <div class="form-row"><label>National ID number</label><input id="la-idnumber" placeholder="1 1988 8 0123456 7 89"></div>
+        <div class="kyc-photo-row">
+          <div class="kyc-photo-col">
+            <label>Photo of ID card</label>
+            <div class="kyc-photo-box" id="kyc-id-preview"><span>🪪</span></div>
+            <div class="kyc-photo-btns">
+              <button type="button" class="btn ghost" onclick="triggerKycIdUpload()">⬆ Upload</button>
+              <button type="button" class="btn ghost" onclick="openKycCamera(&#39;idfront&#39;)">📷 Camera</button>
+            </div>
+            <input type="file" id="kyc-id-file-input" accept="image/*" style="display:none;" onchange="handleKycIdFile(event)">
+          </div>
+          <div class="kyc-photo-col">
+            <label>Selfie holding your ID</label>
+            <div class="kyc-photo-box" id="kyc-selfie-preview"><span>🤳</span></div>
+            <div class="kyc-photo-btns">
+              <button type="button" class="btn ghost" onclick="triggerKycSelfieUpload()">⬆ Upload</button>
+              <button type="button" class="btn ghost" onclick="openKycCamera(&#39;selfie&#39;)">📷 Camera</button>
+            </div>
+            <input type="file" id="kyc-selfie-file-input" accept="image/*" style="display:none;" onchange="handleKycSelfieFile(event)">
+          </div>
+        </div>
+        <div class="modal-error" id="la-kyc-error">Please add your ID number and both photos to continue.</div>
+      </div>
+
+      <!-- Step 3: Terms & Conditions -->
+      <div class="ob-step-panel" data-step="3">
+        <h4>Loan agreement</h4>
+        <div class="ob-sub">Please read carefully — this is a binding agreement between you and our lending partner</div>
+        <div class="tc-box">
+          <p><b>1. Nature of the advance.</b> The rentAdvance is a short-term credit facility, not a rent waiver. Your landlord is paid the full requested amount today; you owe that amount back to our lending partner, not to your landlord.</p>
+          <p><b>2. Service fee.</b> A service fee of 5% of the advance amount is included in your repayment schedule, spread evenly across your chosen repayment period.</p>
+          <p><b>3. Repayment.</b> Repayments are collected automatically via Mobile Money on the frequency you selected. Missed repayments may be retried the following day and are reflected on your rent ledger.</p>
+          <p><b>4. Late payment.</b> Repayments more than 7 days late may be reported to your landlord and may affect your eligibility for future advances.</p>
+          <p><b>5. KYC &amp; data use.</b> The identity documents you provide are shared with our lending partner solely to verify your identity and assess this application, in line with Rwandan data protection law.</p>
+          <p><b>6. Governing law.</b> This agreement is governed by the laws of the Republic of Rwanda. Disputes are subject to the jurisdiction of Rwandan courts.</p>
+        </div>
+        <label class="tc-agree-row">
+          <input type="checkbox" id="la-agree-checkbox">
+          <span>I have read and agree to the rentAdvance terms and conditions above.</span>
+        </label>
+        <div class="form-row"><label>Type your full name as your signature</label><input id="la-signature" placeholder="e.g. Aline Uwera"></div>
+        <div class="modal-error" id="la-agree-error">Please agree to the terms and sign with your full name.</div>
+      </div>
+
+      <!-- Step 4: Review -->
+      <div class="ob-step-panel" data-step="4">
+        <h4>Review your application</h4>
+        <div class="ob-sub">Double-check before sending this to our lending partner</div>
+        <div class="ob-review" id="la-review"></div>
+      </div>
+
+      <!-- Processing -->
+      <div class="ob-step-panel" data-step="processing">
+        <div class="pm-processing">
+          <div class="spinner"></div>
+          <div class="proc-title">Submitting your application…</div>
+          <div class="proc-sub">Sending your KYC documents to our lending partner</div>
+        </div>
+      </div>
+
+      <!-- Success -->
+      <div class="ob-step-panel" data-step="success">
+        <div class="pm-success">
+          <div class="success-check">✓</div>
+          <div class="suc-title">Application submitted</div>
+          <div class="suc-sub" id="la-success-sub">Reference RA-1004 · under review</div>
+          <div class="ob-cred-card">
+            <div class="cc-row"><span>Status</span><b>Under review</b></div>
+            <div class="cc-row"><span>Typical review time</span><b>24–48 hours</b></div>
+            <div class="cc-row"><span>Notification</span><b>SMS &amp; in-app</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ob-foot" id="la-foot-1to4">
+      <button class="btn ghost" onclick="laBack()" id="la-foot-back" style="visibility:hidden;">← Back</button>
+      <button class="btn primary" onclick="laNext()" id="la-foot-next">Continue →</button>
+    </div>
+    <div class="ob-foot" id="la-foot-success" style="display:none;">
+      <button class="btn primary" style="width:100%;justify-content:center;" onclick="closeLoanAppModal()">Done</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SUPERADMIN: LOAN REVIEW MODAL ================= -->
+<div class="modal-overlay" id="loanreview-overlay">
+  <div class="order-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Application <span class="mono" id="lr-app-id"></span></div></div>
+      <button class="pm-close" onclick="closeLendingReview()">✕</button>
+    </div>
+    <div class="od-body" id="lr-body"></div>
+  </div>
+</div>
+
+<!-- ================= TENANT: NEW MAINTENANCE REQUEST MODAL ================= -->
+<div class="modal-overlay" id="maintreq-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Request a repair</div></div>
+      <button class="pm-close" onclick="closeMaintRequestModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>What needs fixing?</label>
+        <select id="mr-category">
+          <option>Electrical</option><option>Plumbing</option><option>HVAC / Air conditioning</option>
+          <option>Cleaning</option><option>Security</option><option>IT / POS support</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Assigned to</label><input id="mr-staff-display" value="Auto-assigned based on category" readonly="" style="background:var(--cream-100);color:var(--ink-600);"></div>
+      <div class="form-row"><label>Describe the issue</label><textarea id="mr-description" placeholder="e.g. The ceiling light above the counter keeps flickering"></textarea></div>
+      <div class="form-row">
+        <label>Urgency</label>
+        <div class="freq-select">
+          <div class="fo selected" data-urgency="normal" onclick="mrSelectUrgency(this)">Normal</div>
+          <div class="fo" data-urgency="urgent" onclick="mrSelectUrgency(this)">Urgent</div>
+        </div>
+      </div>
+      <div class="form-row">
+        <label>Photo of the issue <span style="font-weight:500;color:var(--ink-400);">(optional)</span></label>
+        <div class="photo-picker">
+          <div class="photo-preview" id="mr-photo-preview"><span>📷</span></div>
+          <div class="photo-actions">
+            <button type="button" class="btn ghost photo-action-btn" onclick="triggerMaintPhotoUpload()">⬆ Upload photo</button>
+            <button type="button" class="btn ghost photo-action-btn" onclick="openCameraModal(&#39;maint&#39;)">📷 Take photo</button>
+            <button type="button" class="btn ghost photo-action-btn photo-remove-btn" id="mr-remove-photo-btn" onclick="removeMaintPhoto()" style="display:none;">✕ Remove photo</button>
+          </div>
+          <input type="file" id="mr-file-input" accept="image/*" style="display:none;" onchange="handleMaintPhotoFile(event)">
+        </div>
+      </div>
+      <div class="modal-error" id="mr-error">Please describe the issue before submitting.</div>
+      <button class="pm-btn" onclick="submitMaintRequest()">Submit request →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MAINTENANCE REQUEST DETAIL / TRACKING MODAL ================= -->
+<div class="modal-overlay" id="maintdetail-overlay">
+  <div class="order-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Request <span class="mono" id="md-request-id"></span></div></div>
+      <button class="pm-close" onclick="closeMaintDetail()">✕</button>
+    </div>
+    <div class="od-body" id="md-body"></div>
+  </div>
+</div>
+
+<!-- ================= MALL GUIDE: AMENITY MODAL ================= -->
+<div class="modal-overlay" id="amenity-overlay">
+  <div class="payment-modal" style="width:380px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title" id="amenity-modal-title">Add amenity</div></div>
+      <button class="pm-close" onclick="closeAmenityModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Icon (emoji)</label><input id="amenity-icon" placeholder="e.g. 🅿️" maxlength="4"></div>
+      <div class="form-row"><label>Name</label><input id="amenity-name" placeholder="e.g. Parking — Basement"></div>
+      <div class="form-row"><label>Details</label><input id="amenity-sub" placeholder="e.g. 120 bays · entrance off KN 3 Ave"></div>
+      <div class="modal-error" id="amenity-error">Please give the amenity a name.</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn ghost" style="display:none;flex:1;justify-content:center;" id="amenity-delete-btn" onclick="deleteAmenity()">Remove</button>
+        <button class="pm-btn" style="flex:1;" id="amenity-submit-btn" onclick="submitAmenity()">Save amenity</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MALL GUIDE: ANNOUNCEMENT MODAL ================= -->
+<div class="modal-overlay" id="announcement-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title" id="announcement-modal-title">New announcement</div></div>
+      <button class="pm-close" onclick="closeAnnouncementModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Title</label><input id="announcement-title" placeholder="e.g. Weekend market — Northern Province cooperatives"></div>
+      <div class="form-row"><label>Details</label><textarea id="announcement-body" placeholder="e.g. Pop-up stalls in the atrium, Sat–Sun."></textarea></div>
+      <div class="toggle-row" style="border-top:none;padding-top:2px;">
+        <div><div class="t-label">Set an expiry date</div><div class="t-hint">Otherwise it stays live until removed</div></div>
+        <div class="switch" id="announcement-hasexpiry-switch" onclick="this.classList.toggle(&#39;on&#39;); toggleAnnouncementExpiryField();"><div class="knob"></div></div>
+      </div>
+      <div class="form-row" id="announcement-expiry-row" style="display:none;"><label>Expires on</label><input id="announcement-expiry" type="date"></div>
+      <div class="toggle-row">
+        <div><div class="t-label">Published (live)</div><div class="t-hint">Turn off to save as a draft</div></div>
+        <div class="switch on" id="announcement-live-switch"><div class="knob"></div></div>
+      </div>
+      <div class="modal-error" id="announcement-error">Please give the announcement a title.</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn ghost" style="display:none;flex:1;justify-content:center;" id="announcement-delete-btn" onclick="deleteAnnouncement()">Remove</button>
+        <button class="pm-btn" style="flex:1;" id="announcement-submit-btn" onclick="submitAnnouncement()">Publish announcement</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= FLOOR MAP: LIST VACANCY MODAL ================= -->
+<div class="modal-overlay" id="vacancy-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">List this vacancy</div></div>
+      <button class="pm-close" onclick="closeVacancyModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Unit</label><input id="vacancy-unit-display" readonly="" style="background:var(--cream-100);color:var(--ink-600);"></div>
+      <div class="form-row"><label>Suggested monthly rent</label><input id="vacancy-rent" placeholder="e.g. RWF 350,000"></div>
+      <div class="form-row"><label>Description for prospective tenants</label><textarea id="vacancy-desc" placeholder="e.g. Ground floor unit, high foot traffic, ideal for retail or food &amp; beverage"></textarea></div>
+      <div class="modal-error" id="vacancy-error">Please add a suggested rent before listing.</div>
+      <button class="pm-btn" onclick="submitVacancyListing()">List vacancy →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TEAM: INVITE MEMBER MODAL ================= -->
+<div class="modal-overlay" id="team-overlay">
+  <div class="payment-modal" style="width:380px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Invite team member</div></div>
+      <button class="pm-close" onclick="closeInviteTeamModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Full name</label><input id="team-name" placeholder="e.g. Claudine Mukamana"></div>
+      <div class="form-row"><label>Email</label><input id="team-email" placeholder="e.g. claudine@example.com"></div>
+      <div class="form-row"><label>Role</label>
+        <select id="team-role">
+          <option>Manager — full access</option>
+          <option>Accountant — rent &amp; reports only</option>
+          <option>Viewer — read-only access</option>
+        </select>
+      </div>
+      <div class="modal-error" id="team-error">Please enter a name and email.</div>
+      <button class="pm-btn" onclick="submitInviteTeam()">Send invite →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= DOCUMENTS: UPLOAD MODAL ================= -->
+<div class="modal-overlay" id="doc-overlay">
+  <div class="payment-modal" style="width:380px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Upload document</div></div>
+      <button class="pm-close" onclick="closeUploadDocModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Document name</label><input id="doc-name" placeholder="e.g. Fire Safety Inspection 2026"></div>
+      <div class="form-row"><label>Category</label>
+        <select id="doc-category">
+          <option>Insurance</option><option>Safety &amp; Compliance</option><option>Business License</option><option>Other</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Expiry date <span style="font-weight:500;color:var(--ink-400);">(optional)</span></label><input id="doc-expiry" type="date"></div>
+      <div class="form-row"><label>File</label>
+        <div class="photo-picker">
+          <div class="photo-preview" id="doc-file-preview" style="border-radius:10px;"><span>📄</span></div>
+          <div class="photo-actions">
+            <button type="button" class="btn ghost photo-action-btn" onclick="triggerDocFileUpload()">⬆ Choose file</button>
+          </div>
+          <input type="file" id="doc-file-input" style="display:none;" onchange="handleDocFile(event)">
+        </div>
+      </div>
+      <div class="modal-error" id="doc-error">Please give the document a name.</div>
+      <button class="pm-btn" onclick="submitUploadDoc()">Upload document →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= TENANT HANDBOOK: EDIT SECTION MODAL ================= -->
+<div class="modal-overlay" id="handbook-overlay">
+  <div class="payment-modal" style="width:420px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title" id="handbook-modal-title">Add section</div></div>
+      <button class="pm-close" onclick="closeHandbookModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Section title</label><input id="handbook-title" placeholder="e.g. Signage &amp; Fit-out Rules"></div>
+      <div class="form-row"><label>Content</label><textarea id="handbook-body" style="min-height:110px;" placeholder="e.g. All exterior signage must be approved by property management before installation..."></textarea></div>
+      <div class="modal-error" id="handbook-error">Please give the section a title.</div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn ghost" style="display:none;flex:1;justify-content:center;" id="handbook-delete-btn" onclick="deleteHandbookSection()">Remove</button>
+        <button class="pm-btn" style="flex:1;" onclick="submitHandbookSection()">Save section</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDLORD: POST RENT/CAM INCREASE NOTICE MODAL ================= -->
+<div class="modal-overlay" id="rentnotice-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Post a rent/CAM increase notice</div></div>
+      <button class="pm-close" onclick="closeRentNoticeModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>New total monthly charge</label><input id="rn-amount" placeholder="e.g. RWF 500,000"></div>
+      <div class="form-row"><label>Effective date</label><input id="rn-date" type="date"></div>
+      <div class="form-row"><label>Reason</label><textarea id="rn-reason" placeholder="e.g. Annual CAM adjustment covering added security shift"></textarea></div>
+      <div class="modal-error" id="rn-error">Please add the new amount and effective date.</div>
+      <button class="pm-btn" onclick="submitRentNotice()">Send notice to tenant →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDLORD: RUN PAYOUT MODAL ================= -->
+<div class="modal-overlay" id="payout-overlay">
+  <div class="payment-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Run landlord payout</div></div>
+      <button class="pm-close" onclick="closeLandlordPayoutModal()">✕</button>
+    </div>
+    <div class="pm-body">
+
+      <div class="pm-step active" data-step="confirm">
+        <div class="pm-context"><span>Payout amount</span><b id="lp-amount">RWF 19,240,000</b></div>
+        <div class="pm-summary">
+          <div class="sr"><span>Destination</span><b>Bank of Kigali •••• 4471</b></div>
+          <div class="sr"><span>Covers</span><b>42 active units — July cycle</b></div>
+          <div class="sr"><span>Processing fee</span><b>RWF 0</b></div>
+          <div class="sr total"><span>Total payout</span><b id="lp-amount-2">RWF 19,240,000</b></div>
+        </div>
+        <button class="pm-btn" onclick="runLandlordPayout()">Confirm &amp; run payout →</button>
+      </div>
+
+      <div class="pm-step" data-step="processing">
+        <div class="pm-processing">
+          <div class="spinner"></div>
+          <div class="proc-title">Sending payout to your bank…</div>
+          <div class="proc-sub">This usually settles within a few minutes</div>
+        </div>
+      </div>
+
+      <div class="pm-step" data-step="success">
+        <div class="pm-success">
+          <div class="success-check">✓</div>
+          <div class="suc-title">Payout sent</div>
+          <div class="suc-amount" id="lp-success-amount">RWF 19,240,000</div>
+          <div class="suc-sub">Sent to Bank of Kigali •••• 4471</div>
+          <div class="receipt">
+            <div class="rr"><span>Reference</span><b id="lp-receipt-ref">PO-88231</b></div>
+            <div class="rr"><span>Date</span><b id="lp-receipt-date">19 Jul 2026, 14:32</b></div>
+            <div class="rr"><span>Covers</span><b>42 active units — July cycle</b></div>
+          </div>
+        </div>
+        <button class="pm-btn" onclick="closeLandlordPayoutModal()">Done</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDLORD: ASSIGN TASK MODAL ================= -->
+<div class="modal-overlay" id="assigntask-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Assign a task</div></div>
+      <button class="pm-close" onclick="closeAssignTaskModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Assigning to</label><input id="at-staff-display" readonly="" style="background:var(--cream-100);color:var(--ink-600);"></div>
+      <div class="form-row"><label>Unit / area</label>
+        <select id="at-unit">
+          <option>G-14 · Nyabugogo TechHub</option><option>1F-06 · Amasezerano Boutique</option>
+          <option>2F-02 · Café Umurava</option><option>G-04 · Muraho Electronics</option>
+          <option>Common area — Ground Floor</option><option>Common area — Parking</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Task details</label><textarea id="at-description" placeholder="e.g. Inspect and service the rooftop AC condenser units"></textarea></div>
+      <div class="form-row">
+        <label>Priority</label>
+        <div class="freq-select">
+          <div class="fo selected" data-atpriority="normal" onclick="atSelectPriority(this)">Normal</div>
+          <div class="fo" data-atpriority="urgent" onclick="atSelectPriority(this)">Urgent</div>
+        </div>
+      </div>
+      <div class="modal-error" id="at-error">Please describe the task before assigning.</div>
+      <button class="pm-btn" onclick="submitAssignTask()">Assign task →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDLORD: TASK DETAIL / TRACKING MODAL ================= -->
+<div class="modal-overlay" id="taskdetail-overlay">
+  <div class="order-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Task <span class="mono" id="td-task-id"></span></div></div>
+      <button class="pm-close" onclick="closeTaskDetail()">✕</button>
+    </div>
+    <div class="od-body" id="td-body"></div>
+  </div>
+</div>
+
+<!-- ================= SUPERADMIN: ONBOARD NEW MALL WIZARD ================= -->
+<div class="modal-overlay" id="onboardmall-overlay">
+  <div class="onboard-modal" style="width:560px;">
+    <div class="pm-head">
+      <div class="pm-head-left">
+        <button class="pm-back" id="om-back-btn" onclick="omBack()" style="display:none;">←</button>
+        <div class="pm-title">Onboard a new mall</div>
+      </div>
+      <button class="pm-close" onclick="closeOnboardMallModal()">✕</button>
+    </div>
+
+    <div class="ob-stepper" id="om-stepper">
+      <div class="ob-step-item active" data-n="1"><div class="ob-step-circle">1</div><div class="ob-step-label">Mall details</div></div>
+      <div class="ob-step-item" data-n="2"><div class="ob-step-circle">2</div><div class="ob-step-label">Landlord</div></div>
+      <div class="ob-step-item" data-n="3"><div class="ob-step-circle">3</div><div class="ob-step-label">Plan</div></div>
+      <div class="ob-step-item" data-n="4"><div class="ob-step-circle">4</div><div class="ob-step-label">Review</div></div>
+    </div>
+
+    <div class="ob-body">
+
+      <!-- Step 1: Mall details -->
+      <div class="ob-step-panel active" data-step="1">
+        <h4>Tell us about the building</h4>
+        <div class="ob-sub">This creates the mall's dashboard, floor map and tenant directory</div>
+        <div class="form-row"><label>Mall name</label><input id="om-name" placeholder="e.g. Kimironko Trade Plaza"></div>
+        <div class="form-2col">
+          <div class="form-row"><label>Location</label><input id="om-location" placeholder="e.g. Kimironko, Kigali"></div>
+          <div class="form-row"><label>Category</label>
+            <select id="om-category"><option>Shopping Mall</option><option>Trade Center</option><option>Craft Market</option><option>Business Arcade</option></select>
+          </div>
+        </div>
+        <div class="form-2col">
+          <div class="form-row"><label>Number of floors</label><input id="om-floors" type="number" value="2" min="1" max="10"></div>
+          <div class="form-row"><label>Total units</label><input id="om-units" type="number" value="24" min="1" max="200"></div>
+        </div>
+        <div class="modal-error" id="om-details-error">Please give the mall a name and location.</div>
+      </div>
+
+      <!-- Step 2: Landlord account -->
+      <div class="ob-step-panel" data-step="2">
+        <h4>Set up the landlord account</h4>
+        <div class="ob-sub">This person will log in and manage the mall day to day</div>
+        <div class="form-row"><label>Owner full name</label><input id="om-owner" placeholder="e.g. Divine Ishimwe"></div>
+        <div class="form-2col">
+          <div class="form-row"><label>Email</label><input id="om-email" placeholder="e.g. divine@example.rw"></div>
+          <div class="form-row"><label>Phone</label><input id="om-phone" placeholder="+250 78• ••• •••"></div>
+        </div>
+        <div class="form-row"><label>Payout bank account</label><input id="om-bank" placeholder="e.g. Bank of Kigali •••• 1234"></div>
+        <div class="modal-error" id="om-landlord-error">Please fill in the owner's name, email and phone.</div>
+      </div>
+
+      <!-- Step 3: Plan -->
+      <div class="ob-step-panel" data-step="3">
+        <h4>Choose a plan</h4>
+        <div class="ob-sub">You can change this anytime from Billing</div>
+        <div class="form-row"><label>Plan tier</label>
+          <select id="om-plan"><option>Trial</option><option>Starter</option><option>Growth</option><option>Enterprise</option></select>
+        </div>
+        <div class="ob-calc-note" id="om-plan-note">Trial — free for 30 days, no billing yet</div>
+      </div>
+
+      <!-- Step 4: Review -->
+      <div class="ob-step-panel" data-step="4">
+        <h4>Review and confirm</h4>
+        <div class="ob-sub">Double-check before creating the mall and landlord account</div>
+        <div class="ob-review" id="om-review"></div>
+      </div>
+
+      <!-- Processing -->
+      <div class="ob-step-panel" data-step="processing">
+        <div class="pm-processing">
+          <div class="spinner"></div>
+          <div class="proc-title">Setting up the mall…</div>
+          <div class="proc-sub">Creating floor map, tenant directory and landlord login</div>
+        </div>
+      </div>
+
+      <!-- Success -->
+      <div class="ob-step-panel" data-step="success">
+        <div class="pm-success">
+          <div class="success-check">✓</div>
+          <div class="suc-title">Mall onboarded</div>
+          <div class="suc-sub" id="om-success-sub">Ready to manage from the Platform Console</div>
+          <div class="ob-cred-card">
+            <div class="cc-row"><span>Landlord login email</span><b id="om-cred-email">—</b></div>
+            <div class="cc-row"><span>Temporary password</span><b>1234</b></div>
+            <div class="cc-row"><span>Plan</span><b id="om-cred-plan">—</b></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="ob-foot" id="om-foot-1to4">
+      <button class="btn ghost" onclick="omBack()" id="om-foot-back" style="visibility:hidden;">← Back</button>
+      <button class="btn primary" onclick="omNext()" id="om-foot-next">Continue →</button>
+    </div>
+    <div class="ob-foot" id="om-foot-success" style="display:none;">
+      <button class="btn ghost" onclick="closeOnboardMallModal()">Close</button>
+      <button class="btn primary" onclick="omFinishAndView()">View in Platform Console →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= SUPERADMIN: BILLING MODAL ================= -->
+<div class="modal-overlay" id="billing-overlay">
+  <div class="payment-modal" style="width:400px;">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Billing — <span id="billing-mall-name"></span></div></div>
+      <button class="pm-close" onclick="closeBillingModal()">✕</button>
+    </div>
+    <div class="pm-body">
+      <div class="form-row"><label>Current plan</label>
+        <select id="billing-plan-select">
+          <option>Trial</option><option>Starter</option><option>Growth</option><option>Enterprise</option>
+        </select>
+      </div>
+      <div class="billing-row"><span>Monthly recurring revenue</span><b id="billing-mrr" class="mono"></b></div>
+      <div class="billing-row"><span>Next invoice</span><b id="billing-next"></b></div>
+      <button class="btn primary" style="width:100%;justify-content:center;margin:12px 0 16px;" onclick="changeMallPlan()">Save plan change</button>
+      <div class="od-section-label" style="margin-top:0;">Billing history</div>
+      <div id="billing-history-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= LANDLORD: TENANT MANAGEMENT MODAL ================= -->
+<div class="modal-overlay" id="tenant-manage-overlay">
+  <div class="tenant-modal">
+    <div class="pm-head">
+      <div class="pm-head-left"><div class="pm-title">Manage tenant</div></div>
+      <button class="pm-close" onclick="closeTenantManage()">✕</button>
+    </div>
+
+    <div class="tm-header" id="tm-header"></div>
+
+    <div class="tm-tabs" id="tm-tabs">
+      <div class="tm-tab active" data-tab="overview" onclick="tmSwitchTab(&#39;overview&#39;)">Overview</div>
+      <div class="tm-tab" data-tab="payments" onclick="tmSwitchTab(&#39;payments&#39;)">Payment History</div>
+      <div class="tm-tab" data-tab="receipts" onclick="tmSwitchTab(&#39;receipts&#39;)">Receipts</div>
+      <div class="tm-tab" data-tab="documents" onclick="tmSwitchTab(&#39;documents&#39;)">Documents</div>
+      <div class="tm-tab" data-tab="messages" onclick="tmSwitchTab(&#39;messages&#39;)">Messages</div>
+      <div class="tm-tab" data-tab="notes" onclick="tmSwitchTab(&#39;notes&#39;)">Notes</div>
+    </div>
+
+    <div class="tm-body">
+      <div class="tm-panel active" data-panel="overview" id="tm-panel-overview"></div>
+      <div class="tm-panel" data-panel="payments" id="tm-panel-payments"></div>
+      <div class="tm-panel" data-panel="receipts" id="tm-panel-receipts"></div>
+      <div class="tm-panel" data-panel="documents" id="tm-panel-documents"></div>
+      <div class="tm-panel" data-panel="messages" id="tm-panel-messages"></div>
+      <div class="tm-panel" data-panel="notes" id="tm-panel-notes"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= STOREFRONT PREVIEW MODAL ================= -->
+<div class="modal-overlay" id="cp-overlay">
+  <div class="preview-modal">
+    <div class="preview-modal-head">
+      <div class="pm-title">Live preview</div>
+      <button class="pm-close" onclick="closeCmsPreview()">✕</button>
+    </div>
+    <div class="preview-draft-banner" id="cp-draft-banner">⚠ Previewing unpublished changes — customers won't see this yet</div>
+    <div class="phone" style="width:280px;height:568px;">
+      <div class="phone-screen">
+        <div class="phone-notch"></div>
+        <div class="p-cover"><div class="p-cat cms-live-cat">Phones &amp; Electronics</div></div>
+        <div class="p-shop-card">
+          <div class="p-shop-name cms-live-name">Nyabugogo TechHub</div>
+          <div class="p-shop-loc cms-live-loc">Ground Floor · G-14</div>
+          <div class="p-status-pill">● Open now</div>
+        </div>
+        <div class="p-body">
+          <div class="p-sec-title" style="margin-top:12px;">Deals on yoDeals</div>
+          <div class="cms-live-deals">
+      <div class="p-deal-card" style="border-left-color:#8B5CF6;">
+        <div class="pd-eyebrow" style="color:#8B5CF6;">Deal</div>
+        <div class="pd-headline">30% off Wireless Earbuds</div>
+        <div class="pd-details">This week only — while stocks last.</div>
+        <div class="pd-badge" style="background:#8B5CF6;">-30%</div>
+      </div></div>
+          <div class="p-sec-title">About</div>
+          <div class="cms-live-desc" style="font-size:10px;color:var(--ink-600);line-height:1.5;">Genuine phones, laptops and accessories with warranty on every device. New stock arrives weekly, including the latest smartphone releases.</div>
+        </div>
+        <div class="p-nav"><div class="ni"></div><div class="ni"></div><div class="ni"></div><div class="ni"></div></div>
+      </div>
+    </div>
+    <div class="phone-caption" style="color:#EAF3EC;">This is exactly what customers see on the mall guide app</div>
+  </div>
+</div>
+
+<!-- Toast for publish confirmation -->
+<div class="publish-toast" id="publish-toast"><span class="pt-check">✓</span><span id="publish-toast-text">Published — live on mall guide app</span></div>
+
