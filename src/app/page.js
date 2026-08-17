@@ -3,80 +3,19 @@ import React, { useState, useCallback } from 'react';
 import Sidebar from '@/components/Sidebar';
 import Topbar from '@/components/Topbar';
 import PhonePreview from '@/components/PhonePreview';
-
-/* ─────────────── DATA ─────────────── */
-const floors = {
-  G: [
-    {n:'G-01',s:'paid',t:'Boutique'},{n:'G-02',s:'paid',t:'Café'},{n:'G-03',s:'vacant',t:''},{n:'G-04',s:'paid',t:'Electronics'},
-    {n:'G-05',s:'due',t:'Salon'},{n:'G-06',s:'paid',t:'Bakery'},{n:'G-07',s:'paid',t:'Pharmacy'},{n:'G-08',s:'paid',t:'Fashion'},
-    {n:'G-09',s:'overdue',t:'Phone repair'},{n:'G-10',s:'paid',t:'Bookshop'},{n:'G-11',s:'paid',t:'Toys'},{n:'G-12',s:'vacant',t:''},
-    {n:'G-13',s:'due',t:'Shoes'},{n:'G-14',s:'overdue',t:'TechHub'},{n:'G-15',s:'paid',t:'Jewelry'},{n:'G-16',s:'paid',t:'Stationery'},
-  ],
-  '1': [
-    {n:'1F-01',s:'paid',t:'Boutique'},{n:'1F-02',s:'paid',t:'Tailor'},{n:'1F-03',s:'paid',t:'Perfume'},{n:'1F-04',s:'vacant',t:''},
-    {n:'1F-05',s:'paid',t:'Sports'},{n:'1F-06',s:'due',t:'Amasezerano Boutique'},{n:'1F-07',s:'paid',t:'Furniture'},{n:'1F-08',s:'paid',t:'Optics'},
-    {n:'1F-09',s:'overdue',t:'Salon'},{n:'1F-10',s:'paid',t:'Gifts'},{n:'1F-11',s:'vacant',t:''},{n:'1F-12',s:'paid',t:'Kids wear'},
-    {n:'1F-13',s:'paid',t:'Art studio'},{n:'1F-14',s:'paid',t:'Watches'},{n:'1F-15',s:'due',t:'Beauty'},{n:'1F-16',s:'paid',t:'Home decor'},
-  ],
-  '2': [
-    {n:'2F-01',s:'paid',t:'Cinema snacks'},{n:'2F-02',s:'paid',t:'Café Umurava'},{n:'2F-03',s:'paid',t:'Games lounge'},{n:'2F-04',s:'vacant',t:''},
-    {n:'2F-05',s:'paid',t:'Coworking'},{n:'2F-06',s:'paid',t:'Print shop'},{n:'2F-07',s:'due',t:'Fitness'},{n:'2F-08',s:'paid',t:'Bank kiosk'},
-    {n:'2F-09',s:'paid',t:'Kids play'},{n:'2F-10',s:'vacant',t:''},{n:'2F-11',s:'paid',t:'Bar'},{n:'2F-12',s:'paid',t:'Restaurant'},
-    {n:'2F-13',s:'paid',t:'Ice cream'},{n:'2F-14',s:'paid',t:'Restaurant'},{n:'2F-15',s:'vacant',t:''},{n:'2F-16',s:'paid',t:'Barber'},
-  ],
-};
-
-const tenants = [
-  {name:'Nyabugogo TechHub',unit:'G-14',cat:'Electronics',plan:'daily',store:'published',rent:'overdue',phone:'+250 78• ••• 214'},
-  {name:'Amasezerano Boutique',unit:'1F-06',cat:'Fashion',plan:'weekly',store:'draft',rent:'due',phone:'+250 72• ••• 890'},
-  {name:'Café Umurava',unit:'2F-02',cat:'Food & beverage',plan:'daily',store:'published',rent:'paid',phone:'+250 78• ••• 331'},
-  {name:'Muraho Electronics',unit:'G-04',cat:'Electronics',plan:'weekly',store:'published',rent:'paid',phone:'+250 73• ••• 122'},
-  {name:'Ikirenga Salon',unit:'G-05',cat:'Beauty',plan:'daily',store:'published',rent:'due',phone:'+250 78• ••• 045'},
-  {name:'Zamu Phone Repair',unit:'G-09',cat:'Electronics',plan:'daily',store:'draft',rent:'overdue',phone:'+250 79• ••• 671'},
-  {name:'Coko Bookshop',unit:'G-10',cat:'Books & stationery',plan:'weekly',store:'published',rent:'paid',phone:'+250 78• ••• 500'},
-];
-
-const ledger = [
-  {name:'Nyabugogo TechHub',unit:'G-14',plan:'daily',per:'15,000',pct:62,bal:'57,000',next:'Tomorrow',status:'overdue'},
-  {name:'Amasezerano Boutique',unit:'1F-06',plan:'weekly',per:'180,000',pct:80,bal:'144,000',next:'Fri 24 Jul',status:'due'},
-  {name:'Muraho Electronics',unit:'G-04',plan:'weekly',per:'260,000',pct:100,bal:'0',next:'Fri 24 Jul',status:'paid'},
-  {name:'Ikirenga Salon',unit:'G-05',plan:'daily',per:'12,000',pct:70,bal:'36,000',next:'Today',status:'due'},
-  {name:'Zamu Phone Repair',unit:'G-09',plan:'daily',per:'18,000',pct:40,bal:'108,000',next:'Overdue 4d',status:'overdue'},
-  {name:'Coko Bookshop',unit:'G-10',plan:'weekly',per:'150,000',pct:100,bal:'0',next:'Fri 24 Jul',status:'paid'},
-];
-
-const orders = [
-  {id:'#YD-3391',shop:'Nyabugogo TechHub',item:'Earbuds, charger, speaker',rider:'E. Niyonzima',status:'transit',val:'52,000',time:'3 min ago'},
-  {id:'#YD-3390',shop:'Café Umurava',item:'2x Cappuccino, muffin',rider:'J. Uwase',status:'delivered',val:'5,200',time:'12 min ago'},
-  {id:'#YD-3389',shop:'Muraho Electronics',item:'Phone charger',rider:'—',status:'transit',val:'9,000',time:'14 min ago'},
-  {id:'#YD-3388',shop:'Ikirenga Salon',item:'Home braiding booking',rider:'D. Habimana',status:'delivered',val:'12,000',time:'29 min ago'},
-  {id:'#YD-3387',shop:'Coko Bookshop',item:'Notebook set',rider:'E. Niyonzima',status:'transit',val:'4,800',time:'33 min ago'},
-];
-
-const staffList = [
-  {name:'Eugene Niyonzima',role:'Electrician',status:'Available',color:'#8B5CF6'},
-  {name:'Jeanne Uwase',role:'Cleaning supervisor',status:'On duty',color:'#8B5CF6'},
-  {name:'Didier Habimana',role:'Plumber',status:'Busy — G-09',color:'#F2A93B'},
-  {name:'Aline Mukamana',role:'Security lead',status:'On duty',color:'#8B5CF6'},
-  {name:'Patrick Ndayisenga',role:'IT / POS support',status:'Available',color:'#8B5CF6'},
-  {name:'Claudine Ingabire',role:'HVAC technician',status:'Off shift',color:'#8A968D'},
-];
-
-const malls = [
-  {name:'Kigali Convention Mall',loc:'Nyarugenge, Kigali',plan:'Growth',tenants:42,occ:'87%',gmv:'18.6M',color:'var(--color-forest-500)'},
-  {name:'Musanze Heritage Plaza',loc:'Musanze, Northern Province',plan:'Starter',tenants:24,occ:'71%',gmv:'6.2M',color:'var(--color-amber-500)'},
-  {name:'Huye Trade Center',loc:'Huye, Southern Province',plan:'Growth',tenants:36,occ:'92%',gmv:'11.4M',color:'var(--color-forest-500)'},
-  {name:'Remera Business Arcade',loc:'Remera, Kigali',plan:'Growth',tenants:51,occ:'95%',gmv:'22.1M',color:'var(--color-forest-500)'},
-  {name:'Rubavu Lakeside Mall',loc:'Rubavu, Western Province',plan:'Starter',tenants:19,occ:'64%',gmv:'4.8M',color:'var(--color-amber-500)'},
-  {name:'Nyamirambo Craft Market',loc:'Nyamirambo, Kigali',plan:'Trial',tenants:11,occ:'38%',gmv:'1.1M',color:'var(--color-ink-400)'},
-];
-
-const productsData = [
-  {name:'iPhone 14 Pro',price:'RWF 1.2M',icon:'📱'},
-  {name:'AirPods Max',price:'RWF 600K',icon:'🎧'},
-  {name:'MacBook Air M2',price:'RWF 1.5M',icon:'💻'},
-  {name:'iPad Pro',price:'RWF 950K',icon:'🖥️'},
-];
+import TenantModal from '@/components/TenantModal';
+import PaymentModal from '@/components/PaymentModal';
+import OrderModal from '@/components/OrderModal';
+import { MaintenanceRequestModal, MaintenanceDetailModal } from '@/components/MaintenanceModal';
+import OnboardingWizard from '@/components/OnboardingWizard';
+import DealWizard from '@/components/DealWizard';
+import LoanWizard from '@/components/LoanWizard';
+import NotificationsDropdown from '@/components/NotificationsDropdown';
+import { VacancyModal, AmenityModal, AnnouncementModal, TeamInviteModal, DocumentUploadModal } from '@/components/SmallModals';
+import { HandbookEditModal, BillingModal, OnboardMallWizard, AssignTaskModal, TaskDetailModal } from '@/components/AdminModals';
+import { PayoutModal, EscalationModal } from '@/components/FinanceModals';
+import { ToastProvider, useToast } from '@/components/Toast';
+import { initialFloors, initialTenants, initialLedger, initialOrders, initialStaff, initialTenantProfiles, initialTenantOrders, riderPool, orderStageDefs, maintStageDefs, initialMaintRequests, taskStageDefs, initialLoanApplications, initialCmsDeals, initialMallAmenities, initialMallAnnouncements, initialVacancyInquiries, initialTeamMembers, initialBuildingDocuments, initialHandbookSections, initialMalls, productsData, dealColorOptions, dealPromoOptions, ktPromoOptions, allPromoOptions, editorFilters, maintRoleToCategory, CURRENT_TENANT_NAME, initials, relTime, downloadCSV, orderItemsSummary, orderTotal, orderSubtotal } from '@/lib/data';
 
 /* ─────────────── VIEW TITLES ─────────────── */
 const titles = {
@@ -111,9 +50,6 @@ const titles = {
 };
 
 /* ─────────────── HELPERS ─────────────── */
-function initials(name) {
-  return name.split(' ').map(w => w[0]).slice(0, 2).join('');
-}
 function Badge({ type, label }) {
   return <span className={`badge ${type}`}>{label}</span>;
 }
@@ -141,7 +77,7 @@ function PlaceholderView({ icon, title, sub }) {
 /* ─────────────── FLOOR MAP VIEW ─────────────── */
 function FloorMapView({ setView }) {
   const [activeFloor, setActiveFloor] = useState('G');
-  const units = floors[activeFloor] || [];
+  const units = initialFloors[activeFloor] || [];
   return (
     <div className="view-panel">
       <div className="section-title">
@@ -213,7 +149,7 @@ function FloorMapView({ setView }) {
 
 /* ─────────────── OVERVIEW VIEW ─────────────── */
 function OverviewView({ setView }) {
-  const miniUnits = floors['G'].slice(0, 8);
+  const miniUnits = initialFloors['G'].slice(0, 8);
   return (
     <div className="view-panel">
       <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:14,marginBottom:22}}>
@@ -292,12 +228,12 @@ function OverviewView({ setView }) {
 }
 
 /* ─────────────── TENANT DIRECTORY VIEW ─────────────── */
-function TenantsView() {
+function TenantsView({ onManage, onOnboard }) {
   return (
     <div className="view-panel">
       <div className="section-title">
         <div><h2>Tenant Directory</h2><div className="hint">42 active tenants across 3 floors</div></div>
-        <button className="btn primary">+ Onboard tenant</button>
+        <button className="btn primary" onClick={onOnboard}>+ Onboard tenant</button>
       </div>
       <div className="card">
         <div className="card-body" style={{paddingTop:16}}>
@@ -306,7 +242,7 @@ function TenantsView() {
               <tr><th>Tenant</th><th>Category</th><th>Repayment plan</th><th>Storefront</th><th>Rent status</th><th>Contact</th><th></th></tr>
             </thead>
             <tbody>
-              {tenants.map(t => (
+              {initialTenants.map(t => (
                 <tr key={t.name} className="rowhover">
                   <td><div className="cell-tenant"><div className="avatar-sm">{initials(t.name)}</div><div><div className="tname">{t.name}</div><div className="tunit">{t.unit}</div></div></div></td>
                   <td>{t.cat}</td>
@@ -314,7 +250,7 @@ function TenantsView() {
                   <td><Badge type={t.store} label={t.store === 'published' ? 'Published' : 'Draft'} /></td>
                   <td><Badge type={t.rent} label={t.rent === 'paid' ? 'Paid up' : t.rent === 'due' ? 'Due soon' : 'Overdue'} /></td>
                   <td className="mono" style={{fontSize:11.5,color:'#4B5A50'}}>{t.phone}</td>
-                  <td><button className="btn ghost" style={{padding:'6px 10px',fontSize:11.5}}>Manage</button></td>
+                  <td><button className="btn ghost" style={{padding:'6px 10px',fontSize:11.5}} onClick={() => onManage(t)}>Manage</button></td>
                 </tr>
               ))}
             </tbody>
@@ -326,11 +262,12 @@ function TenantsView() {
 }
 
 /* ─────────────── RENT & PAYMENTS VIEW ─────────────── */
-function RentView() {
+function RentView({ onExport }) {
   return (
     <div className="view-panel">
       <div className="section-title">
         <div><h2>Rent &amp; Payments</h2><div className="hint">Landlord advances and tenant repayment plans</div></div>
+        {onExport && <button className="btn ghost" onClick={() => onExport('rent')}>⬇ Export CSV</button>}
       </div>
       <div className="card">
         <div className="card-body" style={{paddingTop:16}}>
@@ -339,7 +276,7 @@ function RentView() {
               <tr><th>Tenant</th><th>Plan</th><th>Per instalment</th><th>Progress</th><th>Balance</th><th>Next due</th><th>Status</th></tr>
             </thead>
             <tbody>
-              {ledger.map(l => (
+              {initialLedger.map(l => (
                 <tr key={l.name} className="rowhover">
                   <td><div className="cell-tenant"><div className="avatar-sm">{initials(l.name)}</div><div><div className="tname">{l.name}</div><div className="tunit">{l.unit}</div></div></div></td>
                   <td><span className={`freq-pill ${l.plan}`}>{l.plan === 'daily' ? 'Daily' : 'Weekly'}</span></td>
@@ -364,7 +301,7 @@ function RentView() {
 }
 
 /* ─────────────── DELIVERIES VIEW ─────────────── */
-function DeliveriesView() {
+function DeliveriesView({ onOrderClick }) {
   return (
     <div className="view-panel">
       <div className="section-title">
@@ -377,8 +314,8 @@ function DeliveriesView() {
               <tr><th>Order ID</th><th>Shop</th><th>Item(s)</th><th>Rider</th><th>Status</th><th>Value</th><th>Time</th></tr>
             </thead>
             <tbody>
-              {orders.map(o => (
-                <tr key={o.id} className="rowhover">
+              {initialOrders.map(o => (
+                <tr key={o.id} className="rowhover" onClick={() => onOrderClick && onOrderClick(o)} style={{cursor: onOrderClick ? 'pointer' : undefined}}>
                   <td className="mono">{o.id}</td>
                   <td>{o.shop}</td>
                   <td style={{color:'#4B5A50'}}>{o.item}</td>
@@ -397,7 +334,7 @@ function DeliveriesView() {
 }
 
 /* ─────────────── STAFF VIEW ─────────────── */
-function StaffView() {
+function StaffView({ onAssignTask }) {
   return (
     <div className="view-panel">
       <div className="section-title">
@@ -405,7 +342,7 @@ function StaffView() {
         <button className="btn primary">+ Add staff member</button>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:14}}>
-        {staffList.map(s => (
+        {initialStaff.map(s => (
           <div key={s.name} className="staff-card">
             <div className="staff-top">
               <div className="staff-av">{s.name.split(' ').map(w=>w[0]).join('')}</div>
@@ -414,7 +351,7 @@ function StaffView() {
             <div className="staff-status"><span className="sdot" style={{background:s.color}}></span>{s.status}</div>
             <div className="staff-foot">
               <button className="btn ghost" style={{flex:1,justifyContent:'center',padding:'7px',fontSize:11.5}}>Call</button>
-              <button className="btn primary" style={{flex:1,justifyContent:'center',padding:'7px',fontSize:11.5}}>Assign task</button>
+              <button className="btn primary" style={{flex:1,justifyContent:'center',padding:'7px',fontSize:11.5}} onClick={onAssignTask}>Assign task</button>
             </div>
           </div>
         ))}
@@ -424,7 +361,7 @@ function StaffView() {
 }
 
 /* ─────────────── PLATFORM CONSOLE VIEW ─────────────── */
-function ConsoleView({ onEnterMall }) {
+function ConsoleView({ onEnterMall, onOnboardMall }) {
   return (
     <div className="view-panel">
       <div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:14,marginBottom:22}}>
@@ -436,10 +373,10 @@ function ConsoleView({ onEnterMall }) {
       </div>
       <div className="section-title">
         <div><h2>Malls &amp; buildings</h2><div className="hint">Every property running on yoMall — open any of them as if you were the landlord</div></div>
-        <button className="btn primary">+ Onboard new mall</button>
+        <button className="btn primary" onClick={onOnboardMall}>+ Onboard new mall</button>
       </div>
       <div className="mall-grid">
-        {malls.map(m => (
+        {initialMalls.map(m => (
           <div key={m.name} className="mall-card">
             <div className="mall-cover" style={{background:`linear-gradient(135deg, ${m.color}, #2E1065)`}}>
               <div className="mc-plan">{m.plan} plan</div>
@@ -527,7 +464,7 @@ function StorefrontView() {
 }
 
 /* ─────────────── TENANT OVERVIEW VIEW ─────────────── */
-function TenantOverviewView() {
+function TenantOverviewView({ onPayNow, onNewMaint }) {
   return (
     <div className="view-panel">
       <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,marginBottom:22}}>
@@ -560,11 +497,11 @@ function TenantOverviewView() {
           <div className="card-body" style={{display:'flex',flexDirection:'column',gap:10}}>
             <div className="announce-card" style={{borderColor:'#FBE7E7',background:'#FBE7E7'}}>
               <div><div className="a-title" style={{color:'#D64545'}}>3 days overdue</div><div className="a-body">RWF 57,000 owed on your daily repayment plan.</div></div>
-              <button className="btn" style={{background:'#fff'}}>Pay now</button>
+              <button className="btn" style={{background:'#fff'}} onClick={onPayNow}>Pay now</button>
             </div>
             <div className="announce-card">
               <div><div className="a-title">Need a repair?</div><div className="a-body">Request maintenance from our on-call directory.</div></div>
-              <button className="btn" style={{background:'#fff'}}>Directory</button>
+              <button className="btn" style={{background:'#fff'}} onClick={onNewMaint}>Directory</button>
             </div>
           </div>
         </div>
@@ -575,7 +512,7 @@ function TenantOverviewView() {
 
 /* ─────────────── TENANT RENT VIEW ─────────────── */
 function TenantRentView() {
-  const l = ledger[0];
+  const l = initialLedger[0];
   return (
     <div className="view-panel">
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18,marginBottom:18}}>
@@ -697,7 +634,7 @@ function TenantLeaseView() {
 }
 
 /* ─────────────── TENANT ORDERS VIEW ─────────────── */
-function TenantOrdersView() {
+function TenantOrdersView({ onOrderClick }) {
   return (
     <div className="view-panel">
       <div className="section-title">
@@ -708,14 +645,14 @@ function TenantOrdersView() {
           <table>
             <thead><tr><th>Order ID</th><th>Item(s)</th><th>Customer</th><th>Value</th><th>Status</th><th>Time</th></tr></thead>
             <tbody>
-              {[['#YD-3391','Earbuds, charger, speaker','Amina K.','52,000','transit','3 min ago'],['#YD-3387','USB-C cable x3','Jean P.','8,400','delivered','2 hrs ago'],['#YD-3381','Screen protector','Grace M.','3,500','delivered','5 hrs ago'],['#YD-3374','Bluetooth speaker','Eric N.','24,000','delivered','Yesterday']].map(([id,item,cust,val,status,time]) => (
-                <tr key={id} className="rowhover">
-                  <td className="mono">{id}</td>
-                  <td style={{color:'#4B5A50'}}>{item}</td>
-                  <td>{cust}</td>
-                  <td className="mono">RWF {val}</td>
-                  <td><Badge type={status === 'transit' ? 'transit' : 'delivered'} label={status === 'transit' ? 'In transit' : 'Delivered'} /></td>
-                  <td style={{fontSize:11.5,color:'#8A968D'}}>{time}</td>
+              {initialTenantOrders.map(o => (
+                <tr key={o.id} className="rowhover" onClick={() => onOrderClick && onOrderClick(o)} style={{cursor: onOrderClick ? 'pointer' : undefined}}>
+                  <td className="mono">#{o.id}</td>
+                  <td style={{color:'#4B5A50'}}>{orderItemsSummary(o)}</td>
+                  <td>{o.customerName}</td>
+                  <td className="mono">RWF {orderTotal(o).toLocaleString()}</td>
+                  <td><Badge type={o.stage <= 4 ? 'transit' : 'delivered'} label={o.stage <= 4 ? 'In transit' : 'Delivered'} /></td>
+                  <td style={{fontSize:11.5,color:'#8A968D'}}>{relTime(o.placedAt)}</td>
                 </tr>
               ))}
             </tbody>
@@ -727,23 +664,20 @@ function TenantOrdersView() {
 }
 
 /* ─────────────── HANDBOOK VIEW ─────────────── */
-function HandbookView() {
-  const sections = [
-    {title:'Operating hours',body:'The mall is open to the public from 08:00 to 21:00 Monday through Saturday, and 10:00 to 19:00 on Sundays. Tenants must be ready to trade by opening time and must not close early without prior written approval.'},
-    {title:'Waste & cleanliness',body:"Each tenant is responsible for keeping their unit and immediate surroundings clean at all times. Waste should be disposed of in designated bins only. Waste collection is carried out at 07:00 and 20:30 daily."},
-    {title:'Deliveries & loading bay',body:'All deliveries must be coordinated through the loading bay on the east side of the building. Deliveries are permitted between 06:00 and 09:00 only to avoid disruption during trading hours.'},
-    {title:'Noise & conduct',body:'Loud music, megaphones, or any audio equipment that disturbs other tenants or customers is not permitted. All staff must maintain professional conduct at all times.'},
-    {title:'Emergency procedures',body:'In the event of a fire or emergency, activate the nearest alarm and proceed to the designated muster point at the north car park. Do not use lifts during emergencies. Familiarise yourself with the evacuation map posted in every unit.'},
-  ];
+function HandbookView({ onEditSection }) {
+  const sections = initialHandbookSections;
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Tenant Handbook</h2><div className="hint">Building operating rules for all tenants</div></div></div>
       <div className="card">
         <div className="card-body">
           {sections.map((s,i) => (
-            <div key={s.title} style={{padding:'14px 0',borderTop: i > 0 ? '1px solid #F2EFE6' : 'none'}}>
-              <div style={{fontSize:13.5,fontWeight:700,marginBottom:6}}>📋 {s.title}</div>
-              <div style={{fontSize:12.8,color:'#4B5A50',lineHeight:1.7}}>{s.body}</div>
+            <div key={s.id || s.title} style={{padding:'14px 0',borderTop: i > 0 ? '1px solid #F2EFE6' : 'none',display:'flex',justifyContent:'space-between',alignItems:'flex-start'}}>
+              <div style={{flex:1}}>
+                <div style={{fontSize:13.5,fontWeight:700,marginBottom:6}}>📋 {s.title}</div>
+                <div style={{fontSize:12.8,color:'#4B5A50',lineHeight:1.7}}>{s.body}</div>
+              </div>
+              {onEditSection && <button className="btn ghost" style={{padding:'5px 10px',fontSize:11,flexShrink:0,marginLeft:8}} onClick={() => onEditSection(s)}>Edit</button>}
             </div>
           ))}
         </div>
@@ -753,11 +687,11 @@ function HandbookView() {
 }
 
 /* ─────────────── GUIDE VIEW ─────────────── */
-function GuideView() {
+function GuideView({ onEditAmenity, onNewAmenity, onEditAnnouncement, onNewAnnouncement }) {
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Mall Guide Content</h2><div className="hint">Wayfinding, amenities and customer announcements</div></div>
-        <button className="btn primary">+ New announcement</button>
+        <button className="btn primary" onClick={onNewAnnouncement}>+ New announcement</button>
       </div>
       <div style={{display:'grid',gridTemplateColumns:'1.55fr 1fr',gap:18}}>
         <div>
@@ -770,7 +704,7 @@ function GuideView() {
               ].map(a => (
                 <div key={a.title} className="announce-card">
                   <div><div className="a-title">{a.title}</div><div className="a-body">{a.body}</div><div className="a-meta">{a.meta}</div></div>
-                  <div style={{display:'flex',gap:6,flexShrink:0}}><button className="btn ghost" style={{padding:'6px 10px',fontSize:11}}>Edit</button><button className="btn ghost" style={{padding:'6px 10px',fontSize:11,color:'#D64545'}}>Remove</button></div>
+                  <div style={{display:'flex',gap:6,flexShrink:0}}><button className="btn ghost" style={{padding:'6px 10px',fontSize:11}} onClick={() => onEditAnnouncement && onEditAnnouncement(a)}>Edit</button><button className="btn ghost" style={{padding:'6px 10px',fontSize:11,color:'#D64545'}}>Remove</button></div>
                 </div>
               ))}
             </div>
@@ -781,7 +715,7 @@ function GuideView() {
               {[['🅿️','Car parking','Level B1 · 120 bays · RWF 500/hr'],['🚻','Restrooms','Every floor · east wing'],['🏧','ATMs','Ground floor near main entrance'],['🔒','Prayer room','Floor 2 · open 06:00–22:00'],['🍽️','Food court','Floor 2 · 8 F&B tenants']].map(([ic,name,sub]) => (
                 <div key={name} className="amenity-row">
                   <div className="amenity-left"><div className="amenity-ic">{ic}</div><div><div className="amenity-name">{name}</div><div className="amenity-sub">{sub}</div></div></div>
-                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11.5}}>Edit</button>
+                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11.5}} onClick={() => onEditAmenity && onEditAmenity({icon:ic,name,sub})}>Edit</button>
                 </div>
               ))}
             </div>
@@ -830,24 +764,25 @@ function RenewalsView() {
 }
 
 /* ─────────────── REPORTS VIEW ─────────────── */
-function ReportsView() {
+function ReportsView({ onExport }) {
+  const reportTypes = [
+    {icon:'📊',title:'Rent collection report',sub:'Monthly rent collected, outstanding balances and payment plan progress',btn:'Export CSV',type:'rent'},
+    {icon:'🏢',title:'Occupancy report',sub:'Current occupancy by floor, unit status and vacancy summary',btn:'Export CSV',type:'occupancy'},
+    {icon:'📦',title:'Delivery & sales report',sub:'yoDeals order volumes, GMV and rider performance for this month',btn:'Export CSV',type:'deliveries'},
+    {icon:'📋',title:'Tenant directory export',sub:'Full list of tenants with contact info, lease dates and rent status',btn:'Export CSV',type:'tenants'},
+  ];
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Reports</h2><div className="hint">Export building data for your own records</div></div></div>
       <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:18}}>
-        {[
-          {icon:'📊',title:'Rent collection report',sub:'Monthly rent collected, outstanding balances and payment plan progress',btn:'Export CSV'},
-          {icon:'🏢',title:'Occupancy report',sub:'Current occupancy by floor, unit status and vacancy summary',btn:'Export CSV'},
-          {icon:'📦',title:'Delivery & sales report',sub:'yoDeals order volumes, GMV and rider performance for this month',btn:'Export CSV'},
-          {icon:'📋',title:'Tenant directory export',sub:'Full list of tenants with contact info, lease dates and rent status',btn:'Export CSV'},
-        ].map(r => (
+        {reportTypes.map(r => (
           <div key={r.title} className="card">
             <div className="card-body" style={{display:'flex',gap:14,alignItems:'flex-start'}}>
               <div style={{fontSize:28,flexShrink:0}}>{r.icon}</div>
               <div style={{flex:1}}>
                 <div style={{fontWeight:700,fontSize:13.5,marginBottom:4}}>{r.title}</div>
                 <div style={{fontSize:12,color:'#4B5A50',marginBottom:12}}>{r.sub}</div>
-                <button className="btn primary">{r.btn}</button>
+                <button className="btn primary" onClick={() => onExport && onExport(r.type)}>{r.btn}</button>
               </div>
             </div>
           </div>
@@ -858,11 +793,11 @@ function ReportsView() {
 }
 
 /* ─────────────── TEAM VIEW ─────────────── */
-function TeamView() {
+function TeamView({ onInvite }) {
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Team</h2><div className="hint">People with access to manage this building</div></div>
-        <button className="btn primary">+ Invite team member</button>
+        <button className="btn primary" onClick={onInvite}>+ Invite team member</button>
       </div>
       <div className="card">
         <div className="card-body">
@@ -880,11 +815,11 @@ function TeamView() {
 }
 
 /* ─────────────── DOCUMENTS VIEW ─────────────── */
-function DocumentsView() {
+function DocumentsView({ onUpload }) {
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Documents</h2><div className="hint">Compliance certificates and building documents</div></div>
-        <button className="btn primary">+ Upload document</button>
+        <button className="btn primary" onClick={onUpload}>+ Upload document</button>
       </div>
       <div className="card">
         <div className="card-body">
@@ -1057,7 +992,7 @@ function LandlordsView() {
 }
 
 /* ─────────────── LENDING VIEW ─────────────── */
-function LendingView() {
+function LendingView({ onReviewLoan }) {
   return (
     <div className="view-panel">
       <div className="context-banner sa-flex" style={{background:'#3A2E12'}}>
@@ -1077,19 +1012,16 @@ function LendingView() {
           <table>
             <thead><tr><th>Applicant</th><th>Mall / Unit</th><th>Amount</th><th>Term</th><th>KYC</th><th>Status</th><th>Submitted</th><th></th></tr></thead>
             <tbody>
-              {[['Amasezerano Boutique','Musanze Heritage Plaza · 1F-06','280,000','4 weeks · Weekly','Partial','Approved','144 hrs ago'],
-                ['Huye Print & Copy','Huye Trade Center · G-08','150,000','30 days · Daily','Partial','Pending review','48 hrs ago'],
-                ['Remera Fashion House','Remera Business Arcade · 2F-11','600,000','4 weeks · Weekly','Partial','Rejected','216 hrs ago']
-              ].map((r,i) => (
-                <tr key={i} className="rowhover">
-                  <td><div className="cell-tenant"><div className="avatar-sm">{initials(r[0])}</div><div className="tname">{r[0]}</div></div></td>
-                  <td>{r[1]}</td>
-                  <td className="mono">RWF {r[2]}</td>
-                  <td>{r[3]}</td>
-                  <td><Badge type="due" label={r[4]} /></td>
-                  <td><Badge type={r[5] === 'Approved' ? 'paid' : r[5] === 'Rejected' ? 'overdue' : 'due'} label={r[5]} /></td>
-                  <td style={{fontSize:11.5,color:'#8A968D'}}>{r[6]}</td>
-                  <td><button className="btn ghost" style={{padding:'5px 10px',fontSize:11}}>Review →</button></td>
+              {initialLoanApplications.map((app,i) => (
+                <tr key={app.id} className="rowhover">
+                  <td><div className="cell-tenant"><div className="avatar-sm">{initials(app.tenantName)}</div><div className="tname">{app.tenantName}</div></div></td>
+                  <td>{app.mall} · {app.unit}</td>
+                  <td className="mono">RWF {app.amount.toLocaleString()}</td>
+                  <td>{app.term} · {app.frequency === 'daily' ? 'Daily' : 'Weekly'}</td>
+                  <td><Badge type="due" label="Partial" /></td>
+                  <td><Badge type={app.status === 'approved' ? 'paid' : app.status === 'rejected' ? 'overdue' : 'due'} label={app.status === 'approved' ? 'Approved' : app.status === 'rejected' ? 'Rejected' : 'Pending review'} /></td>
+                  <td style={{fontSize:11.5,color:'#8A968D'}}>{relTime(app.submittedAt)}</td>
+                  <td><button className="btn ghost" style={{padding:'5px 10px',fontSize:11}} onClick={() => onReviewLoan && onReviewLoan(app)}>Review →</button></td>
                 </tr>
               ))}
             </tbody>
@@ -1150,23 +1082,25 @@ function PerformanceView() {
 }
 
 /* ─────────────── MODERATION VIEW ─────────────── */
-function ModerationView() {
+function ModerationView({ onRejectDeal }) {
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Deal Moderation</h2><div className="hint">Every deal is reviewed before it appears live on yoDeals</div></div></div>
       <div className="card">
         <div className="card-body">
-          <div style={{display:'flex',gap:12,padding:'12px 0',alignItems:'center'}}>
-            <div style={{width:40,height:40,borderRadius:9,background:'#FBE7E7',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}}>🏷️</div>
-            <div style={{flex:1}}>
-              <div style={{fontWeight:700,fontSize:13.5}}>Buy a Power Bank, get a free cable</div>
-              <div style={{fontSize:11.5,color:'#8A968D',marginTop:2}}>Nyabugogo TechHub · BOGO</div>
+          {initialCmsDeals.filter(d => d.moderationStatus === 'pending').map(d => (
+            <div key={d.id} style={{display:'flex',gap:12,padding:'12px 0',alignItems:'center',borderBottom:'1px solid #F2EFE6'}}>
+              <div style={{width:40,height:40,borderRadius:9,background:'#FBE7E7',display:'flex',alignItems:'center',justifyContent:'center',fontSize:20}}>🏷️</div>
+              <div style={{flex:1}}>
+                <div style={{fontWeight:700,fontSize:13.5}}>{d.headline}</div>
+                <div style={{fontSize:11.5,color:'#8A968D',marginTop:2}}>{d.shopName} · {d.badge}</div>
+              </div>
+              <div style={{display:'flex',gap:8}}>
+                <button className="btn ghost" style={{color:'#D64545',borderColor:'#FBE7E7',padding:'6px 10px',fontSize:11}} onClick={() => onRejectDeal && onRejectDeal(d)}>Reject</button>
+                <button className="btn primary" style={{padding:'6px 10px',fontSize:11}}>Approve</button>
+              </div>
             </div>
-            <div style={{display:'flex',gap:8}}>
-              <button className="btn ghost" style={{color:'#D64545',borderColor:'#FBE7E7',padding:'6px 10px',fontSize:11}}>Reject</button>
-              <button className="btn primary" style={{padding:'6px 10px',fontSize:11}}>Approve</button>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
@@ -1243,11 +1177,53 @@ function AuditView() {
 
 /* ─────────────── MAIN APP ─────────────── */
 export default function App() {
+  return (
+    <ToastProvider>
+      <AppContent />
+    </ToastProvider>
+  );
+}
+
+function AppContent() {
+  const toast = useToast();
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentRole, setCurrentRole] = useState('landlord');
   const [currentView, setCurrentView] = useState('overview');
   const [viewHistory, setViewHistory] = useState([]);
   const [mallName, setMallName] = useState('Kigali Convention Mall');
+
+  // Modal states
+  const [selectedTenant, setSelectedTenant] = useState(null);
+  const [showTenantModal, setShowTenantModal] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showOrderModal, setShowOrderModal] = useState(false);
+  const [showMaintRequest, setShowMaintRequest] = useState(false);
+  const [selectedMaintReq, setSelectedMaintReq] = useState(null);
+  const [showMaintDetail, setShowMaintDetail] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showDealWizard, setShowDealWizard] = useState(false);
+  const [showLoanWizard, setShowLoanWizard] = useState(false);
+  const [selectedLoan, setSelectedLoan] = useState(null);
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showVacancyModal, setShowVacancyModal] = useState(false);
+  const [showAmenityModal, setShowAmenityModal] = useState(false);
+  const [selectedAmenity, setSelectedAmenity] = useState(null);
+  const [showAnnouncementModal, setShowAnnouncementModal] = useState(false);
+  const [selectedAnnouncement, setSelectedAnnouncement] = useState(null);
+  const [showTeamInvite, setShowTeamInvite] = useState(false);
+  const [showDocUpload, setShowDocUpload] = useState(false);
+  const [showHandbookEdit, setShowHandbookEdit] = useState(false);
+  const [selectedHandbookSection, setSelectedHandbookSection] = useState(null);
+  const [showBilling, setShowBilling] = useState(false);
+  const [showOnboardMall, setShowOnboardMall] = useState(false);
+  const [showAssignTask, setShowAssignTask] = useState(false);
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [showTaskDetail, setShowTaskDetail] = useState(false);
+  const [showPayout, setShowPayout] = useState(false);
+  const [showEscalation, setShowEscalation] = useState(false);
+  const [selectedEscalationTenant, setSelectedEscalationTenant] = useState(null);
+  const [showModerationReject, setShowModerationReject] = useState(false);
 
   const navigate = useCallback((view) => {
     setViewHistory(prev => [...prev, currentView]);
@@ -1291,28 +1267,37 @@ export default function App() {
     switch (currentView) {
       case 'overview':     return <OverviewView setView={navigate} />;
       case 'floormap':     return <FloorMapView setView={navigate} />;
-      case 'tenants':      return <TenantsView />;
-      case 'rent':         return <RentView />;
-      case 'deliveries':   return <DeliveriesView />;
-      case 'staff':        return <StaffView />;
-      case 'guide':        return <GuideView />;
+      case 'tenants':      return <TenantsView onManage={(t) => { setSelectedTenant(t); setShowTenantModal(true); }} onOnboard={() => setShowOnboarding(true)} />;
+      case 'rent':         return <RentView onExport={(type) => {
+        if (type === 'rent') downloadCSV('rent-collection.csv', [['Tenant','Unit','Plan','Per Instalment','Balance','Status'], ...initialLedger.map(l => [l.name, l.unit, l.plan, l.per, l.bal, l.status])]);
+        toast('CSV exported');
+      }} />;
+      case 'deliveries':   return <DeliveriesView onOrderClick={(o) => { setSelectedOrder(o); setShowOrderModal(true); }} />;
+      case 'staff':        return <StaffView onAssignTask={() => setShowAssignTask(true)} />;
+      case 'guide':        return <GuideView onEditAmenity={(a) => { setSelectedAmenity(a); setShowAmenityModal(true); }} onNewAmenity={() => { setSelectedAmenity(null); setShowAmenityModal(true); }} onEditAnnouncement={(a) => { setSelectedAnnouncement(a); setShowAnnouncementModal(true); }} onNewAnnouncement={() => { setSelectedAnnouncement(null); setShowAnnouncementModal(true); }} />;
       case 'renewals':     return <RenewalsView />;
-      case 'reports':      return <ReportsView />;
-      case 'team':         return <TeamView />;
-      case 'documents':    return <DocumentsView />;
-      case 'handbook':     return <HandbookView />;
+      case 'reports':      return <ReportsView onExport={(type) => {
+        if (type === 'rent') downloadCSV('rent-collection.csv', [['Tenant','Unit','Plan','Per Instalment','Balance','Status'], ...initialLedger.map(l => [l.name, l.unit, l.plan, l.per, l.bal, l.status])]);
+        else if (type === 'occupancy') downloadCSV('occupancy.csv', [['Unit','Status','Tenant'], ...Object.entries(initialFloors).flatMap(([f, units]) => units.map(u => [u.n, u.s, u.t || 'Vacant']))]);
+        else if (type === 'deliveries') downloadCSV('deliveries.csv', [['Order ID','Shop','Items','Rider','Status','Value'], ...initialOrders.map(o => [o.id, o.shop, o.item, o.rider, o.status, o.val])]);
+        else if (type === 'tenants') downloadCSV('tenants.csv', [['Name','Unit','Category','Plan','Phone'], ...initialTenants.map(t => [t.name, t.unit, t.cat, t.plan, t.phone])]);
+        toast('CSV exported');
+      }} />;
+      case 'team':         return <TeamView onInvite={() => setShowTeamInvite(true)} />;
+      case 'documents':    return <DocumentsView onUpload={() => setShowDocUpload(true)} />;
+      case 'handbook':     return <HandbookView onEditSection={(s) => { setSelectedHandbookSection(s); setShowHandbookEdit(true); }} />;
       case 'storefront':   return <StorefrontView />;
       case 'yodeals':      return <YoDealsView />;
-      case 'console':      return <ConsoleView onEnterMall={enterMall} />;
-      case 't-overview':   return <TenantOverviewView />;
-      case 't-orders':     return <TenantOrdersView />;
+      case 'console':      return <ConsoleView onEnterMall={enterMall} onOnboardMall={() => setShowOnboardMall(true)} />;
+      case 't-overview':   return <TenantOverviewView onPayNow={() => setShowPaymentModal(true)} onNewMaint={() => setShowMaintRequest(true)} />;
+      case 't-orders':     return <TenantOrdersView onOrderClick={(o) => { setSelectedOrder(o); setShowOrderModal(true); }} />;
       case 't-rent':       return <TenantRentView />;
       case 't-lease':      return <TenantLeaseView />;
       case 't-messages':   return <TenantMessagesView />;
       case 'landlords':    return <LandlordsView />;
-      case 'lending':      return <LendingView />;
+      case 'lending':      return <LendingView onReviewLoan={(app) => { setSelectedLoan(app); setShowLoanWizard(true); }} />;
       case 'performance':  return <PerformanceView />;
-      case 'moderation':   return <ModerationView />;
+      case 'moderation':   return <ModerationView onRejectDeal={(d) => { setShowModerationReject(true); }} />;
       case 'escalations':  return <EscalationsView />;
       case 'broadcast':    return <BroadcastView />;
       case 'privacy':      return <PrivacyView />;
@@ -1330,6 +1315,8 @@ export default function App() {
           subtitle={currentView === 'overview' ? `${mallName} · Sunday, 19 July 2026` : titleEntry[1]}
           canGoBack={viewHistory.length > 0}
           onBack={goBack}
+          role={currentRole}
+          onNavigate={navigate}
         />
         <main style={{padding:'24px 26px 60px'}}>
           {showBanner && (
@@ -1341,6 +1328,68 @@ export default function App() {
           {renderView()}
         </main>
       </div>
+
+      {/* ===== MODALS ===== */}
+      {showTenantModal && selectedTenant && (
+        <TenantModal show={showTenantModal} onClose={() => setShowTenantModal(false)} tenant={selectedTenant} profile={initialTenantProfiles[selectedTenant.name]} onSave={(p) => { toast('Tenant updated'); }} />
+      )}
+      {showPaymentModal && (
+        <PaymentModal show={showPaymentModal} onClose={() => setShowPaymentModal(false)} tenantName={CURRENT_TENANT_NAME} balance="57,000" dailyRate="15,000" onPay={(amt, method) => { toast('Payment processed'); setShowPaymentModal(false); }} />
+      )}
+      {showOrderModal && selectedOrder && (
+        <OrderModal show={showOrderModal} onClose={() => setShowOrderModal(false)} order={selectedOrder} stages={orderStageDefs} onAdvanceStage={(id, s) => { toast('Stage advanced'); }} onAssignRider={(id, r) => { toast('Rider assigned'); }} onConfirmDelivery={(id, pin) => { toast('Delivery confirmed'); }} riderPool={riderPool} />
+      )}
+      {showOnboarding && (
+        <OnboardingWizard show={showOnboarding} onClose={() => setShowOnboarding(false)} floors={initialFloors} onComplete={(t) => { toast('Tenant onboarded'); }} />
+      )}
+      {showDealWizard && (
+        <DealWizard show={showDealWizard} onClose={() => setShowDealWizard(false)} dealColorOptions={dealColorOptions} dealPromoOptions={dealPromoOptions} ktPromoOptions={ktPromoOptions} onComplete={(d) => { toast('Deal published'); }} />
+      )}
+      {showMaintRequest && (
+        <MaintenanceRequestModal show={showMaintRequest} onClose={() => setShowMaintRequest(false)} onSubmit={(r) => { toast('Request submitted'); }} staffList={initialStaff} />
+      )}
+      {showMaintDetail && selectedMaintReq && (
+        <MaintenanceDetailModal show={showMaintDetail} onClose={() => setShowMaintDetail(false)} request={selectedMaintReq} stages={maintStageDefs} onRate={(id, r) => { toast('Rating submitted'); }} />
+      )}
+      {showLoanWizard && selectedLoan && (
+        <LoanWizard show={showLoanWizard} onClose={() => setShowLoanWizard(false)} application={selectedLoan} onApprove={(id) => { toast('Loan approved'); }} onReject={(id, reason) => { toast('Loan rejected'); }} />
+      )}
+      {showTeamInvite && (
+        <TeamInviteModal show={showTeamInvite} onClose={() => setShowTeamInvite(false)} onInvite={(m) => { toast('Invitation sent'); }} />
+      )}
+      {showDocUpload && (
+        <DocumentUploadModal show={showDocUpload} onClose={() => setShowDocUpload(false)} onUpload={(d) => { toast('Document uploaded'); }} />
+      )}
+      {showHandbookEdit && (
+        <HandbookEditModal show={showHandbookEdit} onClose={() => setShowHandbookEdit(false)} section={selectedHandbookSection} onSave={(s) => { toast('Section saved'); }} onDelete={(id) => { toast('Section deleted'); }} />
+      )}
+      {showAmenityModal && (
+        <AmenityModal show={showAmenityModal} onClose={() => setShowAmenityModal(false)} amenity={selectedAmenity} onSave={(a) => { toast('Amenity saved'); }} onDelete={(id) => { toast('Amenity deleted'); }} />
+      )}
+      {showAnnouncementModal && (
+        <AnnouncementModal show={showAnnouncementModal} onClose={() => setShowAnnouncementModal(false)} announcement={selectedAnnouncement} onSave={(a) => { toast('Announcement saved'); }} onDelete={(id) => { toast('Announcement deleted'); }} />
+      )}
+      {showVacancyModal && (
+        <VacancyModal show={showVacancyModal} onClose={() => setShowVacancyModal(false)} unit="G-03" inquiries={initialVacancyInquiries.filter(i => i.unit === 'G-03')} onListUnit={() => { toast('Unit listed'); }} onRemoveListing={() => { toast('Listing removed'); }} />
+      )}
+      {showOnboardMall && (
+        <OnboardMallWizard show={showOnboardMall} onClose={() => setShowOnboardMall(false)} onComplete={(m) => { toast('Mall onboarded'); }} />
+      )}
+      {showAssignTask && (
+        <AssignTaskModal show={showAssignTask} onClose={() => setShowAssignTask(false)} staff={initialStaff} onSubmit={(t) => { toast('Task assigned'); }} />
+      )}
+      {showTaskDetail && selectedTask && (
+        <TaskDetailModal show={showTaskDetail} onClose={() => setShowTaskDetail(false)} task={selectedTask} stages={taskStageDefs} onAdvanceStage={(id) => { toast('Stage advanced'); }} />
+      )}
+      {showBilling && (
+        <BillingModal show={showBilling} onClose={() => setShowBilling(false)} mall={initialMalls[0]} />
+      )}
+      {showPayout && (
+        <PayoutModal show={showPayout} onClose={() => setShowPayout(false)} pendingAmount="14,100,000" bankInfo="Bank of Kigali •••• 4471" onProcess={() => { toast('Payout processed'); }} />
+      )}
+      {showEscalation && selectedEscalationTenant && (
+        <EscalationModal show={showEscalation} onClose={() => setShowEscalation(false)} tenantName={selectedEscalationTenant.name} tenantUnit={selectedEscalationTenant.unit} currentMessage="" onEscalate={() => { toast('Issue escalated'); }} />
+      )}
     </div>
   );
 }
