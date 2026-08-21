@@ -163,6 +163,8 @@ tr.rowhover:hover { background: #FAF8F3; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
   font-size: 12.5px;
   color: #4B5A50;
   margin-bottom: 14px;
@@ -225,12 +227,12 @@ tr.rowhover:hover { background: #FAF8F3; cursor: pointer; }
 .btn.ghost  { background: none; }
 
 /* =================== SECTION TITLE =================== */
-.section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.section-title { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; gap: 10px; flex-wrap: wrap; }
 .section-title h2 { font-size: 17px; margin: 0; font-weight: 700; }
 .section-title .hint { font-size: 12.5px; color: #8A968D; margin-top: 2px; }
 
 /* =================== ANNOUNCE CARD =================== */
-.announce-card { border: 1.5px dashed #E4E1D6; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.announce-card { border: 1.5px dashed #E4E1D6; border-radius: 12px; padding: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 10px; flex-wrap: wrap; }
 .announce-card .a-title { font-size: 12.8px; font-weight: 700; }
 .announce-card .a-body  { font-size: 11.5px; color: #4B5A50; margin-top: 3px; max-width: 420px; }
 .announce-card .a-meta  { font-size: 10.5px; color: #8A968D; margin-top: 5px; }
