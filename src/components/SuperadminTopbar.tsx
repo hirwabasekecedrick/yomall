@@ -1,7 +1,10 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, ArrowLeft, ShieldCheck, Search, Bell } from 'lucide-react';
+import { Menu, ArrowLeft, ShieldCheck, Bell } from 'lucide-react';
 import NotificationsDropdown from './NotificationsDropdown';
+import SettingsMenu from './SettingsMenu';
+import QuickSearch, { SearchItem } from './QuickSearch';
+import { initialMalls } from '@/lib/data';
 
 export default function SuperadminTopbar({ title, subtitle, canGoBack, onBack, onNavigate, onMenu }: { title: string; subtitle?: string; canGoBack?: boolean; onBack?: () => void; onNavigate?: (v: string) => void; onMenu?: () => void }) {
   const [showNotifs, setShowNotifs] = useState(false);
@@ -17,14 +20,29 @@ export default function SuperadminTopbar({ title, subtitle, canGoBack, onBack, o
     return () => document.removeEventListener('mousedown', handleClick);
   }, [showNotifs]);
 
+  const searchItems: SearchItem[] = [
+    ...(onNavigate ? [
+      { label:'Platform console', sub:'Page', action:() => onNavigate('console') },
+      { label:'Landlords', sub:'Page', action:() => onNavigate('landlords') },
+      { label:'Lending', sub:'Page', action:() => onNavigate('lending') },
+      { label:'Performance', sub:'Page', action:() => onNavigate('performance') },
+      { label:'Deal moderation', sub:'Page', action:() => onNavigate('moderation') },
+      { label:'Escalations', sub:'Page', action:() => onNavigate('escalations') },
+      { label:'Broadcast', sub:'Page', action:() => onNavigate('broadcast') },
+      { label:'Privacy & data', sub:'Page', action:() => onNavigate('privacy') },
+      { label:'Audit log', sub:'Page', action:() => onNavigate('audit') },
+    ] : []),
+    ...initialMalls.map(m => ({ label:m.name, sub:`Mall · ${m.loc}`, action:() => window.location.assign(`/landlord/overview?mall=${encodeURIComponent(m.name)}&sa=1`) })),
+  ];
+
   return (
-    <div className="h-[66px] shrink-0 bg-[#140F22] border-b border-white/10 flex items-center justify-between gap-[10px] px-[14px] sm:px-[26px] sticky top-0 z-10">
+    <div className="h-[66px] shrink-0 bg-[#FFFEFB] border-b border-line flex items-center justify-between gap-[10px] px-[14px] sm:px-[26px] sticky top-0 z-10">
       <div className="flex items-center gap-[10px] sm:gap-[12px] min-w-0">
         {onMenu && (
           <button
             onClick={onMenu}
             aria-label="Open menu"
-            className="lg:hidden w-[34px] h-[34px] shrink-0 rounded-[9px] border border-white/15 bg-white/5 flex items-center justify-center cursor-pointer text-[#C4B5F0] hover:text-white transition-colors"
+            className="lg:hidden w-[34px] h-[34px] shrink-0 rounded-[9px] border border-line bg-white flex items-center justify-center cursor-pointer text-ink-600 hover:text-ink-900 transition-colors"
           >
             <Menu size={17} />
           </button>
@@ -32,30 +50,35 @@ export default function SuperadminTopbar({ title, subtitle, canGoBack, onBack, o
         {canGoBack && (
           <button
             onClick={onBack}
-            className="bg-transparent border-none cursor-pointer text-[#9C8CC4] hover:text-white transition-colors px-[4px]"
+            aria-label="Go back"
+            className="bg-transparent border-none cursor-pointer text-ink-600 hover:text-ink-900 transition-colors px-[4px]"
           >
             <ArrowLeft size={16} />
           </button>
         )}
         <div className="min-w-0">
-          <h1 className="text-[16px] sm:text-[18.5px] font-bold m-0 tracking-[-.2px] text-white truncate">{title}</h1>
-          <div className="hidden sm:block text-[11px] md:text-[12px] text-[#9C8CC4] mt-[1px] font-medium truncate">{subtitle}</div>
+          <h1 className="text-[16px] sm:text-[18.5px] font-bold m-0 tracking-[-.2px] truncate">{title}</h1>
+          <div className="hidden sm:block text-[11px] md:text-[12px] text-ink-400 mt-[1px] font-medium truncate">{subtitle}</div>
         </div>
       </div>
 
       <div className="flex items-center gap-[8px] sm:gap-[12px] shrink-0">
-        <div className="hidden lg:flex items-center gap-[7px] bg-white/5 border border-white/15 rounded-[9px] p-[7px_11px] text-[12.5px] text-[#B4A8D4] w-[240px]">
-          <Search size={14} /> <input placeholder="Search malls, landlords, tenants..." className="border-none bg-transparent outline-none text-[12.5px] w-full text-white font-sans placeholder:text-[#7E6FA3]" />
-        </div>
+        <span className="inline-flex items-center gap-[5px] px-[10px] py-[5px] rounded-full bg-forest-500/10 text-forest-700 text-[10px] font-bold uppercase tracking-[.6px] border border-forest-500/30">
+          <ShieldCheck size={12} /> Platform
+        </span>
+
+        <QuickSearch items={searchItems} placeholder="Search malls, pages..." width={240} />
 
         <div className="relative" ref={notifRef}>
-          <div
-            className="w-[34px] h-[34px] rounded-[9px] border border-white/15 bg-white/5 flex items-center justify-center cursor-pointer relative text-[#C4B5F0]"
+          <button
+            type="button"
+            aria-label="Notifications"
+            className="w-[34px] h-[34px] rounded-[9px] border border-line bg-white flex items-center justify-center cursor-pointer relative text-ink-600"
             onClick={() => setShowNotifs(p => !p)}
           >
             <Bell size={16} />
-            <span className="absolute top-[6px] right-[6px] w-[7px] h-[7px] bg-red-500 rounded-full border-[1.5px] border-[#140F22] block"></span>
-          </div>
+            <span className="absolute top-[6px] right-[6px] w-[7px] h-[7px] bg-red-500 rounded-full border-[1.5px] border-white block"></span>
+          </button>
           {showNotifs && (
             <NotificationsDropdown
               show={showNotifs}
@@ -65,6 +88,8 @@ export default function SuperadminTopbar({ title, subtitle, canGoBack, onBack, o
             />
           )}
         </div>
+
+        <SettingsMenu />
 
         <div className="w-[34px] h-[34px] rounded-full bg-amber-500 text-forest-900 flex items-center justify-center font-bold text-[12px] font-sans cursor-pointer shrink-0">
           PA

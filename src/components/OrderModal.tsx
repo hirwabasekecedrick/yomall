@@ -49,10 +49,10 @@ export default function OrderModal({ show, onClose, order, stages, onAdvanceStag
     <div className="order-modal">
       <div className="pm-head">
         <div className="pm-head-left">
-          <button className="pm-back" onClick={onClose}><ArrowLeft size={15} /></button>
+          <button aria-label="Back" className="pm-back" onClick={onClose}><ArrowLeft size={15} /></button>
           <span className="pm-title">Order {order.id}</span>
         </div>
-        <button className="pm-close" onClick={onClose}><X size={16} /></button>
+        <button aria-label="Close" className="pm-close" onClick={onClose}><X size={16} /></button>
       </div>
 
       <div className="od-body">

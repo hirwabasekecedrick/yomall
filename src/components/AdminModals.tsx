@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { X } from 'lucide-react';
 import { initials } from '@/lib/data';
-import { STAGE_ICONS } from './icons';
 
 /* ═══════════════════════════════════════════════
    HandbookEditModal
@@ -34,7 +33,7 @@ export function HandbookEditModal({ show, onClose, section, onSave, onDelete }) 
           <div className="pm-head-left">
             <span className="pm-title">{isEdit ? 'Edit section' : 'Add section'}</span>
           </div>
-          <button className="pm-close" onClick={onClose}><X size={16} /></button>
+          <button aria-label="Close" className="pm-close" onClick={onClose}><X size={16} /></button>
         </div>
         <div className="pm-body">
           <div className="form-row">
@@ -77,75 +76,6 @@ export function HandbookEditModal({ show, onClose, section, onSave, onDelete }) 
 
           <button className="pm-btn ghost3" onClick={onClose}>
             Cancel
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   BillingModal
-   ═══════════════════════════════════════════════ */
-export function BillingModal({ show, onClose, mall }) {
-  if (!show || !mall) return null;
-
-  const history = mall.billingHistory || [];
-
-  return (
-    <div className="modal-overlay show" onClick={onClose}>
-      <div className="payment-modal" onClick={e => e.stopPropagation()}>
-        <div className="pm-head">
-          <div className="pm-head-left">
-            <span className="pm-title">Billing &mdash; {mall.name}</span>
-          </div>
-          <button className="pm-close" onClick={onClose}><X size={16} /></button>
-        </div>
-        <div className="pm-body">
-          <div className="pm-context" style={{ marginBottom: 16 }}>
-            <div>
-              <div style={{ fontSize: 10.5, fontWeight: 700, color: '#8A968D', textTransform: 'uppercase', letterSpacing: '.4px', marginBottom: 4 }}>MRR</div>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: 18, fontWeight: 800, color: '#6D28D9' }}>Frw {mall.mrr?.toLocaleString()}</div>
-            </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontSize: 10.5, fontWeight: 700, color: '#8A968D', textTransform: 'uppercase', letterSpacing: '.4px', marginBottom: 4 }}>Next invoice</div>
-              <div style={{ fontSize: 13, fontWeight: 700 }}>{mall.nextInvoice}</div>
-            </div>
-          </div>
-
-          <div className="od-section-label">Billing history</div>
-
-          {history.length === 0 ? (
-            <div style={{ textAlign: 'center', padding: '24px 0', color: '#8A968D', fontSize: 12.5 }}>
-              No billing history yet.
-            </div>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Amount</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {history.map((row, idx) => (
-                  <tr key={idx}>
-                    <td>{row.date}</td>
-                    <td style={{ fontFamily: 'var(--font-mono)', fontWeight: 700 }}>Frw {row.amount?.toLocaleString()}</td>
-                    <td>
-                      <span className={`badge ${row.status === 'Paid' ? 'paid' : 'overdue'}`}>
-                        {row.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-
-          <button className="pm-btn ghost3" onClick={onClose} style={{ marginTop: 16 }}>
-            Close
           </button>
         </div>
       </div>
@@ -467,7 +397,7 @@ export function AssignTaskModal({ show, onClose, staff, onSubmit }) {
           <div className="pm-head-left">
             <span className="pm-title">Assign task</span>
           </div>
-          <button className="pm-close" onClick={onClose}><X size={16} /></button>
+          <button aria-label="Close" className="pm-close" onClick={onClose}><X size={16} /></button>
         </div>
         <div className="pm-body">
           <div className="form-row">
@@ -537,99 +467,6 @@ export function AssignTaskModal({ show, onClose, staff, onSubmit }) {
           >
             Assign
           </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   TaskDetailModal
-   ═══════════════════════════════════════════════ */
-export function TaskDetailModal({ show, onClose, task, stages, onAdvanceStage }) {
-  if (!show || !task) return null;
-
-  const isCompleted = task.stage === stages.length - 1;
-
-  function stageStatus(idx) {
-    if (idx < task.stage) return 'done';
-    if (idx === task.stage) return 'current';
-    return '';
-  }
-
-  function stageTime(idx) {
-    if (idx < task.stage) {
-      if (idx === 0 && task.assignedAt) return task.assignedAt;
-      if (isCompleted && idx === stages.length - 1 && task.completedAt) return task.completedAt;
-      return '';
-    }
-    return '';
-  }
-
-  return (
-    <div className="modal-overlay show" onClick={onClose}>
-      <div className="order-modal" onClick={e => e.stopPropagation()}>
-        <div className="pm-head">
-          <div className="pm-head-left">
-            <span className="pm-title">{task.id}</span>
-            <span className="badge transit">{task.category}</span>
-          </div>
-          <button className="pm-close" onClick={onClose}><X size={16} /></button>
-        </div>
-
-        <div className="od-body">
-          <div className="od-section-label">Description</div>
-          <div style={{ fontSize: 12.5, color: '#4B5A50', lineHeight: 1.55, marginBottom: 16 }}>
-            {task.description}
-          </div>
-
-          <div className="od-section-label">Assigned staff</div>
-          <div className="rider-card-mini">
-            <div
-              className="rc-av"
-              style={{ background: '#8B5CF622', color: '#6D28D9' }}
-            >
-              {initials(task.staff.name)}
-            </div>
-            <div>
-              <div className="rc-name">{task.staff.name}</div>
-              <div className="rc-sub">{task.staff.role}</div>
-            </div>
-          </div>
-
-          <div className="od-section-label">Timeline</div>
-          <div className="od-timeline">
-            {stages.map((st, idx) => {
-              const status = stageStatus(idx);
-              return (
-                <div className={`od-timeline-item${status ? ' ' + status : ''}`} key={idx}>
-                  <div className="od-timeline-dot">{STAGE_ICONS[st.icon] || st.icon}</div>
-                  <div className="od-timeline-line" />
-                  <div className="od-timeline-content">
-                    <div className="od-timeline-label">{st.label}</div>
-                    {stageTime(idx) && (
-                      <div className="od-timeline-time">{stageTime(idx)}</div>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div style={{ marginTop: 20 }}>
-            {!isCompleted ? (
-              <button
-                className="pm-btn"
-                onClick={() => onAdvanceStage(task.id, task.stage + 1)}
-              >
-                Advance stage
-              </button>
-            ) : (
-              <div style={{ textAlign: 'center', background: '#EDE9FE', borderRadius: 12, padding: '14px', fontSize: 13, fontWeight: 700, color: '#6D28D9' }}>
-                Task completed
-              </div>
-            )}
-          </div>
         </div>
       </div>
     </div>

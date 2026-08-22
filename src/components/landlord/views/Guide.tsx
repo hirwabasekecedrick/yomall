@@ -1,9 +1,35 @@
 'use client';
-import React from 'react';
-import { UtensilsCrossed, Glasses } from 'lucide-react';
+import React, { useState } from 'react';
+import { UtensilsCrossed, Glasses, Megaphone } from 'lucide-react';
 import { AMENITY_ICONS } from '@/components/icons';
+import { AnnouncementItem, AmenityItem } from '@/components/landlord/LandlordContext';
 
-export default function GuideView({ onEditAmenity, onNewAmenity, onEditAnnouncement, onNewAnnouncement }: { onEditAmenity: (a: { icon: string; name: string; sub: string }) => void; onNewAmenity: () => void; onEditAnnouncement: (a: { title: string }) => void; onNewAnnouncement: () => void }) {
+const ANNOUNCE_ICONS: Record<string, React.ReactNode> = {
+  food: <UtensilsCrossed size={14} />,
+  optics: <Glasses size={14} />,
+};
+
+export default function GuideView({ announcements, amenities, onEditAmenity, onNewAmenity, onDeleteAmenity, onEditAnnouncement, onNewAnnouncement, onDeleteAnnouncement, onPublishAnnouncement }: {
+  announcements: AnnouncementItem[];
+  amenities: AmenityItem[];
+  onEditAmenity: (a: AmenityItem) => void;
+  onNewAmenity: () => void;
+  onDeleteAmenity: (id: number) => void;
+  onEditAnnouncement: (a: AnnouncementItem) => void;
+  onNewAnnouncement: () => void;
+  onDeleteAnnouncement: (id: number) => void;
+  onPublishAnnouncement: (a: { title: string; body: string; pinned: boolean }) => void;
+}) {
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [pinned, setPinned] = useState('no');
+
+  function handlePublish() {
+    if (!title.trim() || !body.trim()) return;
+    onPublishAnnouncement({ title: title.trim(), body: body.trim(), pinned: pinned === 'yes' });
+    setTitle(''); setBody(''); setPinned('no');
+  }
+
   return (
     <div className="view-panel">
       <div className="section-title"><div><h2>Mall Guide Content</h2><div className="hint">Wayfinding, amenities and customer announcements</div></div>
@@ -14,24 +40,28 @@ export default function GuideView({ onEditAmenity, onNewAmenity, onEditAnnouncem
           <div className="card" style={{marginBottom:18}}>
             <div className="card-head"><h3>Active announcements</h3></div>
             <div className="card-body">
-              {[
-                {icon:<UtensilsCrossed size={14} />,title:'Weekend food festival',body:'Enjoy discounts at all F&B tenants this Saturday from 12:00–18:00. Free entry.',meta:'Posted 2 days ago · Pinned'},
-                {icon:<Glasses size={14} />,title:'New tenant: Amara Optics',body:'Welcome Amara Optics to Unit 1F-08! Stop by for prescription glasses and sunglasses.',meta:'Posted 5 days ago'},
-              ].map(a => (
-                <div key={a.title} className="announce-card">
-                  <div><div className="a-title" style={{display:'flex',alignItems:'center',gap:6}}>{a.icon}{a.title}</div><div className="a-body">{a.body}</div><div className="a-meta">{a.meta}</div></div>
-                  <div style={{display:'flex',gap:6,flexShrink:0}}><button className="btn ghost" style={{padding:'6px 10px',fontSize:11}} onClick={() => onEditAnnouncement(a)}>Edit</button><button className="btn ghost" style={{padding:'6px 10px',fontSize:11,color:'#D64545'}}>Remove</button></div>
+              {announcements.length === 0 && (
+                <div style={{color:'#8A968D',fontSize:12.5,padding:'12px 0',textAlign:'center'}}>No live announcements.</div>
+              )}
+              {announcements.map(a => (
+                <div key={a.id} className="announce-card">
+                  <div><div className="a-title" style={{display:'flex',alignItems:'center',gap:6}}>{ANNOUNCE_ICONS[a.icon || ''] || <Megaphone size={14} />}{a.title}</div><div className="a-body">{a.body}</div><div className="a-meta">{a.meta}</div></div>
+                  <div style={{display:'flex',gap:6,flexShrink:0}}>
+                    <button className="btn ghost" style={{padding:'6px 10px',fontSize:11}} onClick={() => onEditAnnouncement(a)}>Edit</button>
+                    <button className="btn ghost" style={{padding:'6px 10px',fontSize:11,color:'#D64545'}} onClick={() => onDeleteAnnouncement(a.id)}>Remove</button>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
           <div className="card">
-            <div className="card-head"><h3>Amenities directory</h3></div>
+            <div className="card-head"><div><h3>Amenities directory</h3><button className="link-btn" onClick={onNewAmenity}>+ Add amenity</button></div></div>
             <div className="card-body">
-              {[['parking','Car parking','Level B1 · 120 bays · RWF 500/hr'],['restroom','Restrooms','Every floor · east wing'],['atm','ATMs','Ground floor near main entrance'],['prayer','Prayer room','Floor 2 · open 06:00–22:00'],['foodcourt','Food court','Floor 2 · 8 F&B tenants']].map(([key,name,sub]) => (
-                <div key={name} className="amenity-row">
-                  <div className="amenity-left"><div className="amenity-ic">{AMENITY_ICONS[key]}</div><div><div className="amenity-name">{name}</div><div className="amenity-sub">{sub}</div></div></div>
-                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11.5}} onClick={() => onEditAmenity({icon:key,name,sub})}>Edit</button>
+              {amenities.map(a => (
+                <div key={a.id} className="amenity-row">
+                  <div className="amenity-left"><div className="amenity-ic">{AMENITY_ICONS[a.icon]}</div><div><div className="amenity-name">{a.name}</div><div className="amenity-sub">{a.sub}</div></div></div>
+                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11.5,color:'#D64545'}} onClick={() => onDeleteAmenity(a.id)}>Remove</button>
+                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11.5}} onClick={() => onEditAmenity(a)}>Edit</button>
                 </div>
               ))}
             </div>
@@ -40,10 +70,10 @@ export default function GuideView({ onEditAmenity, onNewAmenity, onEditAnnouncem
         <div className="card">
           <div className="card-head"><h3>Post an announcement</h3></div>
           <div className="card-body">
-            <div className="form-row"><label>Title</label><input placeholder="e.g. Weekend promotion" /></div>
-            <div className="form-row"><label>Message</label><textarea placeholder="What do you want mall visitors to know?" /></div>
-            <div className="form-row"><label>Pin to top?</label><select><option>No — show in order</option><option>Yes — pin to top</option></select></div>
-            <button className="btn primary" style={{width:'100%',justifyContent:'center'}}>Publish announcement</button>
+            <div className="form-row"><label>Title</label><input placeholder="e.g. Weekend promotion" value={title} onChange={e => setTitle(e.target.value)} /></div>
+            <div className="form-row"><label>Message</label><textarea placeholder="What do you want mall visitors to know?" value={body} onChange={e => setBody(e.target.value)} /></div>
+            <div className="form-row"><label>Pin to top?</label><select value={pinned} onChange={e => setPinned(e.target.value)}><option value="no">No — show in order</option><option value="yes">Yes — pin to top</option></select></div>
+            <button className="btn primary" disabled={!title.trim() || !body.trim()} style={{width:'100%',justifyContent:'center',opacity:(!title.trim() || !body.trim()) ? 0.5 : 1}} onClick={handlePublish}>Publish announcement</button>
           </div>
         </div>
       </div>

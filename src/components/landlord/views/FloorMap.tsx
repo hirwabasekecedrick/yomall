@@ -2,16 +2,34 @@
 import React, { useState } from 'react';
 import { Users } from 'lucide-react';
 import { initialFloors } from '@/lib/data';
+import { useLandlord } from '@/components/landlord/LandlordContext';
+import { useToast } from '@/components/Toast';
 
 export default function FloorMapView() {
   const [activeFloor, setActiveFloor] = useState('G');
+  const [listedUnits, setListedUnits] = useState<{ unit: string; floor: string }[]>([]);
+  const { tenants, manageTenant, startOnboarding } = useLandlord();
+  const toast = useToast();
   const units = initialFloors[activeFloor] || [];
+
+  function handleUnitClick(u: { n: string; s: string; t?: string }) {
+    if (u.s === 'vacant') {
+      if (listedUnits.some(l => l.unit === u.n)) { toast(`Unit ${u.n} is already listed`); return; }
+      setListedUnits(p => [...p, { unit:u.n, floor:activeFloor }]);
+      toast(`Unit ${u.n} listed — prospective tenants can now inquire`);
+      return;
+    }
+    const tenant = tenants.find(t => t.unit === `${activeFloor === 'G' ? 'G' : activeFloor + 'F'}-${u.n.split('-')[1]}`) || tenants.find(t => t.unit.endsWith(u.n));
+    if (tenant) manageTenant(tenant);
+    else startOnboarding();
+  }
+
   return (
     <div className="view-panel">
       <div className="section-title">
         <div>
           <h2>Floor &amp; Unit Map</h2>
-          <div className="hint">The same layout tenants see in the customer-facing mall guide — colour reflects rent status</div>
+          <div className="hint">Click an occupied unit to open its ledger · click a vacant unit to list it</div>
         </div>
         <div style={{display:'flex',gap:6}}>
           {['G','1','2'].map(f => (
@@ -29,7 +47,7 @@ export default function FloorMapView() {
         <div className="card-body">
           <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-[10px]">
             {units.map(u => (
-              <div key={u.n} className={`unit ${u.s}`} style={{height:70}} title={`${u.n} — ${u.t || 'Vacant'}`}>
+              <div key={u.n} className={`unit ${u.s}`} style={{height:70,cursor:'pointer'}} title={`${u.n} — ${u.t || 'Vacant'} · click to open`} onClick={() => handleUnitClick(u)}>
                 <div className="u-name">{u.n}</div>
                 <div className="u-tag">{u.t || 'Vacant'}</div>
               </div>
@@ -49,7 +67,18 @@ export default function FloorMapView() {
         <div className="card">
           <div className="card-head"><h3>Listed vacancies</h3><div className="hint" style={{marginTop:0}}>Units currently marketed to prospective tenants</div></div>
           <div className="card-body">
-            <div className="maint-req-empty" style={{color:'#8A968D',fontSize:12.5,padding:'12px 0'}}>No vacancies listed yet — click a vacant unit on the map to list it.</div>
+            {listedUnits.length === 0 && (
+              <div className="maint-req-empty" style={{color:'#8A968D',fontSize:12.5,padding:'12px 0'}}>No vacancies listed yet — click a vacant unit on the map to list it.</div>
+            )}
+            {listedUnits.map(l => (
+              <div key={l.unit} style={{display:'flex',alignItems:'center',justifyContent:'space-between',padding:'10px 0',borderBottom:'1px solid #F2EFE6'}}>
+                <div><span className="mono" style={{fontWeight:700}}>{l.unit}</span> <span style={{fontSize:11,color:'#8A968D'}}>· {l.floor === 'G' ? 'Ground' : `Floor ${l.floor}`}</span></div>
+                <div style={{display:'flex',alignItems:'center',gap:8}}>
+                  <span className="badge published">Listed</span>
+                  <button className="btn ghost" style={{padding:'5px 10px',fontSize:11,color:'#D64545'}} onClick={() => { setListedUnits(p => p.filter(x => x.unit !== l.unit)); toast(`Unit ${l.unit} unlisted`); }}>Unlist</button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
         <div className="card">

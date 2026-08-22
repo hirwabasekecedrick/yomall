@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
-import { Badge } from '@/components/ui';
-import { initialTenantOrders, relTime, orderItemsSummary, orderTotal } from '@/lib/data';
+import { Badge, RelTime } from '@/components/ui';
+import { initialTenantOrders, orderItemsSummary, orderTotal } from '@/lib/data';
 
 export default function TenantOrdersView({ onOrderClick }: { onOrderClick: (o: unknown) => void }) {
   return (
@@ -23,7 +23,7 @@ export default function TenantOrdersView({ onOrderClick }: { onOrderClick: (o: u
                   <td>{o.customerName}</td>
                   <td className="mono">RWF {orderTotal(o).toLocaleString()}</td>
                   <td><Badge type={o.stage <= 4 ? 'transit' : 'delivered'} label={o.stage <= 4 ? 'In transit' : 'Delivered'} /></td>
-                  <td style={{fontSize:11.5,color:'#8A968D'}}>{relTime(o.placedAt)}</td>
+                  <td style={{fontSize:11.5,color:'#8A968D'}}><RelTime ts={o.placedAt} /></td>
                 </tr>
               ))}
             </tbody>
@@ -47,7 +47,7 @@ export default function TenantOrdersView({ onOrderClick }: { onOrderClick: (o: u
               </div>
               <div className="text-[12.8px] text-[#4B5A50] mt-[6px]">{orderItemsSummary(o)}</div>
               <div className="flex items-center justify-between gap-[8px] mt-[8px]">
-                <span className="text-[11.5px] text-[#8A968D]">{o.customerName} · {relTime(o.placedAt)}</span>
+                <span className="text-[11.5px] text-[#8A968D]">{o.customerName} · <RelTime ts={o.placedAt} /></span>
                 <span className="mono text-[12.5px] font-semibold whitespace-nowrap">RWF {orderTotal(o).toLocaleString()}</span>
               </div>
             </div>

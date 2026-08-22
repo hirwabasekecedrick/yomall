@@ -9,7 +9,9 @@ export default function DeliveriesView({ onOrderClick }: { onOrderClick: (o: unk
       <div className="section-title">
         <div><h2>Deliveries &amp; yoDeals Sales</h2><div className="hint">Monitor online orders and rider status</div></div>
       </div>
-      <div className="card">
+
+      {/* Desktop table */}
+      <div className="card hidden md:block">
         <div className="card-body pt-[16px] overflow-x-auto">
           <table>
             <thead>
@@ -30,6 +32,24 @@ export default function DeliveriesView({ onOrderClick }: { onOrderClick: (o: unk
             </tbody>
           </table>
         </div>
+      </div>
+
+      {/* Mobile cards */}
+      <div className="md:hidden flex flex-col gap-[10px]">
+        {initialOrders.map(o => (
+          <div key={o.id} onClick={() => onOrderClick(o)} style={{border:'1px solid #E4E1D6',borderRadius:12,padding:'12px 14px',background:'#fff',cursor:'pointer'}}>
+            <div className="flex items-center justify-between gap-[8px]">
+              <span className="mono text-[12.5px] font-semibold">{o.id}</span>
+              <Badge type={o.status === 'transit' ? 'transit' : 'delivered'} label={o.status === 'transit' ? 'In transit' : 'Delivered'} />
+            </div>
+            <div className="text-[12.8px] font-semibold mt-[6px]">{o.item}</div>
+            <div className="text-[11.5px] text-[#8A968D] mt-[2px]">{o.shop} · Rider: {o.rider}</div>
+            <div className="flex items-center justify-between gap-[8px] mt-[10px]" style={{borderTop:'1px solid #F2EFE6',paddingTop:10}}>
+              <span className="mono text-[12px]">RWF {o.val}</span>
+              <span className="text-[10.5px] text-[#8A968D]">{o.time}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

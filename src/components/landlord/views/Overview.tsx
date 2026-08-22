@@ -4,7 +4,7 @@ import { ArrowRight } from 'lucide-react';
 import { KPI } from '@/components/ui';
 import { initialFloors } from '@/lib/data';
 
-export default function OverviewView({ onOpenMap }: { onOpenMap: () => void }) {
+export default function OverviewView({ onOpenMap, onUnitClick, onNudge, onReview, onAssign }: { onOpenMap: () => void; onUnitClick: (u: { n: string; s: string; t?: string }) => void; onNudge: () => void; onReview: () => void; onAssign: () => void }) {
   const miniUnits = initialFloors['G'].slice(0, 8);
   return (
     <div className="view-panel">
@@ -25,7 +25,7 @@ export default function OverviewView({ onOpenMap }: { onOpenMap: () => void }) {
           <div className="card-body">
             <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-[8px]">
               {miniUnits.map(u => (
-                <div key={u.n} className={`unit ${u.s}`} style={{height:58}} title={`${u.n} — ${u.t || 'Vacant'}`}>
+                <div key={u.n} className={`unit ${u.s}`} style={{height:58,cursor:'pointer'}} title={`${u.n} — ${u.t || 'Vacant'}`} onClick={() => onUnitClick(u)}>
                   <div className="u-name">{u.n}</div>
                   <div className="u-tag">{u.t || 'Vacant'}</div>
                 </div>
@@ -46,15 +46,15 @@ export default function OverviewView({ onOpenMap }: { onOpenMap: () => void }) {
           <div className="card-body" style={{display:'flex',flexDirection:'column',gap:10}}>
             <div className="announce-card" style={{borderColor:'#FBE7E7',background:'#FBE7E7'}}>
               <div><div className="a-title" style={{color:'#D64545'}}>G-14 · Nyabugogo TechHub</div><div className="a-body">Daily repayment overdue by 3 days — RWF 45,000 outstanding.</div></div>
-              <button className="btn" style={{background:'#fff'}}>Nudge</button>
+              <button className="btn" style={{background:'#fff'}} onClick={onNudge}>Nudge</button>
             </div>
             <div className="announce-card" style={{borderColor:'#FDF1DC',background:'#FDF1DC'}}>
               <div><div className="a-title" style={{color:'#DB9426'}}>1F-06 · Amasezerano Boutique</div><div className="a-body">Storefront draft not published — invisible on mall guide app.</div></div>
-              <button className="btn" style={{background:'#fff'}}>Review</button>
+              <button className="btn" style={{background:'#fff'}} onClick={onReview}>Review</button>
             </div>
             <div className="announce-card">
               <div><div className="a-title">2F-02 · Café Umurava</div><div className="a-body">Maintenance request: AC unit — awaiting technician assignment.</div></div>
-              <button className="btn" style={{background:'#fff'}}>Assign</button>
+              <button className="btn" style={{background:'#fff'}} onClick={onAssign}>Assign</button>
             </div>
           </div>
         </div>

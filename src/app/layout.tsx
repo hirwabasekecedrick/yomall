@@ -13,8 +13,11 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  title: "yoMall — Property Manager Dashboard",
-  description: "Property Manager Dashboard",
+  title: {
+    default: "yoMall — Property Manager Dashboard",
+    template: "%s · yoMall",
+  },
+  description: "Multi-tenant mall management platform — rent, storefronts, orders, lending and operations.",
 };
 
 export default function RootLayout({ children }) {

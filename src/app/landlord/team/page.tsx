@@ -4,5 +4,5 @@ import { useLandlord } from '@/components/landlord/LandlordContext';
 
 export default function LandlordTeamPage() {
   const ll = useLandlord();
-  return <TeamView onInvite={ll.inviteMember} />;
+  return <TeamView members={ll.teamMembers} onInvite={ll.inviteMember} onRemove={ll.removeMember} />;
 }

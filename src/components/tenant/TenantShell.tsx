@@ -63,7 +63,20 @@ function ShellInner({ children }: { children: React.ReactNode }) {
           <PaymentModal show onClose={() => setShowPaymentModal(false)} tenantName={CURRENT_TENANT_NAME} balance="57,000" dailyRate="15,000" onPay={() => { toast('Payment processed'); }} />
         )}
         {showOrderModal && selectedOrder && (
-          <OrderModal show onClose={() => setShowOrderModal(false)} order={selectedOrder} stages={orderStageDefs} onAdvanceStage={() => { toast('Stage advanced'); }} onAssignRider={() => { toast('Rider assigned'); }} onConfirmDelivery={() => { toast('Delivery confirmed'); }} riderPool={riderPool} />
+          <OrderModal show onClose={() => setShowOrderModal(false)} order={selectedOrder} stages={orderStageDefs}
+            onAdvanceStage={(id, stage) => {
+              setSelectedOrder(p => p && p.id === id ? { ...p, stage } : p);
+              toast(`Order ${id} moved to "${orderStageDefs[stage]?.label || 'next stage'}"`);
+            }}
+            onAssignRider={(id, rider) => {
+              setSelectedOrder(p => p && p.id === id ? { ...p, rider } : p);
+              toast(`${(rider as Record<string, unknown>).name} assigned to ${id}`);
+            }}
+            onConfirmDelivery={(id) => {
+              setSelectedOrder(p => p && p.id === id ? { ...p, status:'delivered', stage: orderStageDefs.length - 1 } : p);
+              toast(`Delivery of ${id} confirmed — PIN verified`);
+            }}
+            riderPool={riderPool} />
         )}
         {showMaintRequest && (
           <MaintenanceRequestModal show onClose={() => setShowMaintRequest(false)} onSubmit={() => { toast('Request submitted'); }} staffList={initialStaff} />

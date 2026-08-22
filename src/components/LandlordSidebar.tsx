@@ -43,13 +43,6 @@ export default function LandlordSidebar({ currentView, setView, onLogout, mobile
         </div>
       </div>
 
-      <div className="bg-white/5 border border-white/10 rounded-[10px] p-[9px_11px] mb-[18px] cursor-pointer">
-        <div className="text-[9.5px] uppercase tracking-[.6px] text-[#9FC0A6] mb-[2px]">Managing</div>
-        <div className="text-[13px] font-semibold flex items-center justify-between">
-          Kigali Convention Mall <ChevronDown size={14} />
-        </div>
-      </div>
-
       <div className="flex-1">
         <NavGroupLabel>Mall operations</NavGroupLabel>
         <nav className="flex flex-col gap-[2px]">
@@ -78,20 +71,20 @@ export default function LandlordSidebar({ currentView, setView, onLogout, mobile
         </nav>
       </div>
 
-      <div className="mt-[14px] p-[12px_11px] border-t border-white/10 flex items-center gap-[9px]">
+      <div className="mt-[14px] p-[12px_0px] border-t border-white/10 flex items-center gap-[9px]">
         <div className="w-[30px] h-[30px] rounded-full bg-amber-500 text-forest-900 flex items-center justify-center font-bold text-[12px] font-sans shrink-0">SK</div>
         <div className="flex-1 min-w-0">
           <div className="text-[12.5px] font-semibold text-white">Shema Katende</div>
-          <div className="text-[10.5px] text-[#9FC0A6] truncate">Landlord · Kigali Convention Mall</div>
+          <div className="text-[10.5px] text-[#9FC0A6] truncate">Landlord </div>
         </div>
-      </div>
-
-      <div className="flex items-center justify-between p-[4px_11px_0]">
-        <span className="inline-flex items-center gap-[4px] px-[8px] py-[3px] rounded-full bg-white/10 text-white text-[9px] font-bold uppercase tracking-[.5px]">Landlord</span>
+        
+      <div className="flex items-center justify-between">
         <button onClick={onLogout} aria-label="Sign out" title="Sign out" className="w-[28px] h-[28px] rounded-[8px] bg-transparent border border-white/15 flex items-center justify-center cursor-pointer text-[#CFE3D3] hover:text-white hover:bg-white/10 transition-colors">
           <LogOut size={14} />
         </button>
       </div>
+      </div>
+
     </aside>
   );
 

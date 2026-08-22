@@ -1,9 +1,12 @@
 'use client';
 import React, { useState, useRef, useEffect } from 'react';
-import { Menu, ArrowLeft, Search, Bell, Settings } from 'lucide-react';
+import { Menu, ArrowLeft, Search, Bell } from 'lucide-react';
 import NotificationsDropdown from './NotificationsDropdown';
+import UserMenu from './UserMenu';
+import SettingsMenu from './SettingsMenu';
+import QuickSearch, { SearchItem } from './QuickSearch';
 
-export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onNavigate, onMenu }: { title: string; subtitle?: string; canGoBack?: boolean; onBack?: () => void; onNavigate?: (v: string) => void; onMenu?: () => void }) {
+export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onNavigate, onMenu }: { title: string; subtitle?: React.ReactNode; canGoBack?: boolean; onBack?: () => void; onNavigate?: (v: string) => void; onMenu?: () => void }) {
   const [showNotifs, setShowNotifs] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const notifRef = useRef<HTMLDivElement>(null);
@@ -17,6 +20,30 @@ export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onN
     if (showNotifs) document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, [showNotifs]);
+
+  const searchItems: SearchItem[] = onNavigate ? [
+    { label:'Dashboard', sub:'Page', action:() => onNavigate('overview') },
+    { label:'Floor map', sub:'Page — units & occupancy', action:() => onNavigate('floormap') },
+    { label:'Tenant directory', sub:'Page', action:() => onNavigate('tenants') },
+    { label:'Rent & payments', sub:'Page', action:() => onNavigate('rent') },
+    { label:'Deliveries', sub:'Page — yoDeals orders', action:() => onNavigate('deliveries') },
+    { label:'Staff directory', sub:'Page', action:() => onNavigate('staff') },
+    { label:'Mall guide content', sub:'Page — announcements & amenities', action:() => onNavigate('guide') },
+    { label:'Lease renewals', sub:'Page', action:() => onNavigate('renewals') },
+    { label:'Reports', sub:'Page', action:() => onNavigate('reports') },
+    { label:'Team', sub:'Page', action:() => onNavigate('team') },
+    { label:'Documents', sub:'Page', action:() => onNavigate('documents') },
+    ...['Nyabugogo TechHub','Coko Bookshop','Café Umurava','Amasezerano Boutique','Muraho Electronics'].map(name => ({
+      label:name, sub:'Tenant — open directory', action:() => {
+        const sp = new URLSearchParams(typeof window !== 'undefined' ? window.location.search : '');
+        const keep = new URLSearchParams();
+        const mall = sp.get('mall');
+        if (mall) keep.set('mall', mall);
+        if (sp.get('sa') === '1') keep.set('sa', '1');
+        window.location.assign(`/landlord/tenants?${keep.toString()}`);
+      },
+    })),
+  ] : [];
 
   return (
     <>
@@ -34,6 +61,7 @@ export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onN
           {canGoBack && (
             <button
               onClick={onBack}
+              aria-label="Go back"
               className="bg-transparent border-none cursor-pointer text-ink-600 hover:text-ink-900 transition-colors px-[4px]"
             >
               <ArrowLeft size={16} />
@@ -54,18 +82,18 @@ export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onN
             <Search size={15} />
           </button>
 
-          <div className="hidden md:flex items-center gap-[7px] bg-cream-100 border border-line rounded-[9px] p-[7px_11px] text-[12.5px] text-ink-600 w-[230px] lg:w-[260px]">
-            <Search size={14} /> <input placeholder="Search tenant, unit, order..." className="border-none bg-transparent outline-none text-[12.5px] w-full text-ink-900 font-sans" />
-          </div>
+          <QuickSearch items={searchItems} placeholder="Search tenant, page..." width={230} />
 
           <div className="relative" ref={notifRef}>
-            <div
+            <button
+              type="button"
+              aria-label="Notifications"
               className="w-[34px] h-[34px] rounded-[9px] border border-line bg-white flex items-center justify-center cursor-pointer relative text-ink-600"
               onClick={() => setShowNotifs(p => !p)}
             >
               <Bell size={16} />
               <span className="absolute top-[6px] right-[6px] w-[7px] h-[7px] bg-red-500 rounded-full border-[1.5px] border-white block"></span>
-            </div>
+            </button>
             {showNotifs && (
               <NotificationsDropdown
                 show={showNotifs}
@@ -76,9 +104,9 @@ export default function LandlordTopbar({ title, subtitle, canGoBack, onBack, onN
             )}
           </div>
 
-          <div className="w-[34px] h-[34px] rounded-[9px] border border-line bg-white flex items-center justify-center cursor-pointer text-ink-600">
-            <Settings size={16} />
-          </div>
+          <SettingsMenu />
+
+          <UserMenu initials="SE" name="Shema Elie" meta="Landlord · shema@edupoto.rw" />
         </div>
       </div>
 

@@ -5,7 +5,7 @@ import { KPI, Badge } from '@/components/ui';
 export default function TenantOverviewView({ onPayNow, onNewMaint }: { onPayNow: () => void; onNewMaint: () => void }) {
   return (
     <div className="view-panel">
-      <div style={{display:'grid',gridTemplateColumns:'repeat(4,1fr)',gap:14,marginBottom:22}}>
+      <div className="grid grid-cols-2 xl:grid-cols-4 gap-[14px] mb-[22px]">
         <KPI label="Today's sales" value="RWF 88,400" delta="14% vs yesterday" deltaClass="up" />
         <KPI label="Orders today" value="11" delta="via yoDeals" deltaClass="flat" />
         <KPI label="Rent balance" value="RWF 57,000" delta="Overdue by 3 days" deltaClass="down" />

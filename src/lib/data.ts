@@ -7,15 +7,17 @@ export const MIN = 60000;
 export function initials(name) {
   return name.split(' ').map(w => w[0]).slice(0, 2).join('');
 }
-export function relTime(ms) {
-  const diff = Date.now() - ms;
+export function relTime(ms, now = Date.now()) {
+  const diff = Math.max(0, now - ms);
   const mins = Math.round(diff / 60000);
   if (mins < 1) return 'just now';
   if (mins < 60) return mins + ' min ago';
   const hrs = Math.round(mins / 60);
-  return hrs + (hrs === 1 ? ' hr ago' : ' hrs ago');
+  if (hrs < 24) return hrs + (hrs === 1 ? ' hr ago' : ' hrs ago');
+  const days = Math.round(hrs / 24);
+  return days + (days === 1 ? ' day ago' : ' days ago');
 }
-export function orderSubtotal(order) { return order.items.reduce((s, i) => s + i.qty * i.price, 0); }
+function orderSubtotal(order) { return order.items.reduce((s, i) => s + i.qty * i.price, 0); }
 export function orderTotal(order) { return orderSubtotal(order) + order.deliveryFee; }
 export function orderItemsSummary(order) { return order.items.map(i => i.name + (i.qty > 1 ? ` ×${i.qty}` : '')).join(', '); }
 export function downloadCSV(filename, rows) {
@@ -135,12 +137,7 @@ export const maintStageDefs = [
   { label: 'Work in progress', icon: 'wrench' },
   { label: 'Completed', icon: 'check' },
 ];
-export const initialMaintRequests = [
-  { id: 'MR-2201', category: 'HVAC / Air conditioning', description: 'AC unit above the counter is not cooling and making a rattling noise.', urgency: 'urgent', photo: null, staff: { name: 'Claudine Ingabire', role: 'HVAC technician' }, stage: 3, submittedAt: Date.now() - 3 * 3600000, completedAt: null, rating: null },
-  { id: 'MR-2196', category: 'Electrical', description: 'Ceiling light near the entrance flickers on and off.', urgency: 'normal', photo: null, staff: { name: 'Eugene Niyonzima', role: 'Electrician' }, stage: 4, submittedAt: Date.now() - 2 * DAY, completedAt: Date.now() - 2 * DAY + 3 * 3600000, rating: 5 },
-];
 
-/* ──── Assigned tasks ──── */
 export const taskStageDefs = [
   { label: 'Task assigned', icon: 'receipt' },
   { label: 'Acknowledged by staff', icon: 'eye' },
@@ -151,9 +148,9 @@ export const taskStageDefs = [
 
 /* ──── Loan applications ──── */
 export const initialLoanApplications = [
-  { id: 'RA-1001', tenantName: 'Amasezerano Boutique', mall: 'Musanze Heritage Plaza', unit: '1F-06', ownerName: 'Delphine Mukamana', phone: '+250 78• ••• 903', idNumber: '1 1980 8 0012345 6 01', idPhoto: null, selfie: null, amount: 280000, frequency: 'weekly', term: '4 weeks', signature: 'Delphine Mukamana', agreedAt: Date.now() - 6 * DAY, status: 'approved', submittedAt: Date.now() - 6 * DAY, reviewedAt: Date.now() - 5 * DAY, disbursedAt: Date.now() - 5 * DAY, rejectionReason: null, isCurrentTenant: false },
-  { id: 'RA-1002', tenantName: 'Huye Print & Copy', mall: 'Huye Trade Center', unit: 'G-08', ownerName: 'Eric Bizimana', phone: '+250 73• ••• 447', idNumber: '1 1985 7 0098765 4 22', idPhoto: null, selfie: null, amount: 150000, frequency: 'daily', term: '30 days', signature: 'Eric Bizimana', agreedAt: Date.now() - 2 * DAY, status: 'pending', submittedAt: Date.now() - 2 * DAY, reviewedAt: null, disbursedAt: null, rejectionReason: null, isCurrentTenant: false },
-  { id: 'RA-1003', tenantName: 'Remera Fashion House', mall: 'Remera Business Arcade', unit: '2F-11', ownerName: 'Grace Uwamahoro', phone: '+250 72• ••• 118', idNumber: '1 1979 9 0011223 3 09', idPhoto: null, selfie: null, amount: 600000, frequency: 'weekly', term: '4 weeks', signature: 'Grace Uwamahoro', agreedAt: Date.now() - 9 * DAY, status: 'rejected', submittedAt: Date.now() - 9 * DAY, reviewedAt: Date.now() - 8 * DAY, disbursedAt: null, rejectionReason: 'Insufficient trading history — please reapply after 3 months of active sales.', isCurrentTenant: false },
+  { id: 'RA-1001', tenantName: 'Amasezerano Boutique', mall: 'Musanze Heritage Plaza', unit: '1F-06', ownerName: 'Delphine Mukamana', phone: '+250 78• ••• 903', idNumber: '1 1980 8 0012345 6 01', idPhoto: null, selfie: null, amount: 280000, frequency: 'weekly', term: '28 days', kyc: 'verified', signature: 'Delphine Mukamana', agreedAt: Date.now() - 6 * DAY, status: 'approved', submittedAt: Date.now() - 6 * DAY, reviewedAt: Date.now() - 5 * DAY, disbursedAt: Date.now() - 5 * DAY, rejectionReason: null, isCurrentTenant: false },
+  { id: 'RA-1002', tenantName: 'Huye Print & Copy', mall: 'Huye Trade Center', unit: 'G-08', ownerName: 'Eric Bizimana', phone: '+250 73• ••• 447', idNumber: '1 1985 7 0098765 4 22', idPhoto: null, selfie: null, amount: 150000, frequency: 'daily', term: '30 days', kyc: 'partial', signature: 'Eric Bizimana', agreedAt: Date.now() - 2 * DAY, status: 'pending', submittedAt: Date.now() - 2 * DAY, reviewedAt: null, disbursedAt: null, rejectionReason: null, isCurrentTenant: false },
+  { id: 'RA-1003', tenantName: 'Remera Fashion House', mall: 'Remera Business Arcade', unit: '2F-11', ownerName: 'Grace Uwamahoro', phone: '+250 72• ••• 118', idNumber: '1 1979 9 0011223 3 09', idPhoto: null, selfie: null, amount: 600000, frequency: 'weekly', term: '28 days', kyc: 'failed', signature: 'Grace Uwamahoro', agreedAt: Date.now() - 9 * DAY, status: 'rejected', submittedAt: Date.now() - 9 * DAY, reviewedAt: Date.now() - 8 * DAY, disbursedAt: null, rejectionReason: 'ID verification failed — please reapply with a valid National ID.', isCurrentTenant: false },
 ];
 
 /* ──── CMS deals ──── */
@@ -177,25 +174,7 @@ export const initialMallAnnouncements = [
 ];
 
 /* ──── Vacancy data ──── */
-export const initialVacancyInquiries = [
-  { unit: 'G-03', name: 'Eric Mugisha', phone: '+250 78• ••• 552', message: 'Interested in this unit for a phone accessories shop — is it still available?', at: Date.now() - 2 * DAY },
-  { unit: '1F-04', name: 'Solange Uwase', phone: '+250 72• ••• 810', message: 'Looking for a boutique space, can I schedule a viewing?', at: Date.now() - 5 * DAY },
-];
 
-/* ──── Team members ──── */
-export const initialTeamMembers = [
-  { id: 1, name: 'Shema Katende', email: 'shema@edupoto.rw', role: 'Owner — full access', isOwner: true },
-  { id: 2, name: 'Claudine Mukamana', email: 'claudine@edupoto.rw', role: 'Manager — full access', isOwner: false },
-];
-
-/* ──── Building documents ──── */
-export const initialBuildingDocuments = [
-  { id: 1, name: 'Property Insurance Policy', category: 'Insurance', expiry: '2027-01-15', uploadedAt: Date.now() - 60 * DAY },
-  { id: 2, name: 'Fire Safety Inspection Certificate', category: 'Safety & Compliance', expiry: '2026-12-01', uploadedAt: Date.now() - 120 * DAY },
-  { id: 3, name: 'Business Operating License', category: 'Business License', expiry: null, uploadedAt: Date.now() - 200 * DAY },
-];
-
-/* ──── Handbook sections ──── */
 export const initialHandbookSections = [
   { id: 1, title: 'Operating Hours', body: 'The mall is open daily from 7:00 AM to 10:00 PM. Individual storefront hours may vary but must be posted visibly at the entrance.' },
   { id: 2, title: 'Signage & Fit-out Rules', body: 'All exterior signage must be approved by property management before installation. Fit-out works must be completed within 30 days of lease start and are limited to non-business hours (10 PM–6 AM) unless otherwise agreed.' },

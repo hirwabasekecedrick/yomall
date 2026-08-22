@@ -71,7 +71,7 @@ export default function PaymentModal({ show, onClose, tenantName, balance, daily
             <div className="pm-head-left">
               <div className="pm-title">Top-up / Repayment</div>
             </div>
-            <button className="pm-close" onClick={handleClose}><X size={16} /></button>
+            <button aria-label="Close" className="pm-close" onClick={handleClose}><X size={16} /></button>
           </div>
           <div className="pm-body">
             <div className="pm-context">
@@ -146,10 +146,10 @@ export default function PaymentModal({ show, onClose, tenantName, balance, daily
         <div className={`pm-step${step === 2 ? ' active' : ''}`}>
           <div className="pm-head">
             <div className="pm-head-left">
-              <button className="pm-back" onClick={() => { setStep(1); setPin(''); setPinError(''); }}><ArrowLeft size={15} /></button>
+              <button aria-label="Back" className="pm-back" onClick={() => { setStep(1); setPin(''); setPinError(''); }}><ArrowLeft size={15} /></button>
               <div className="pm-title">Enter PIN</div>
             </div>
-            <button className="pm-close" onClick={handleClose}><X size={16} /></button>
+            <button aria-label="Close" className="pm-close" onClick={handleClose}><X size={16} /></button>
           </div>
           <div className="pm-body">
             <div className="pin-phone">

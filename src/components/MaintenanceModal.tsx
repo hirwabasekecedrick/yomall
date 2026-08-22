@@ -1,8 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import { X, Check, Camera, Star } from 'lucide-react';
-import { initials, relTime, maintRoleToCategory } from '@/lib/data';
-import { STAGE_ICONS } from './icons';
+import { initials, maintRoleToCategory } from '@/lib/data';
 
 const CATEGORIES = [
   'Electrical',
@@ -49,7 +48,7 @@ export function MaintenanceRequestModal({ show, onClose, onSubmit, staffList }) 
     <div className="payment-modal" onClick={(e) => e.stopPropagation()}>
       <div className="pm-head">
         <span className="pm-title">New maintenance request</span>
-        <button className="pm-close" onClick={handleClose}><X size={16} /></button>
+        <button aria-label="Close" className="pm-close" onClick={handleClose}><X size={16} /></button>
       </div>
       <div className="pm-body">
         {submitted ? (
@@ -161,151 +160,6 @@ export function MaintenanceRequestModal({ show, onClose, onSubmit, staffList }) 
               Submit request
             </button>
           </>
-        )}
-      </div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════════
-   MaintenanceDetailModal
-   ═══════════════════════════════════════════════ */
-export function MaintenanceDetailModal({ show, onClose, request, stages, onRate }) {
-  const [rating, setRating] = useState(0);
-  const [ratingSubmitted, setRatingSubmitted] = useState(false);
-
-  if (!show || !request) return null;
-
-  const isCompleted = request.stage === stages.length - 1;
-  const alreadyRated = request.rating != null || ratingSubmitted;
-
-  function handleRate() {
-    if (!rating) return;
-    onRate(request.id, rating);
-    setRatingSubmitted(true);
-  }
-
-  function urgencyBadgeClass() {
-    return `badge ${request.urgency === 'urgent' ? 'overdue' : 'transit'}`;
-  }
-
-  function stageStatus(idx) {
-    if (idx < request.stage) return 'done';
-    if (idx === request.stage) return 'current';
-    return '';
-  }
-
-  function stageTime(idx) {
-    if (idx < request.stage) {
-      if (idx === 0) return relTime(request.submittedAt);
-      if (isCompleted && idx === stages.length - 1 && request.completedAt) {
-        return relTime(request.completedAt);
-      }
-      return '';
-    }
-    return '';
-  }
-
-  return (
-    <div className="order-modal" onClick={(e) => e.stopPropagation()}>
-      <div className="pm-head">
-        <div className="pm-head-left">
-          <span className="pm-title">{request.id}</span>
-          <span className={urgencyBadgeClass()}>{request.urgency}</span>
-        </div>
-        <button className="pm-close" onClick={onClose}><X size={16} /></button>
-      </div>
-
-      <div className="od-body">
-        <div className="od-section-label">Issue</div>
-        <div style={{ fontSize: 12.5, fontWeight: 700, marginBottom: 4 }}>
-          {request.category}
-        </div>
-        <div style={{ fontSize: 12.2, color: '#4B5A50', marginBottom: 16, lineHeight: 1.55 }}>
-          {request.description}
-        </div>
-
-        <div className="od-section-label">Assigned staff</div>
-        <div className="rider-card-mini">
-          <div
-            className="rc-av"
-            style={{
-              background: request.staff.role === 'Electrician' ? '#8B5CF622' : '#EDE9FE',
-              color: request.staff.role === 'Electrician' ? '#8B5CF6' : '#6D28D9',
-            }}
-          >
-            {initials(request.staff.name)}
-          </div>
-          <div>
-            <div className="rc-name">{request.staff.name}</div>
-            <div className="rc-sub">{request.staff.role}</div>
-          </div>
-        </div>
-
-        <div className="od-section-label">Timeline</div>
-        <div className="od-timeline">
-          {stages.map((st, idx) => {
-            const status = stageStatus(idx);
-            return (
-              <div className={`od-timeline-item${status ? ' ' + status : ''}`} key={idx}>
-                <div className="od-timeline-dot">{STAGE_ICONS[st.icon] || st.icon}</div>
-                <div className="od-timeline-line" />
-                <div className="od-timeline-content">
-                  <div className="od-timeline-label">{st.label}</div>
-                  {stageTime(idx) && (
-                    <div className="od-timeline-time">{stageTime(idx)}</div>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {isCompleted && (
-          <div style={{ marginTop: 20 }}>
-            {alreadyRated ? (
-              <div
-                style={{
-                  textAlign: 'center',
-                  background: '#EDE9FE',
-                  borderRadius: 12,
-                  padding: '16px 14px',
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: '#6D28D9',
-                }}
-              >
-                Thank you for your feedback
-              </div>
-            ) : (
-              <>
-                <div className="od-section-label">Rate this service</div>
-                <div style={{ display: 'flex', gap: 4, marginBottom: 12 }}>
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                      key={star}
-                      onClick={() => setRating(star)}
-                      style={{
-                        cursor: 'pointer',
-                        color: star <= rating ? '#F2A93B' : '#E4E1D6',
-                        transition: 'color .12s',
-                        display: 'flex',
-                      }}
-                    >
-                      <Star size={26} fill={star <= rating ? '#F2A93B' : 'none'} />
-                    </span>
-                  ))}
-                </div>
-                <button
-                  className="pm-btn"
-                  disabled={!rating}
-                  onClick={handleRate}
-                >
-                  Submit rating
-                </button>
-              </>
-            )}
-          </div>
         )}
       </div>
     </div>
