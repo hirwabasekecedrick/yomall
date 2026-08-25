@@ -27,6 +27,8 @@ export const titles: Record<string, [string, string]> = {
   't-rent':['My Rent','Your repayment plan and payment history'],
   't-lease':['My Lease','Your lease terms, charges, deposit and compliance'],
   't-messages':['Messages','Contact your property manager directly'],
+  'pos':['MSME Biz Wizard','Sales, invoices, stock and tax for your shop'],
+  'chinatown':['ChinaTown','Shared containers, sourcing requests and customs financing'],
 };
 
 export const landlordNavItems: { view: string; label: string }[] = [

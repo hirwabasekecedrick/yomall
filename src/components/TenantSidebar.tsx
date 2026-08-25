@@ -13,6 +13,8 @@ import {
   Wrench,
   BookOpen,
   LogOut,
+  Calculator,
+  Ship,
 } from "lucide-react";
 
 export default function TenantSidebar({
@@ -129,6 +131,16 @@ export default function TenantSidebar({
             view="lease"
             icon={<ScrollText size={17} />}
             label="My Lease"
+          />
+          <NavItem
+            view="pos"
+            icon={<Calculator size={17} />}
+            label="MSME Biz Wizard"
+          />
+          <NavItem
+            view="chinatown"
+            icon={<Ship size={17} />}
+            label="ChinaTown"
           />
           <NavItem
             view="messages"

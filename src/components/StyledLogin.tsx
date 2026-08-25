@@ -1,6 +1,7 @@
 'use client';
 import React, { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { Building2, ShoppingBag, ShieldCheck, Eye, EyeOff, ArrowRight } from 'lucide-react';
 
 type Role = 'landlord' | 'tenant' | 'superadmin';
@@ -140,6 +141,15 @@ export default function LoginScreen({ onLogin }: { onLogin: (role: Role) => void
         >
           Sign in to yoMall <ArrowRight size={16} />
         </button>
+
+        {role === 'tenant' && (
+          <div className="text-center text-[12.5px] text-ink-400 mt-[18px]">
+            New shop at a yoMall property?{' '}
+            <Link href="/register" className="font-bold text-forest-500 hover:text-forest-700">
+              Register your shop
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

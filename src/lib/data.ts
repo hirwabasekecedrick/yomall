@@ -234,3 +234,103 @@ export const maintRoleToCategory = {
 
 /* ──── CURRENT TENANT for tenant role ──── */
 export const CURRENT_TENANT_NAME = 'Nyabugogo TechHub';
+
+/* ════════════════════════════════════════════════════════════════
+   Tenant mobile-feature parity — added data & helpers
+   (Rent Advance schedule, POS/Invoicing, ChinaTown sourcing,
+   Storefront composer, yoInfo feed, self-serve registration)
+   ════════════════════════════════════════════════════════════════ */
+
+/* ──── Rent payment history (separate from the rentAdvance schedule) ──── */
+export const rentPaymentHistory = [
+  { date: 'Today', month: null, amount: null, account: '', status: 'missed' },
+  { date: 'Yesterday', month: 'Jul', amount: 15000, account: '07•• •••214 (MoMo)', type: 'full', status: 'paid' },
+  { date: '2 days ago', month: 'Jul', amount: 15000, account: '07•• •••214 (MoMo)', type: 'full', status: 'paid' },
+  { date: '3 days ago', month: 'Jul', amount: 15000, account: '07•• •••214 (MoMo)', type: 'full', status: 'paid' },
+];
+
+/* Build a rentAdvance repayment schedule: 5% service fee spread evenly across the term. */
+export function buildRepaymentSchedule(amountStr, frequency, term) {
+  const amt = parseFloat(String(amountStr || '0').replace(/,/g, '')) || 0;
+  const totalWithFee = Math.round(amt * 1.05);
+  const count = Math.max(1, parseInt(term, 10) || 1);
+  const per = Math.round(totalWithFee / count);
+  const schedule = [];
+  const start = new Date();
+  for (let i = 0; i < count; i++) {
+    const due = new Date(start);
+    if (frequency === 'daily') due.setDate(due.getDate() + i + 1);
+    else due.setDate(due.getDate() + (i + 1) * 7);
+    const amount = i === count - 1 ? totalWithFee - per * (count - 1) : per;
+    schedule.push({ seq: i + 1, dueDate: due, amount, status: i === 0 ? 'due' : 'upcoming' });
+  }
+  return schedule;
+}
+
+/* ──── POS / MSME "Biz Wizard" invoicing ──── */
+export const initialMwStock = [
+  { name: 'Wireless Earbuds', qty: 18, price: 25000 },
+  { name: 'Phone Charger (Type-C)', qty: 32, price: 5000 },
+  { name: 'Power Bank 10,000mAh', qty: 11, price: 15000 },
+  { name: 'Bluetooth Speaker', qty: 7, price: 22000 },
+];
+export const initialMwInvoices = [
+  { id: 'EBM-3391', item: 'Wireless Earbuds', qty: 1, total: 29500, vat: 4500, customer: 'Walk-in customer', status: 'Paid', at: Date.now() - 3 * 3600000 },
+];
+export const defaultMwTemplate = { name: 'Nyabugogo TechHub', tin: '', address: '', accent: '#8B5CF6', footer: 'Thank you for your business!' };
+export const INITIAL_CREDITS_BALANCE = 240;
+
+/* ──── ChinaTown / container trading (sourcing marketplace) ──── */
+export const CT_ACCESS_CODE = '1234';
+export const ctCatalog = [
+  { id: 'ct1', name: 'Wireless earbuds, bulk pack', cat: 'Electronics', icon: '🎧', cny: 38, rwf: 9500, pcs: 200, vol: 0.9, moq: 5, loc: 'Kigali showroom' },
+  { id: 'ct2', name: 'Fast-charge power banks 10,000mAh', cat: 'Electronics', icon: '🔋', cny: 22, rwf: 5800, pcs: 150, vol: 0.7, moq: 5, loc: 'Kigali showroom' },
+  { id: 'ct3', name: 'Cotton blend T-shirts, assorted', cat: 'Textiles', icon: '👕', cny: 14, rwf: 3600, pcs: 300, vol: 1.1, moq: 10, loc: 'Rusizi showroom' },
+  { id: 'ct4', name: 'Stainless steel hand tools set', cat: 'Hardware', icon: '🔧', cny: 56, rwf: 14200, pcs: 80, vol: 1.4, moq: 3, loc: 'Kigali showroom' },
+  { id: 'ct5', name: 'Non-stick cookware set', cat: 'Household', icon: '🍳', cny: 64, rwf: 16800, pcs: 60, vol: 1.6, moq: 3, loc: 'Rubavu showroom' },
+  { id: 'ct6', name: 'Stackable plastic storage bins', cat: 'Household', icon: '🗄️', cny: 19, rwf: 4900, pcs: 120, vol: 1.2, moq: 5, loc: 'Kigali showroom' },
+  { id: 'ct7', name: 'Foldable office chairs', cat: 'Furniture', icon: '🪑', cny: 98, rwf: 24500, pcs: 24, vol: 2.1, moq: 2, loc: 'Kigali showroom' },
+  { id: 'ct8', name: 'Skincare gift sets, assorted', cat: 'Cosmetics', icon: '🧴', cny: 26, rwf: 6800, pcs: 180, vol: 0.8, moq: 5, loc: 'Rusizi showroom' },
+];
+export const ctCategories = ['All', 'Electronics', 'Textiles', 'Hardware', 'Household', 'Furniture', 'Cosmetics'];
+export const initialCtContainer = { fillPct: 55, filledVol: 15.4, capVol: 28, buyers: 6 };
+export const ctSourceCatalog = [
+  { icon: '🎧', name: 'Bluetooth earbuds, custom logo option', source: 'Alibaba · Shenzhen Sound Tech', price: 8200 },
+  { icon: '🔌', name: 'USB-C fast charger cable, bulk', source: 'Alibaba · Yiwu Cable Co.', price: 1100 },
+  { icon: '📦', name: 'Similar item — ChinaTown verified supplier', source: 'ChinaTown catalog', price: 9600 },
+];
+export const CT_CLIENT_CODE = 'CT-4821';
+export const CT_LENDERS = ['Kigali Trust Bank', 'Amizero Microfinance'];
+export const CT_SHIPPING_RATE_PER_M3 = 45000;
+
+/* ──── Storefront composer ("Update Wizard") ──── */
+export const uwCtaOptions = ['Learn More', 'Get Started', 'Contact Us', 'Shop Now', 'Book Now', 'Call Now', 'Sign Up', 'Download', 'Visit Store', 'WhatsApp Us'];
+export const initialUwPosts = [
+  { id: 'UW-101', type: 'update', headline: 'New stock arrived — check out our latest smartphones', channels: ['yoInfo Fliiper', 'Instagram'], cost: 15, publishedAt: Date.now() - 2 * 86400000 },
+];
+export const uwChannelCosts = { instagram: 15, facebook: 15, tiktok: 20 };
+
+/* ──── yoInfo Fliiper feed (mall community bulletin: news / deals / jobs) ──── */
+export const yoInfoItems = [
+  { category: 'jobs', tag: 'Jobs', seed: 'ym-techhub-job', title: 'Amasezerano Boutique — sales assistant needed', desc: 'Recruiting a part-time sales assistant for the fashion floor. Apply by Aug 25.', meta: 'Amasezerano Boutique · 4h ago' },
+  { category: 'news', tag: 'News', seed: 'ym-newshop', title: '3 new shops just opened in Kigali Convention Mall', desc: 'Ikirenga Salon, Coko Bookshop and Zamu Phone Repair are now open on the ground floor.', meta: 'Mall management · 6h ago' },
+  { category: 'deals', tag: 'Deals', seed: 'ym-earbuds', title: '30% off Wireless Earbuds — Nyabugogo TechHub', desc: 'This week only, while stocks last. Genuine stock, warranty included.', meta: 'Nyabugogo TechHub · 2h ago' },
+  { category: 'news', tag: 'News', seed: 'ym-parking', title: 'Basement parking now free after 7pm', desc: 'Kigali Convention Mall is waiving evening parking fees to support night shoppers.', meta: 'Mall management · 1d ago' },
+  { category: 'jobs', tag: 'Jobs', seed: 'ym-security', title: 'Security officer needed — night shift', desc: 'Kigali Convention Mall is hiring a licensed security officer for the 8pm–6am shift.', meta: 'Mall management · 1d ago' },
+  { category: 'deals', tag: 'Deals', seed: 'ym-bogo', title: 'Buy a Power Bank, get a free cable', desc: 'Free Type-C charging cable with every power bank purchase this week.', meta: 'Nyabugogo TechHub · 5h ago' },
+  { category: 'news', tag: 'News', seed: 'ym-market', title: 'Weekend market returns to the atrium', desc: 'Northern Province cooperatives bring fresh produce and crafts, Sat–Sun.', meta: 'Mall management · 2d ago' },
+  { category: 'deals', tag: 'Deals', seed: 'ym-salon', title: '20% off first visit — Ikirenga Salon', desc: 'New customers get 20% off any service this month. Walk-ins welcome.', meta: 'Ikirenga Salon · 3d ago' },
+];
+
+/* ──── Self-serve tenant registration ──── */
+export const registerMalls = [
+  { name: 'Kigali Convention Mall', loc: 'Nyarugenge, Kigali' },
+  { name: 'Musanze Heritage Plaza', loc: 'Musanze, Northern Province' },
+  { name: 'Huye Trade Center', loc: 'Huye, Southern Province' },
+  { name: 'Remera Business Arcade', loc: 'Remera, Kigali' },
+  { name: 'Rubavu Lakeside Mall', loc: 'Rubavu, Western Province' },
+];
+export const REG_TENANT_CODE = 'TC-4821';
+export const REG_OTP = '1234';
+export const regStepTitles = ['Choose your mall', 'Verify your tenant code', 'Verify your phone number', 'Your shop & account', 'Review & create account'];
+export const registerCategories = ['Phones & Electronics', 'Fashion & boutique', 'Food & beverage', 'Beauty & personal care', 'Household & hardware', 'Other'];
